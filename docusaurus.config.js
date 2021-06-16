@@ -1,19 +1,19 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'IFC.js',
+  tagline: 'IFC toolkit for JavaScript.',
   url: 'https://IFCjs.github.io',
-  baseUrl: '/docs/',
+  baseUrl: '/info/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'IFCjs', // Usually your GitHub org/user name.
-  projectName: 'docs', // Usually your repo name.
+  projectName: 'info', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      title: 'IFC.js',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'IFC.js Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -74,7 +74,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} IFC.js.`,
     },
   },
   presets: [
