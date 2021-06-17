@@ -10,6 +10,7 @@ module.exports = {
   organizationName: 'IFCjs', // Usually your GitHub org/user name.
   projectName: 'info', // Usually your repo name.
   themeConfig: {
+    image: 'img/logo.png',
     navbar: {
       title: 'IFC.js',
       logo: {

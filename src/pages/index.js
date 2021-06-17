@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <Layout
       title={`Docs`}
-      description="Description will go into a meta tag in <head />">
+      description="Start building open BIM applications now.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
