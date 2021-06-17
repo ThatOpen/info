@@ -1,16 +1,16 @@
-import React from 'react';
-import clsx from 'clsx';
-import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import styles from './index.module.css';
-import HomepageFeatures from '../components/HomepageFeatures';
+import React from "react";
+import clsx from "clsx";
+import Layout from "@theme/Layout";
+import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import styles from "./index.module.css";
+import HomepageFeatures from "../components/HomepageFeatures";
 import logo from "../../static/img/logo.png";
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
-    <header className={clsx('hero shadow--lw', styles.heroBanner)}>
+    <header className={clsx("hero shadow--lw", styles.heroBanner)}>
       <div className="container">
         <img className="landing-logo" src={logo} alt="asdf"></img>
         <h1 className="hero__title">{siteConfig.title}</h1>
@@ -18,21 +18,31 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--outline button--secondary button--lg"
-            to="/docs/intro">
+            to="/docs/intro"
+          >
             Get started
           </Link>
         </div>
+        <iframe
+          className="landing-scene"
+          width="50%"
+          height="300"
+          src="https://ifcjs.github.io/hello-world/landing-page/"
+          allowFullScreen="allowfullscreen"
+          frameBorder="0"
+        ></iframe>
       </div>
     </header>
   );
 }
 
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={`Docs`}
-      description="Start building open BIM applications now.">
+      description="Start building open BIM applications now."
+    >
       <HomepageHeader />
       <main>
         <HomepageFeatures />

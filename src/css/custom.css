@@ -28,6 +28,30 @@ h2 > a {
   color: var(--ifm-heading-color);
 }
 
+
+iframe {
+  border-radius: 0.5rem;
+}
+
+
+.landing-scene {
+  width: 40%;
+  min-width: 0%;
+  min-height: 20rem;
+  margin-top: 2rem;
+}
+
+.container {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .landing-scene {
+    min-width: 100%;
+  }
+}
+
 .landing-logo {
   max-width: 8rem;
   margin: 0.5rem auto 2rem auto;
