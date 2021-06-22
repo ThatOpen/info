@@ -25,17 +25,6 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Plug and Play',
-    Svg: require('../../static/img/iconmonstr-product-3.svg').default,
-    description: (
-      <Translate>
-        With IFC.js it is possible to create open BIM applications in less than 100 lines of JavaScript,
-        without needing to know how the internals of the IFC schema work. 
-        Focus your efforts on what brings value to your business.
-      </Translate>
-    ),
-  },
-  {
     title: 'Lightweight',
     Svg: require('../../static/img/iconmonstr-paper-plane-2.svg').default,
     description: (
@@ -50,7 +39,7 @@ const FeatureList = [
 
 function Feature({Svg, title, description}) {
   return (
-    <div className={clsx('col col--3')}>
+    <div className={clsx('col col--4')}>
       <div className="text--center">
         <Svg className={styles.featureSvg} alt={title} />
       </div>
