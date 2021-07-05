@@ -9,6 +9,9 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'IFCjs', // Usually your GitHub org/user name.
   projectName: 'info', // Usually your repo name.
+  stylesheets: [
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+  ],
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'ja'],
@@ -32,7 +35,7 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'Introduction',
           position: 'left',
           label: 'Docs',
         },
@@ -56,7 +59,7 @@ module.exports = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/introduction',
             },
           ],
         },
