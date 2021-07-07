@@ -4,7 +4,7 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
-import HomepageFeatures from '../components/HomepageFeatures';
+import HomepageFeatures from '../components/HomepageFeatures/HomepageFeatures';
 import logo from "../../static/img/logo.png";
 
 function HomepageHeader() {
@@ -17,7 +17,7 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--outline button--secondary button--lg"
+            className="button button--outline button--primary button--lg"
             to="/docs/introduction">
             Get started
           </Link>

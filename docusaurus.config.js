@@ -26,6 +26,10 @@ module.exports = {
   },
   themeConfig: {
     image: 'img/logo.png',
+    prism: {
+      theme: require('./src/codeThemes/duotoneLight'),
+      darkTheme: require('./src/codeThemes/nightOwl'),
+    },
     navbar: {
       title: 'IFC.js',
       logo: {

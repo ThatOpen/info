@@ -6,7 +6,7 @@ import Translate, {translate} from '@docusaurus/Translate'
 const FeatureList = [
   {
     title: 'Native speed',
-    Svg: require('../../static/img/iconmonstr-time-19.svg').default,
+    Svg: require('../../../static/img/iconmonstr-time-19.svg').default,
     description: (
       <Translate>
         The IFC.js parsing engine is based on WebAssembly and C++, 
@@ -16,7 +16,7 @@ const FeatureList = [
   },
   {
     title: 'Multi platform',
-    Svg: require('../../static/img/iconmonstr-smartphone-16.svg').default,
+    Svg: require('../../../static/img/iconmonstr-smartphone-16.svg').default,
     description: (
       <Translate>
         IFC.js is compatible with any platform: web application (frontend and backend), 
@@ -26,7 +26,7 @@ const FeatureList = [
   },
   {
     title: 'Lightweight',
-    Svg: require('../../static/img/iconmonstr-paper-plane-2.svg').default,
+    Svg: require('../../../static/img/iconmonstr-paper-plane-2.svg').default,
     description: (
       <Translate>
         An open BIM application created with IFC.js can weigh less than 1 MB. 
