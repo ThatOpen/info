@@ -51,6 +51,18 @@ div[class^='announcementBarContent'] a:hover {
   --ifm-footer-background-color: #22272E;
 }
 
+.main-wrapper > div {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 996px) {
+  .main-wrapper > div {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 996px) {
   :root {
     --ifm-font-size-base: 18px;

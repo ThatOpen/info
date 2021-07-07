@@ -1,7 +1,7 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'IFC.js',
-  tagline: 'IFC toolkit for JavaScript.',
+  tagline: 'BIM toolkit for JavaScript.',
   url: 'https://IFCjs.github.io',
   baseUrl: '/info/',
   onBrokenLinks: 'warn',
