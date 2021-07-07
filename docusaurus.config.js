@@ -14,13 +14,16 @@ module.exports = {
   ],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ja'],
+    locales: ['en', 'ja', 'es'],
     localeConfigs: {
       en: {
         label: 'English',
       },
       ja: {
         label: '日本語',
+      },
+      es: {
+        label: "Español"
       }
     }
   },
