@@ -59,27 +59,6 @@ div[class^='announcementBarContent'] a:hover {
   margin-right: auto;
 }
 
-@media screen and (max-width: 996px) {
-  .main-wrapper > div {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 996px) {
-  :root {
-    --ifm-font-size-base: 18px;
-  }
-  .hero .hero__title {
-    font-size: 2.5rem;
-  }
-}
-
-@media screen and (min-width: 997px) {
-  :root {
-    --ifm-font-size-base: 17px;
-  }
-}
-
 .prism-code, .card{
   box-shadow: var(--box-shadow);
   transition: box-shadow 0.1s ease-in-out;
@@ -116,12 +95,6 @@ iframe {
   min-height: 100%;
 }
 
-@media only screen and (max-width: 600px) {
-  .landing-scene {
-    min-width: 100%;
-  }
-}
-
 .landing-logo {
   max-width: 8rem;
   margin: 0.5rem auto 2rem auto;
@@ -144,5 +117,32 @@ iframe {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1500px) {
+  .main-wrapper > div {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 18px;
+  }
+  .hero .hero__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  :root {
+    --ifm-font-size-base: 17px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .landing-scene {
+    min-width: 100%;
   }
 }
