@@ -53,15 +53,22 @@ div[class^='announcementBarContent'] a:hover {
   --ifm-footer-background-color: #22272E;
 }
 
+
+.main-wrapper {
+  min-height: 100vh !important;
+}
+
 .main-wrapper > div {
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 .prism-code, .card{
   box-shadow: var(--box-shadow);
   transition: box-shadow 0.1s ease-in-out;
+  margin: 2rem 0;
 }
 
 .prism-code:hover, .card:hover{
@@ -126,22 +133,82 @@ iframe {
   }
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 1400px) {
   :root {
     --ifm-font-size-base: 18px;
   }
+
+  article {
+    padding: 0;
+  }
+
+  article header h1 {
+    font-size: 2rem !important;
+  }
+
+  article h2 {
+    font-size: 1.4rem !important;
+    margin: 2rem 0 1rem 0 !important;
+    padding: 0 !important;
+  }
+
+  article h3 {
+    font-size: 1.3rem !important;
+    margin: 1.5rem 0 1rem 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .hero {
+    height: 100vh !important;
+  }
+
+  .container {
+    margin-bottom: 4rem !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .landing-logo {
+    margin-top: auto;
+  }
+
+  .buttons_src-pages-{
+    margin-bottom: auto;
+  }
+
+  .card-demo, .alert, .prism-code {
+    margin: 1.5rem 0 !important;
+  }
+
   .hero .hero__title {
     font-size: 2.5rem;
   }
 }
 
-@media screen and (min-width: 997px) {
+@media (max-height: 997px) and (min-width: 997px) {
   :root {
     --ifm-font-size-base: 17px;
   }
 }
 
-@media only screen and (max-width: 600px) {
+/* Horizontal mobile*/
+@media screen and (max-height: 500px) {
+  .hero > div > h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+  .hero > div > p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero > div > img {
+    width: 2rem;
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
   .landing-scene {
     min-width: 100%;
   }
