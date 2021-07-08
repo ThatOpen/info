@@ -163,6 +163,7 @@ iframe {
   }
 
   .container {
+    min-height: auto;
     margin-bottom: 4rem !important;
     display: flex;
     flex-direction: column;
