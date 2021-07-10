@@ -63,15 +63,18 @@ function getToken() {
 }
 
 async function callDeepl(url) {
-  const headers = {
-    "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*",
-  };
   try {
-    return await axios.get(url, { headers });
+    return await axios.get(url, { headers: getHeaders() });
   } catch (error) {
     console.log(error);
   }
+}
+
+function getHeaders(){
+  return {
+    "Cache-Control": "no-cache",
+    "Access-Control-Allow-Origin": "*",
+  };
 }
 
 translateJSON("es");
