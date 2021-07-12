@@ -1,6 +1,6 @@
 import React from "react";
 
-export const IfcjsCard = (props) => {
+export const IfcCard = (props) => {
   
   const title = props.title ? (
     <div className="card__header">

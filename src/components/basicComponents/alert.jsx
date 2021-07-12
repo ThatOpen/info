@@ -1,14 +1,13 @@
 import React from "react";
-import { IfcjsIcon } from "./icon";
 
-export const IfcjsAlert = (props) => (
+export const IfcAlert = (props) => (
   <div
     className="alert alert--primary"
     role="alert"
     style={{ margin: "2rem" }}
   >
+    <h2>💡</h2>
     <div style={{ marginBottom: "2rem" }}>
-      <IfcjsIcon>lightbulb</IfcjsIcon> 
     </div>
     {props.children}
   </div>

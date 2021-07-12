@@ -1,0 +1,28 @@
+.ifcTabItem {
+    width: 100% !important;
+    justify-content: center;
+}
+
+.ifcTabContent {
+    margin: 2rem;
+    padding: 3rem;
+    border-radius: var(--ifm-alert-border-radius);
+    background-color: var(--ifm-highlight-color);
+    box-shadow: var(--box-shadow);
+    transition: var(--box-shadow-transition);
+}
+
+.ifcTabContent:hover{
+    box-shadow: var(--box-shadow-big);
+  }
+
+@media (max-width: 1400px) {
+    .ifcTabItem {
+        font-size: 1rem;
+    }
+
+    .ifcTabContent {
+        margin: 2rem 0;
+        padding: 1.5rem;
+    }
+  }

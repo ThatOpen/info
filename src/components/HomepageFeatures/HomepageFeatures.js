@@ -15,7 +15,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Multi platform',
+    title: 'Multiplatform',
     Svg: require('../../../static/img/iconmonstr-smartphone-16.svg').default,
     description: (
       <Translate>

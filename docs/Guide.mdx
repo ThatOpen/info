@@ -14,7 +14,7 @@ In addition, you need to have Node.js and any IDE installed in order to follow t
 
 This tutorial will be done with Vanilla JavaScript, without using frameworks like React, Vue, Angular, etc.
 However, the same steps can be adapted and applied to any of these use cases.
-You can find the complete project of the guide [here](https://github.com/IFCjs/hello-world) and the deployed application [here](https://ifcjs.github.io/hello-world/introduction/).
+You can find the complete project of the guide [here](https://github.com/IFCjs/hello-world/tree/main/introduction) and the deployed application [here](https://ifcjs.github.io/hello-world/introduction/).
 
 ## Setting up the project
 
@@ -41,7 +41,7 @@ The next step is to create an HTML file (index.html) as the entry point of the a
 The HTML will have a canvas element that will be used to render the Three.js scene, as well as an input element, which will be the one we use to open IFC files from our computer to the application.
 It will also have a reference to a file called "Bundle.js" which will be the file we are going to create with rollup and which will contain all the code for our application.
 
-```html title="index.html"
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,7 +61,7 @@ It will also have a reference to a file called "Bundle.js" which will be the fil
 
 In order for the canvas to be full screen we are going to create the following CSS file:
 
-```css title="stylesheet.css"
+```css
 * {
   margin: 0;
   padding: 0;
@@ -89,7 +89,7 @@ body {
 Next, the rollup configuration file must be created.
 This file has to be called rollup.config.js and includes the reference to the plugins we have previously installed, and assumes that the JavaScript file we are going to work with is called "app.js".
 
-```js title="rollup.config.js"
+```js
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 
@@ -112,7 +112,7 @@ export default {
 
 In addition, we need to create the babel configuration file, called .babelrc (no name, just extension).
 
-```json title=".babelrc"
+```json
 {
   "presets": ["@babel/env"]
 }
@@ -121,7 +121,7 @@ In addition, we need to create the babel configuration file, called .babelrc (no
 Also, the package.json file needs to be modified to contain the commands to control rollup.
 If we have installed everything correctly, we should see the same dependencies in this file.
 
-```json title="package.json"
+```json
 {
   "name": "lcdlv",
   "version": "1.0.0",
@@ -171,7 +171,7 @@ Next we are going to create a basic 3D scene using Three.js.
 Note that this is not a Three.js tutorial;
 if you have no previous experience with the library, we recommend that you [learn the basics](https://threejsfundamentals.org/) before attempting to make an open BIM application with IFC.js.
 
-```js title="app.js"
+```js
 import {
   AmbientLight,
   AxesHelper,
@@ -255,7 +255,7 @@ Finally, we need something to load IFCs;
 that something is IFC.js, which is integrated with Three.js as its official IFC Loader.
 This can be done by instantiating the loader and creating an event for when the user uploads an IFC file to the HTML input element.
 
-```js title="app.js"
+```js
 import { IFCLoader } from "three/examples/jsm/loaders/IFCLoader";
 
 //Sets up the IFC loading
@@ -278,6 +278,6 @@ Congratulations!
 You have just created your first IFC viewer.
 If you have done everything correctly, you should be able to see something similar to [this](https://ifcjs.github.io/hello-world/introduction/) in your local server.
 From here, the possibilities are endless.
-You can take a look at web-ifc-viewer to [web-ifc-viewer](https://github.com/agviegas/web-ifc-viewer) to see the IFC viewer we are building,
+You can take a look at web-ifc-viewer to [web-ifc-viewer](https://github.com/IFCjs/web-ifc-viewer) to see the IFC viewer we are building,
 which includes tools for object selection, changing geometry appearance, section planes and much more.
-You can try it [here](https://agviegas.github.io/web-ifc-viewer/examples/simple-html/).
+You can try it [here](https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/).

@@ -10,16 +10,19 @@
   --ifm-color-primary-lightest: #609eef;
   --ifm-code-font-size: 95%;
 
+  --ifm-highlight-color: var(--ifm-color-secondary);
   --ifm-font-family-base: 'Open Sans';
   --ifm-background-color: #F3F4F6;
   --box-shadow:  0 1px 2px 1px #e6e6e6;
   --box-shadow-big:  0 10px 20px 8px #e6e6e6;
+  --box-shadow-transition: box-shadow 0.1s ease-in-out;
 }
 
 html[data-theme='dark'] {
-  --ifm-color-primary: var(--ifm-color-primary-lightest);
   --ifm-background-color: #2D333B;
   --ifm-background-surface-color: #22272E;
+  --ifm-highlight-color: var(--ifm-background-surface-color);
+  --ifm-color-primary: var(--ifm-color-primary-lightest);
   --box-shadow:  none;
   --box-shadow-big: none;
   --ifm-alert-color: #ffffff;
@@ -67,7 +70,7 @@ div[class^='announcementBarContent'] a:hover {
 
 .prism-code, .card{
   box-shadow: var(--box-shadow);
-  transition: box-shadow 0.1s ease-in-out;
+  transition: var(--box-shadow-transition);
   margin: 2rem 0;
 }
 
