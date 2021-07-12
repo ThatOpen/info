@@ -3,9 +3,9 @@ title: "イントロダクション"
 sidebar_position: 1
 ---
 
-import { IfcjsCard } from "../../../../components/card";
-import { IfcjsIcon } from "../../../../components/icon";
-import { IfcjsAlert } from "../../../../components/alert";
+import { IfcCard } from "../../../../src/components/basicComponents/card";
+import { IfcAlert } from "../../../../src/components/basicComponents/alert";
+import { IfcScene } from "../../../../src/components/basicComponents/scene";
 
 IFC.js は、IFC モデルをブラウザで読み込み、表示、編集するための JavaScript ライブラリです。
 
@@ -35,10 +35,10 @@ IFC.js は、IFC モデルをブラウザで読み込み、表示、編集する
 BuildingSMART 社が作成した、建物の 3D モデルを格納するためのフォーマットです。
 オープンなので、誰でも読み書きできます。最高でしょ！！
 
-<IfcjsAlert>
+<IfcAlert>
   IFC のおかげで、開発者は誰でも自由に BIM アプリを作ることができ、
   建設分野の大手開発会社のアプリと連携することができます。
-</IfcjsAlert>
+</IfcAlert>
 
 ### IFC の問題
 
@@ -46,10 +46,10 @@ BIM アプリケーションを作ろうとする人は、他のツールから�
 しかし残念ながら、IFC は読み書きが難しいフォーマットです。
 何千ページものドキュメントがあり、自作の IFC パーサーを作成・維持するのは大変な作業です。
 
-<IfcjsCard title="💸   IFC で開発する余裕ありますか?">
+<IfcCard title="💸   IFC で開発する余裕ありますか?">
   これは、何人もの開発者がフルタイムで働いている企業でなければできないことです。
   これではもうそんなにオープンな感じではないですよね。
-</IfcjsCard>
+</IfcCard>
 
 IFC の内部がどのようになっているか気になる方のために、例を挙げてみましょう。
 このような何十万行ものデータを解析することを想像してみてください。
@@ -76,9 +76,9 @@ IFC が正しく定義されていない場合はどうすればよいか？
 **ジオメトリやデータのインポート／エクスポートという点では同じなのに**、
 すべての開発者がそれぞれのアプリケーションに IFC ファイルのリーダー／ライターを実装しなければならないというのは意味がありません。
 
-<IfcjsCard>
+<IfcCard>
   IFC.jsは、IFCファイルの読み書きを非常に簡単に行うことができるJavaScriptライブラリです。
-</IfcjsCard>
+</IfcCard>
 
 これにより、建築・建設アプリケーションの開発者は、
 IFC での作業が容易になり、ビジネスに真に付加価値を与える機能性に集中することができます。
@@ -87,16 +87,16 @@ IFC での作業が容易になり、ビジネスに真に付加価値を与え�
 
 IFC.js は IFC ファイルを読み込んで、2 つのものを作成します。
 
-<IfcjsCard title="🧊   ジオメトリ">
+<IfcCard title="🧊   ジオメトリ">
   IFC.js が 3D シーンを生成できるのは、Three.js や Babylon.js などの 3D
   ライブラリに対応しているからです。 つまり、3D の BIM
   ツールをすぐに作ることができるのです。
-</IfcjsCard>
+</IfcCard>
 
-<IfcjsCard title="🔗   データ">
+<IfcCard title="🔗   データ">
   ジオメトリに関連するすべてのプロパティにハイレベルでアクセスできます。
   つまり、建築物の構成要素やその材料、熱特性、構造強度などのデータに簡単にアクセスできます。
-</IfcjsCard>
+</IfcCard>
 
 IFC.js を使った BIM アプリケーションの作成は、JavaScript、HTML、CSS で Web ページを作成するのと同じくらい簡単です。IFC ファイルがない場合は、[これら](https://drive.google.com/drive/folders/1MwRsL3ZnlyhWEVUko9wAnklaMne3pp3h?usp=sharing)のファイルを読み込んでみてください。
 
@@ -227,24 +227,24 @@ IFC.js は、大規模な多言語ライブラリ（C++、TypeScript、JavaScrip
 IFC.js でオープン BIM 開発の世界をどんどん良くしていきたいと思いませんか？
 ライブラリは大きいので、どこに参加したいかを選択する必要があります。
 
-<IfcjsCard title="パーシングとジオメトリとC++">
+<IfcCard title="パーシングとジオメトリとC++">
   もしあなたが C++ や WebAssembly、パーシングや IFC
   規格の低レベル実装に情熱を持っているなら、 web-ifc
   で私たちを助けることができます。 これは最大かつ最も複雑なライブラリです。
-</IfcjsCard>
+</IfcCard>
 
-<IfcjsCard title="Three.js とジオメトリと Typescript">
+<IfcCard title="Three.js とジオメトリと Typescript">
   一方、Three.js の開発者の方でライブラリに貢献したいと考えている方は、 Three.js
   の公式 IFC ローダーである web-ifc-three で協力することができます
   （ジオメトリの最適化、IFCローダーAPIの構築など）。
-</IfcjsCard>
+</IfcCard>
 
-<IfcjsCard title="BIM ツールとブレインストーミングと UX">
+<IfcCard title="BIM ツールとブレインストーミングと UX">
   最後に、もしあなたが Open BIM アプリケーションの構築にしか興味がなく、 BIM
   ツールやユーザーインターフェースについて素晴らしいアイデアをお持ちなら、
   web-ifc-viewer を市場で最高の IFC
   ビューアにするために私たちに協力していただくのが一番です。
-</IfcjsCard>
+</IfcCard>
 
 いずれにしても、[Discord チャンネル](https://discord.com/invite/g7Uzn2KSwB)に立ち寄っていただき、
 気軽にあなたの考えを教えていただければ、私たちがご案内いたします。

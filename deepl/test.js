@@ -6,7 +6,8 @@ const PATH_ERROR = "The path of the file to translate could not be found.";
 const WRITE_ERROR = "An error occured while writing JSON Object to File.";
 const WRITE_OK = "All translations have been successfully saved!";
 
-translateMDX("es", "docs/Introduction.mdx", "Introduction.mdx");
+// translateMDX("es", "docs/Introduction.mdx", "Introduction.mdx");
+translateJSON("es");
 
 async function translateMDX(lang, route, destination) {
   if (!fs.existsSync(route)) throw new Error(PATH_ERROR);
@@ -138,5 +139,3 @@ function getHeaders() {
     "Access-Control-Allow-Origin": "*",
   };
 }
-
-// translateJSON("es");
