@@ -28,7 +28,7 @@ module.exports = {
     }
   },
   themeConfig: {
-    image: 'img/logo.png',
+    image: 'img/social-card.png',
     prism: {
       theme: require('./src/codeThemes/duotoneLight'),
       darkTheme: require('./src/codeThemes/nightOwl'),
