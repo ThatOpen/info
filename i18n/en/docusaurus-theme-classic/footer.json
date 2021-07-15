@@ -15,13 +15,9 @@
     "message": "Tutorial",
     "description": "The label of footer link with label=Tutorial linking to /docs/introduction"
   },
-  "link.item.label.Stack Overflow": {
-    "message": "Stack Overflow",
-    "description": "The label of footer link with label=Stack Overflow linking to https://stackoverflow.com/questions/tagged/docusaurus"
-  },
   "link.item.label.Discord": {
     "message": "Discord",
-    "description": "The label of footer link with label=Discord linking to https:https://discord.gg/FXfyR4XrKT"
+    "description": "The label of footer link with label=Discord linking to https://discord.com/invite/g7Uzn2KSwB"
   },
   "link.item.label.Twitter": {
     "message": "Twitter",

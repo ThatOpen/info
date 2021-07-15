@@ -6,23 +6,24 @@ const PATH_ERROR = "The path of the file to translate could not be found.";
 const WRITE_ERROR = "An error occured while writing JSON Object to File.";
 const WRITE_OK = "All translations have been successfully saved!";
 
-// translateMDX("es", "docs/Introduction.mdx", "Introduction.mdx");
-translateJSON("es");
+// translateMDX("nl", "../docs/Introduction.mdx", "Introduction.mdx");
+translateJSON("nl");
 
 async function translateMDX(lang, route, destination) {
+  console.log(__dirname)
   if (!fs.existsSync(route)) throw new Error(PATH_ERROR);
   const lines = readMDX(route);
   const filtered = filterTexts(lines);
-  // const array =  encodeText(filtered);
-  // const translated = await translateText(array, lang.toUpperCase());
-  const texts = JSON.parse(fs.readFileSync("./deepl/example-response.json"));
-  formatTranslatedTexts(lines, filtered, texts);
+  const array =  encodeText(filtered);
+  const translated = await translateText(array, lang.toUpperCase());
+  // const texts = JSON.parse(fs.readFileSync("./deepl/example-response.json"));
+  formatTranslatedTexts(lines, filtered, translated);
   writeMDXFile(lang, destination, lines);
 }
 
 function writeMDXFile(lang, destination, lines){
-  const path = `./i18n/${lang}/docusaurus-plugin-content-docs/current/` + destination;
-  var file = fs.createWriteStream(path);
+  const path = `../i18n/${lang}/docusaurus-plugin-content-docs/current/` + destination;
+  const file = fs.createWriteStream(path);
   file.on('error', (err) => console.log(WRITE_ERROR, err));
   lines.forEach((v) =>  file.write(v + '\n'));
   file.end();
@@ -62,7 +63,7 @@ function readMDX(route) {
 
 function filterTexts(texts) {
   const filtered = new Set();
-  const filter = /^$|^\s{2,}(?!\/\/)|^---/;
+  const filter = /^$|^\s{2,}(?!\/\/)|^---|^</;
   texts.forEach((text) => {
     if (!filter.test(text)) filtered.add(text);
   });
@@ -70,9 +71,9 @@ function filterTexts(texts) {
 }
 
 async function translateJSON(lang) {
-  const route = `i18n/${lang}/code.json`;
+  const route = `../i18n/${lang}/code.json`;
   if (!fs.existsSync(route)) throw new Error(PATH_ERROR);
-  const texts = JSON.parse(fs.readFileSync("./deepl/base_code.json"));
+  const texts = JSON.parse(fs.readFileSync("../i18n/en/code.json"));
   const textlist = Object.values(texts).map((text) => text.message);
   const translated = await translateText(textlist, lang.toUpperCase());
   createTranslatedJson(texts, translated);
@@ -120,7 +121,7 @@ function getChunksToTranslate(texts) {
 }
 
 function getToken() {
-  const tokenPath = "deepl/deepl.json";
+  const tokenPath = "deepl.json";
   if (!fs.existsSync(tokenPath)) throw new Error(AUTH_ERROR);
   return JSON.parse(fs.readFileSync(tokenPath)).key;
 }

@@ -5,7 +5,7 @@ import Translate, {translate} from '@docusaurus/Translate'
 
 const FeatureList = [
   {
-    title: 'Native speed',
+    title: (<Translate>Native speed</Translate>),
     Svg: require('../../../static/img/iconmonstr-time-19.svg').default,
     description: (
       <Translate>
@@ -15,7 +15,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Multiplatform',
+    title: (<Translate>Multiplatform</Translate>),
     Svg: require('../../../static/img/iconmonstr-smartphone-16.svg').default,
     description: (
       <Translate>
@@ -25,7 +25,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Lightweight',
+    title: (<Translate>Lightweight</Translate>),
     Svg: require('../../../static/img/iconmonstr-paper-plane-2.svg').default,
     description: (
       <Translate>
