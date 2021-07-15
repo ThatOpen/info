@@ -12,6 +12,30 @@
     transition: var(--box-shadow-transition);
 }
 
+.linkContainer{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hidden{
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.visible{
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.link {
+    text-decoration: none !important;
+    position: absolute;
+    font-size: 1.5rem;
+    transform: translateY(-25px);
+    text-align: center;
+    cursor: pointer;
+}
+
 .ifcTabContent:hover{
     box-shadow: var(--box-shadow-big);
   }
