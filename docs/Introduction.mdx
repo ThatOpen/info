@@ -3,7 +3,7 @@
 ---
 
   import { IfcCard } from "../src/components/basicComponents/card";
-  import { IfcAlert } from "../src/components/basicComponents/alert";
+  import { IfcAlert } from "../src/components/Alert/alert";
   import { IfcScene } from "../src/components/basicComponents/scene";
   import { IfcTab } from "../src/components/Tab/tab";
 
@@ -181,8 +181,7 @@ IFC.js is a large, multi-language library (C++, TypeScript JavaScript, etc). Hav
 
 <IfcTab items={
     [
-      { name: 
-"web-ifc",
+      { name: "web-ifc",
       link: "https://github.com/tomvandig/web-ifc",
       content: 
 "This is the repository containing the core of the library: a parser and geometry generator written from scratch in C++ and compiled via Emscripten to WebAssembly. This repository encapsulates the complexity of reading IFC files and loading their data into memory."
