@@ -1,10 +1,15 @@
 import React from "react";
+import {IfcIconLink} from "../IconLink/IconLink";
+import styles from "./InfoCard.module.css"
 
 export const IfcCard = (props) => {
-  
+
   const title = props.title ? (
     <div className="card__header">
-      <h3>{props.title}</h3>
+        <span className={styles.iconContainer}>
+            {props.icon && <IfcIconLink icon={props.icon} active="true"/>}
+        </span>
+      <h3 className={props.icon && styles.titleOffset}>{props.title}</h3>
     </div>
   ) : (
     ""

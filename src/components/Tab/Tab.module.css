@@ -4,41 +4,26 @@
 }
 
 .ifcTabContent {
-    margin: 2rem;
-    padding: 3rem;
     border-radius: var(--ifm-alert-border-radius);
     background-color: var(--ifm-highlight-color);
     box-shadow: var(--box-shadow);
     transition: var(--box-shadow-transition);
+    padding: 3rem;
 }
 
-.linkContainer{
+.linkContainer {
     display: flex;
     justify-content: flex-end;
 }
 
-.hidden{
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-}
-
-.visible{
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.link {
-    text-decoration: none !important;
-    position: absolute;
-    font-size: 1.5rem;
-    transform: translateY(-25px);
-    text-align: center;
-    cursor: pointer;
-}
-
-.ifcTabContent:hover{
+.ifcTabContent:hover {
     box-shadow: var(--box-shadow-big);
-  }
+}
+
+.iconSpacing{
+    min-height: 3rem;
+    transform: translateX(-1rem);
+}
 
 @media (max-width: 1400px) {
     .ifcTabItem {
@@ -47,6 +32,10 @@
 
     .ifcTabContent {
         margin: 2rem 0;
-        padding: 1.5rem;
+        padding: 2rem;
     }
-  }
+
+    .linkContainer {
+        transform: translateX(-1rem) translateY(-1rem);
+    }
+}

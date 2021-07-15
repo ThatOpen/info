@@ -7,5 +7,5 @@ export const IfcScene = () => (
     key={Math.random()}
     src="https://ifcjs.github.io/hello-world/introduction/"
     frameBorder="0"
-  ></iframe>
+    />
 );

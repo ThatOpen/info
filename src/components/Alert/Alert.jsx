@@ -1,5 +1,6 @@
 import React from "react";
-import styles from "./alert.module.css";
+import styles from "./Alert.module.css";
+import {IfcIconLink} from "../IconLink/IconLink";
 
 export const IfcAlert = (props) => (
     <div
@@ -7,8 +8,8 @@ export const IfcAlert = (props) => (
         role="alert"
         style={{margin: "2rem"}}
     >
-        <h2 className={styles.icon}>💡</h2>
-        <div style={{marginBottom: "2rem"}}>
+        <div className={styles.icon}>
+            <IfcIconLink icon={"💡"} active={"true"}/>
         </div>
         {props.children}
     </div>
