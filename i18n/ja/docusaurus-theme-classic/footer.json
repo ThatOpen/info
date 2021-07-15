@@ -1,18 +1,18 @@
 {
   "link.title.Docs": {
-    "message": "Documentatie",
+    "message": "ドキュメント",
     "description": "The title of the footer links column with title=Docs in the footer"
   },
   "link.title.Community": {
-    "message": "Gemeenschap",
+    "message": "コミュニティ",
     "description": "The title of the footer links column with title=Community in the footer"
   },
   "link.title.More": {
-    "message": "Meer",
+    "message": "さらに",
     "description": "The title of the footer links column with title=More in the footer"
   },
   "link.item.label.Tutorial": {
-    "message": "handleiding",
+    "message": "チュートリアル",
     "description": "The label of footer link with label=Tutorial linking to /docs/introduction"
   },
   "link.item.label.Discord": {
@@ -20,11 +20,11 @@
     "description": "The label of footer link with label=Discord linking to https://discord.com/invite/g7Uzn2KSwB"
   },
   "link.item.label.Twitter": {
-    "message": "Twitter",
+    "message": "ツイッター",
     "description": "The label of footer link with label=Twitter linking to https://twitter.com/agviegasBIM"
   },
   "link.item.label.Blog": {
-    "message": "Blog",
+    "message": "ブログ",
     "description": "The label of footer link with label=Blog linking to /blog"
   },
   "link.item.label.GitHub": {
@@ -32,7 +32,7 @@
     "description": "The label of footer link with label=GitHub linking to https://github.com/IFCjs"
   },
   "copyright": {
-    "message": "Copyright © 2021 IFC.js.",
+    "message": "著作権は2021年IFC.jsに帰属します。",
     "description": "The footer copyright"
   }
 }

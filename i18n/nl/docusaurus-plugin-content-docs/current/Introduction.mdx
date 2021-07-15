@@ -1,5 +1,5 @@
 ---
-  title: Introduction
+  title: Inleiding
   sidebar_position: 1
 ---
 
@@ -11,7 +11,7 @@
   🎮
 IFC.js is een JavaScript bibliotheek om IFC modellen te laden, weer te geven en te bewerken in de browser. Probeer de [live demo](https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/) met uw IFC-model en ontdek de kracht van IFC.js.
 
-Wat is deze bibliotheek?
+## Wat is deze bibliotheek?
 
 ### Wat is IFC?
 
@@ -28,8 +28,7 @@ Deze hulpmiddelen zijn afkomstig van verschillende ontwikkelaars over de hele we
 Het antwoord is [**IFC**](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/), een formaat dat door BuildingSMART is gecreëerd om deze 3D-modellen van gebouwen te bevatten. Het is open, dus iedereen kan het lezen en schrijven. Joepie!
 
   <IfcAlert>
-Dankzij IFC kan elke ontwikkelaar vrijelijk BIM-apps maken die kunnen communiceren met de apps van de grote ontwikkelaars.
-    companies in the construction sector.
+      Dankzij IFC kan elke ontwikkelaar vrijelijk BIM-apps maken die kunnen communiceren met de apps van de grote ontwikkelaars in de bouwsector.
   </IfcAlert>
 
 
@@ -97,12 +96,12 @@ Het maken van een BIM applicatie met IFC.js is net zo eenvoudig als het maken va
 
   //...
 
-  /Laadt IFC en voegt het toe aan de scène
+  //Laadt IFC en voegt het toe aan de scène
   const ifcLoader = new IfcLoader();
   ifcLoader.load(ifcURL, (geometry) => scene.add(geometry));
   ```
 
-Voor wie is deze bibliotheek?
+## Voor wie is deze bibliotheek?
 
 Deze bibliotheek is voor iedereen die BIM toepassingen wil ontwikkelen. Dit omvat zowel ontwikkelaars die toepassingen maken voor de bouwindustrie als architecten en andere professionals die voordeel willen halen uit de gegevens in hun IFC-bestanden.
 
@@ -111,7 +110,7 @@ Om deze bibliotheek te gebruiken is een basiskennis van JavaScript, HTML en CSS 
   😊
 Als je niet weet waar je moet beginnen, raden we je aan om een kijkje te nemen [hier](https://threejsfundamentals.org/) of word gewoon lid van het [Discord Channel](https://discord.com/invite/g7Uzn2KSwB) en zeg hallo.
 
-Waarom is IFC.js anders?
+## Waarom is IFC.js anders?
 
 IFC.js is een bibliotheek geschreven door en voor JavaScript, aantoonbaar een van de meest alomtegenwoordige talen. Dit betekent dat het compatibel is met webbrowsers, desktop- en mobiele toepassingen. JavaScript is ook een van de gemakkelijkste talen om te leren, en maakt het mogelijk om gebruikersinterfaces te bouwen met HTML en CSS. Met andere woorden, het maken van BIM toepassingen met IFC.js is net zo eenvoudig als het maken van een webpagina.
 
@@ -152,7 +151,7 @@ IFC.js ondersteunt ook <a href={"https://reactnative.dev/"}>React Native</a>, di
   ⚡️
 Als u ervaring heeft met web applicaties, denkt u misschien dat het zwakke punt van een op JavaScript gebaseerde IFC bibliotheek de performance is. De kern van de bibliotheek is echter ontwikkeld in C gecombineerd met WebAssembly en [Emscripten](https://emscripten.org/). Het is speciaal ontworpen voor **maximale prestaties**, waardoor IFC.js de snelheid en prestaties van desktop applicaties benadert terwijl het direct in de browser draait.
 
-### Features
+### Kenmerken
 
   <IfcCard>
     👓
@@ -186,7 +185,7 @@ IFC.js kan ook <b>IFC-bestanden vanuit het niets bewerken en schrijven</b>.
 
 ## Broncode
 
-IFC.js is een grote, meertalige bibliotheek (C , TypeScript JavaScript, enz.). Het zou moeilijk en onhandelbaar zijn om het in een enkele repository te hebben. Om die reden bestaat de bibliotheek in meerdere repositories, die elk hun eigen doel hebben. U kunt ze [hier] vinden (https://github.com/IFCjs).
+IFC.js is een grote, meertalige bibliotheek (C , TypeScript JavaScript, enz.). Het zou moeilijk en onhandelbaar zijn om het in een enkele repository te hebben. Om die reden bestaat de bibliotheek in meerdere repositories, die elk hun eigen doel hebben. U kunt ze [hier](https://github.com/IFCjs) vinden.
 
   <IfcTab items={
     [
@@ -228,7 +227,7 @@ Dat is geweldig! Er zijn veel dingen die je kunt doen naast coderen. Ga naar het
   <IfcCard
     icon="🧠"
     title=
-        "Parsing, geometry and C++">
+        "Parsing, geometrie en C++">
 Als u gepassioneerd bent over C, WebAssembly, parsing of de nitty-gritty van IFC, kunt u ons helpen met de snelste open source BIM parser in de industrie: <a href={"https://github.com/tomvandig/web-ifc"}>web-ifc</a>.
   </IfcCard>
 

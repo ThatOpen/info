@@ -1,188 +1,188 @@
 {
   "homepage.tagline": {
-    "message": "BIM toolkit voor JavaScript.",
+    "message": "JavaScript用のBIMツールキット。",
     "description": "Tagline of the welcome page."
   },
   "homepage.getStarted": {
-    "message": "Aan de slag",
+    "message": "スタート",
     "description": "The welcome button of the documentation. Brings the user to the Introduction page."
   },
   "Native speed": {
-    "message": "Native snelheid"
+    "message": "ネイティブスピード"
   },
   "The IFC.js parsing engine is based on WebAssembly and C++, and is specifically designed to read data from large files as fast as a desktop application.": {
-    "message": "De IFC.js parsing engine is gebaseerd op WebAssembly en C , en is speciaal ontworpen om gegevens uit grote bestanden even snel te lezen als een desktop applicatie."
+    "message": "IFC.jsの解析エンジンは、WebAssemblyとC言語をベースにしており、大容量ファイルからデスクトップアプリケーションと同等の速度でデータを読み取ることができるように設計されています。"
   },
   "Multiplatform": {
-    "message": "Multiplatform"
+    "message": "マルチプラットフォーム"
   },
   "IFC.js is compatible with any platform: web application (frontend and backend), desktop applications (Windows, Mac and Linux) and mobile applications (Android and iOS).": {
-    "message": "IFC.js is compatibel met elk platform: webapplicaties (frontend en backend), desktopapplicaties (Windows, Mac en Linux) en mobiele applicaties (Android en iOS)."
+    "message": "IFC.jsは、Webアプリケーション（フロントエンド、バックエンド）、デスクトップアプリケーション（Windows、Mac、Linux）、モバイルアプリケーション（Android、iOS）など、あらゆるプラットフォームに対応しています。"
   },
   "Lightweight": {
-    "message": "Lichtgewicht"
+    "message": "軽量化"
   },
   "An open BIM application created with IFC.js can weigh less than 1 MB. This library allows the creation of web and native applications with almost no impact on the final weight of the application.": {
-    "message": "Een open BIM applicatie gemaakt met IFC.js kan minder dan 1 MB wegen. Deze bibliotheek maakt het mogelijk web- en native applicaties te maken met bijna geen impact op het uiteindelijke gewicht van de applicatie."
+    "message": "IFC.jsで作成されたオープンBIMアプリケーションの重量は1MB以下になります。このライブラリは、アプリケーションの最終的な重量にほとんど影響を与えることなく、ウェブアプリケーションやネイティブアプリケーションを作成することができます。"
   },
   "theme.NotFound.title": {
-    "message": "Pagina niet gevonden",
+    "message": "ページが見つかりません",
     "description": "The title of the 404 page"
   },
   "theme.NotFound.p1": {
-    "message": "We konden niet vinden wat u zocht.",
+    "message": "お探しのものが見つかりませんでした。",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
-    "message": "Neem contact op met de eigenaar van de site die u naar de oorspronkelijke URL heeft gelinkt en laat hem weten dat hun link verbroken is.",
+    "message": "元のURLにリンクしたサイトの所有者に連絡し、そのリンクが壊れていることを伝えてください。",
     "description": "The 2nd paragraph of the 404 page"
   },
   "theme.AnnouncementBar.closeButtonAriaLabel": {
-    "message": "Sluiten",
+    "message": "閉じる",
     "description": "The ARIA label for close button of announcement bar"
   },
   "theme.blog.paginator.navAriaLabel": {
-    "message": "Blog lijst pagina navigatie",
+    "message": "ブログ一覧ページのナビゲーション",
     "description": "The ARIA label for the blog pagination"
   },
   "theme.blog.paginator.newerEntries": {
-    "message": "Nieuwere berichten",
+    "message": "新着情報",
     "description": "The label used to navigate to the newer blog posts page (previous page)"
   },
   "theme.blog.paginator.olderEntries": {
-    "message": "Oudere inzendingen",
+    "message": "古いエントリー",
     "description": "The label used to navigate to the older blog posts page (next page)"
   },
   "theme.blog.post.readingTime.plurals": {
-    "message": "Een min gelezen|{readingTime} min gelezen",
+    "message": "1分間の読書|{readingTime}分の読書",
     "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.tags.tagsListLabel": {
-    "message": "Tags:",
+    "message": "タグをクリックしてください。",
     "description": "The label alongside a tag list"
   },
   "theme.blog.post.readMore": {
-    "message": "Meer lezen",
+    "message": "続きを読む",
     "description": "The label used in blog post item excerpts to link to full blog posts"
   },
   "theme.blog.post.paginator.navAriaLabel": {
-    "message": "Blog post pagina navigatie",
+    "message": "ブログ記事のページナビゲーション",
     "description": "The ARIA label for the blog posts pagination"
   },
   "theme.blog.post.paginator.newerPost": {
-    "message": "Nieuwer bericht",
+    "message": "Newer Post",
     "description": "The blog post button label to navigate to the newer/previous post"
   },
   "theme.blog.post.paginator.olderPost": {
-    "message": "Ouder bericht",
+    "message": "古い記事",
     "description": "The blog post button label to navigate to the older/next post"
   },
   "theme.tags.tagsPageTitle": {
-    "message": "Tags",
+    "message": "タグ",
     "description": "The title of the tag list page"
   },
   "theme.blog.post.plurals": {
-    "message": "Een bericht|{count} berichten",
+    "message": "一回の投稿|{count}の投稿",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.blog.tagTitle": {
-    "message": "{nPosts} getagd met \"{tagName}\"",
+    "message": "{nPosts}に\"{tagName}\"がタグ付けされています。",
     "description": "The title of the page for a blog tag"
   },
   "theme.tags.tagsPageLink": {
-    "message": "Alle tags bekijken",
+    "message": "すべてのタグを見る",
     "description": "The label of the link targeting the tag list page"
   },
   "theme.CodeBlock.copyButtonAriaLabel": {
-    "message": "Kopieer code naar klembord",
+    "message": "コードをクリップボードにコピー",
     "description": "The ARIA label for copy code blocks button"
   },
   "theme.CodeBlock.copied": {
-    "message": "Gekopieerd",
+    "message": "Copied",
     "description": "The copied button label on code blocks"
   },
   "theme.CodeBlock.copy": {
-    "message": "Kopiëren",
+    "message": "コピー",
     "description": "The copy button label on code blocks"
   },
   "theme.docs.sidebar.expandButtonTitle": {
-    "message": "Zijbalk uitbreiden",
+    "message": "サイドバーの拡大",
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
   },
   "theme.docs.sidebar.expandButtonAriaLabel": {
-    "message": "Zijbalk uitbreiden",
+    "message": "サイドバーの拡大",
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
   },
   "theme.docs.paginator.navAriaLabel": {
-    "message": "Docs navigatie pagina's",
+    "message": "Docsのナビゲーションページ",
     "description": "The ARIA label for the docs pagination"
   },
   "theme.docs.paginator.previous": {
-    "message": "Vorige",
+    "message": "前",
     "description": "The label used to navigate to the previous doc"
   },
   "theme.docs.paginator.next": {
-    "message": "Volgende",
+    "message": "次のページ",
     "description": "The label used to navigate to the next doc"
   },
   "theme.docs.sidebar.collapseButtonTitle": {
-    "message": "Zijbalk samenvouwen",
+    "message": "サイドバーの折りたたみ",
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.sidebar.collapseButtonAriaLabel": {
-    "message": "Zijbalk samenvouwen",
+    "message": "サイドバーの折りたたみ",
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.sidebar.responsiveCloseButtonLabel": {
-    "message": "Menu sluiten",
+    "message": "メニューを閉じる",
     "description": "The ARIA label for close button of mobile doc sidebar"
   },
   "theme.docs.sidebar.responsiveOpenButtonLabel": {
-    "message": "Open menu",
+    "message": "メニューを開く",
     "description": "The ARIA label for open button of mobile doc sidebar"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "Dit is nog niet uitgebrachte documentatie voor {siteTitle} {versieLabel} versie.",
+    "message": "これは {siteTitle} {versionLabel} バージョンの未公開ドキュメントです。{versionLabel}バージョンの未公開ドキュメントです。",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "Dit is documentatie voor {siteTitle} {versionLabel}, die niet langer actief wordt onderhouden.",
+    "message": "これは {siteTitle} {versionLabel} のドキュメントです。{versionLabel}のドキュメントで、もう積極的なメンテナンスは行われていません。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
-    "message": "Voor actuele documentatie, zie de {latestVersionLink} ({versionLabel}).",
+    "message": "最新のドキュメントについては、{latestVersionLink}の({versionLabel})をご覧ください。",
     "description": "The label userd to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionLinkLabel": {
-    "message": "laatste versie",
+    "message": "最新版",
     "description": "The label used for the latest version suggestion link label"
   },
   "theme.common.editThisPage": {
-    "message": "Deze pagina bewerken",
+    "message": "このページを編集する",
     "description": "The link label to edit the current page"
   },
   "theme.common.headingLinkTitle": {
-    "message": "Directe link naar rubriek",
+    "message": "見出しへのダイレクトリンク",
     "description": "Title for link to heading"
   },
   "theme.lastUpdated.atDate": {
-    "message": " op {datum}",
+    "message": "日付}に",
     "description": "The words used to describe on which date a page has been last updated"
   },
   "theme.lastUpdated.byUser": {
-    "message": " door {user}",
+    "message": "by {user(something)} I",
     "description": "The words used to describe by who the page has been last updated"
   },
   "theme.lastUpdated.lastUpdatedAtBy": {
-    "message": "Laatst bijgewerkt{datum}{doorGebruiker}",
+    "message": "最終更新日{atDate}{byUser}。",
     "description": "The sentence used to display when a page has been last updated, and by who"
   },
   "theme.common.skipToMainContent": {
-    "message": "Overslaan naar hoofdinhoud",
+    "message": "メインコンテンツへスキップ",
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
   },
   "Source": {
-    "message": "Bron",
+    "message": "ソース",
     "description": "The source of an image of the blog"
   }
 }

@@ -5,12 +5,15 @@ const AUTH_ERROR = "Only Ansoni can call the DEEPL API.";
 const PATH_ERROR = "The path of the file to translate could not be found.";
 const WRITE_ERROR = "An error occured while writing JSON Object to File.";
 const WRITE_OK = "All translations have been successfully saved!";
+const actions = {
+  docs: "DOCS",
+  blog: "BLOG"
+}
 
-// translateMDX("nl", "../docs/Introduction.mdx", "Introduction.mdx");
-translateJSON("nl");
+translateMDX("ja", actions.docs, "../docs/Introduction.mdx", "Introduction.mdx");
+// translateJSON("ja");
 
-async function translateMDX(lang, route, destination) {
-  console.log(__dirname)
+async function translateMDX(lang, action, route, destination) {
   if (!fs.existsSync(route)) throw new Error(PATH_ERROR);
   const lines = readMDX(route);
   const filtered = filterTexts(lines);
@@ -18,11 +21,17 @@ async function translateMDX(lang, route, destination) {
   const translated = await translateText(array, lang.toUpperCase());
   // const texts = JSON.parse(fs.readFileSync("./deepl/example-response.json"));
   formatTranslatedTexts(lines, filtered, translated);
-  writeMDXFile(lang, destination, lines);
+  writeMDXFile(lang, destination, lines, action);
 }
 
-function writeMDXFile(lang, destination, lines){
-  const path = `../i18n/${lang}/docusaurus-plugin-content-docs/current/` + destination;
+function getLocation(lang, action){
+  if(action === actions.docs) return `../i18n/${lang}/docusaurus-plugin-content-docs/current/`;
+  if(action === actions.blog) return `../i18n/${lang}/docusaurus-plugin-content-blog/`;
+  return null;
+}
+
+function writeMDXFile(lang, destination, lines, action){
+  const path = getLocation(lang, action)  + destination;
   const file = fs.createWriteStream(path);
   file.on('error', (err) => console.log(WRITE_ERROR, err));
   lines.forEach((v) =>  file.write(v + '\n'));
