@@ -10,10 +10,10 @@ const actions = {
   blog: "BLOG"
 }
 
-// const languages = ['da', 'de', 'es', 'fi', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'sv', 'zh'];
+// const languages = ['ja', 'zh'];
 // languages.forEach(lang => translateMDX(lang, actions.blog, "../blog/2021-07-17-hola.mdx", "2021-07-17-hola.mdx"));
 
-// translateMDX("da", actions.blog, "../blog/2021-07-17-hola.mdx", "2021-07-17-hola.mdx");
+// translateMDX("zh", actions.blog, "../blog/2021-07-17-hola.mdx", "2021-07-17-hola.mdx");
 // translateJSON("da");
 
 async function translateMDX(lang, action, route, destination) {
