@@ -22,7 +22,9 @@
     "file-loader": "^6.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "url-loader": "^4.1.1"
+    "three": "^0.130.1",
+    "url-loader": "^4.1.1",
+    "web-ifc-three": "^0.0.32"
   },
   "browserslist": {
     "production": [
