@@ -14,19 +14,46 @@ module.exports = {
   ],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ja', 'es', 'nl'],
+    locales: ['da', 'de', 'en', 'es', 'fi', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'sv', 'zh'],
     localeConfigs: {
+      da: {
+        label: 'Dansk'
+      },
+      de: {
+        label: 'Deutsch'
+      },
       en: {
         label: 'English',
+      },
+      es: {
+        label: 'Español'
+      },
+      fi: {
+        label: 'Suomalainen'
+      },
+      fr: {
+        label: 'Français'
+      },
+      it: {
+        label: 'Italiano',
       },
       ja: {
         label: '日本語',
       },
-      es: {
-        label: "Español"
-      },
       nl: {
-        label: "Nederlands"
+        label: 'Nederlands'
+      },
+      pt: {
+        label: 'Português'
+      },
+      ru: {
+        label: 'Русский'
+      },
+      sv: {
+        label: 'Svenska'
+      },
+      zh: {
+        label: '中文'
       }
     }
   },

@@ -1,0 +1,251 @@
+---
+  title: Introduction
+  sidebar_position: 1
+---
+
+  import {IfcCard} from "../../../../src/components/Card/InfoCard";
+  import {IfcAlert} from "../../../../src/components/Alert/Alert";
+  import {IfcScene} from "../../../../src/components/Scene/Scene";
+  import {IfcTab} from "../../../../src/components/Tab/Tab";
+
+  🎮
+IFC.js är ett JavaScript-bibliotek för att ladda, visa och redigera IFC-modeller i webbläsaren. Prova [live demo](https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/) med din IFC-modell och upptäck kraften i IFC.js.
+
+## Vad är biblioteket?
+
+### Vad är IFC?
+
+  🏠
+Arkitekter ritar inte längre byggnadsplaner en och en, utan skapar 3D-modeller av byggnader, ungefär som de hus som modelleras i [SIMS](https://www.ea.com/es-es/games/the-sims). Detta arbetssätt kallas BIM (Building Information Model), eftersom de modeller som skapas innehåller både geometri och information.
+
+  🔥
+En byggnad är dock så komplex att det inte finns någon enskild applikation som kan skapa dessa modeller i sin helhet. Varje program har ett specifikt uppdrag: modellering av geometri, beräkning av strukturer, energisimuleringar, skapande av projektdokument och så vidare.
+
+  👀
+Verktygen kommer från flera olika utvecklare runt om i världen och alla fungerar i sitt eget format. Med andra ord kan den strukturmodell som skapas av ett program för strukturberäkning inte läsas av ett program för energisimulering och vice versa. Så hur är det möjligt att skapa en modell av en byggnad från flera olika verktyg?
+
+  🎉
+Svaret är [**IFC**](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/), ett format som skapats av BuildingSMART för att innehålla dessa 3D-modeller av byggnader. Det är öppet, så vem som helst kan läsa och skriva det. Yay!
+
+  <IfcAlert>
+Tack vare IFC kan alla utvecklare fritt skapa BIM-appar som kan kommunicera med appar från de stora utvecklingsföretagen inom byggsektorn.
+  </IfcAlert>
+
+
+### Problemet med IFC
+
+Alla som vill skapa en BIM-applikation **måste läsa och skriva IFC-filer** för att kunna importera och exportera information från andra verktyg. Tyvärr är IFC ett format som är svårt att läsa och skriva. Det finns tusentals sidor dokumentation och att skapa och underhålla en egentillverkad IFC-parser är en enorm uppgift.
+
+  <IfcCard title="
+Har du råd med IFC?"
+  >
+    💸
+Detta är något som endast företag med flera utvecklare som arbetar heltid med detta har råd med. Det låter inte så öppet längre, eller hur?
+</IfcCard>
+
+Om du är nyfiken på hur en IFC ser ut inuti, har du här ett exempel. Föreställ dig att du kan analysera hundratusentals rader som dessa:
+
+  ```js
+  #6699= IFCCARTESIANPOINT((0.,-1.7053025E-13));
+  #6701= IFCAXIS2PLACEMENT2D(#6699,#23);
+  #6703= IFCCARTESIANPOINT((892.,-253.399999,150.));
+  #6705= IFCAXIS2PLACEMENT3D(#6703,#15,#19);
+  #6706= IFCEXTRUDEDAREASOLID(#6702,#6705,#19,506.8);
+  #6707= IFCCOLOURRGB($,0.50196,0.501913,0.501960);
+  ```
+
+  💀
+Även om du är villig att skapa en parser från grunden och underhålla den vid varje ändring av IFC-schemat finns det flera icke-triviala frågor för att lösa problemet. Hur hanterar man minnet i mycket stora filer? Hur implementerar man geometrisk generering på ett effektivt sätt? Vad ska man göra när en IFC inte har definierats korrekt?
+
+### IFC.js till undsättning
+
+Det skulle inte vara meningsfullt för alla utvecklare att behöva implementera sin egen IFC-filläsare och -skrivare för sina program. Särskilt när vi alla vill ha samma sak: **importera och exportera geometri och data**.
+
+  <IfcCard>
+IFC.js är ett JavaScript-bibliotek som gör det superenkelt att <b>läsa och skriva IFC-filer</b>.
+  </IfcCard>
+
+Detta gör det möjligt för utvecklare av arkitektur- och byggprogram att arbeta i IFC utan ansträngning och fokusera på de funktioner som verkligen ger mervärde till deras verksamhet.
+
+## IFC.js i ett nötskal
+
+IFC.js har två fokusområden:
+
+  <IfcCard
+    icon="💎"
+    title=
+"Geometri"> IFC.js kan generera 3D-scener eftersom det är kompatibelt med 3D-bibliotek som Three.js eller Babylon.js. Detta innebär att du kan skapa 3D BIM-verktyg direkt.
+  </IfcCard>
+
+  <IfcCard
+    icon="🔗"
+    title=
+"Data"> Tillgång på hög nivå till alla egenskaper som är kopplade till geometrin. Detta innebär enkel tillgång till data om byggnadskomponenterna, deras material, termiska egenskaper, strukturell styrka osv.
+  </IfcCard>
+
+Att skapa BIM-applikationer med IFC.js är lika enkelt som att skapa en webbsida med JavaScript, HTML och CSS. Om du inte har någon IFC-fil tillgänglig kan du försöka ladda någon av [dessa](https://drive.google.com/drive/folders/1MwRsL3ZnlyhWEVUko9wAnklaMne3pp3h?usp=sharing).
+
+  <IfcScene/>
+
+  ```js
+  import { IfcLoader } from 'web-ifc-three';
+  import { Scene } from 'three';
+
+  //Skapar en scen för THREE.js
+  const scene = new Scene();
+
+  //...
+
+  //Laddar IFC och lägger till den i scenen
+  const ifcLoader = new IfcLoader();
+  ifcLoader.load(ifcURL, (geometry) => scene.add(geometry));
+  ```
+
+## Vem är biblioteket till för?
+
+Det här biblioteket är till för alla som vill utveckla BIM-applikationer. Det gäller både utvecklare som skapar applikationer för byggbranschen och arkitekter och andra yrkesverksamma som vill dra nytta av uppgifterna i sina IFC-filer.
+
+För att använda biblioteket krävs grundläggande kunskaper i JavaScript, HTML och CSS. Dessa kunskaper ligger utanför den här dokumentationens räckvidd. Du måste också använda något 3D-bibliotek för att visa IFC:s geometri (Three.js eller Babylon.js).
+
+  😊
+Om du inte vet var du ska börja föreslår vi att du tar en titt [här](https://threejsfundamentals.org/) eller bara går med i [Discord-kanalen](https://discord.com/invite/g7Uzn2KSwB) och säger hej.
+
+## Varför är IFC.js annorlunda?
+
+IFC.js är ett bibliotek som är skrivet av och för JavaScript, som utan tvekan är ett av de mest allestädes närvarande språken. Det innebär att det är kompatibelt med webbläsare, skrivbords- och mobilapplikationer. JavaScript är också ett av de enklaste språken att lära sig och gör det möjligt att bygga användargränssnitt med HTML och CSS. Med andra ord är det lika enkelt att skapa BIM-applikationer med IFC.js som att skapa en webbsida.
+
+### Multiplattform
+
+Du kan använda IFC.js för att skapa öppna BIM-applikationer för alla plattformar:
+
+  <IfcTab
+    items={
+        [
+            {
+                icon: "🌏",
+                content:
+                    <p><b>
+Frontend-webbprogram</b> som läser och skriver IFC-filer och visar 3D utan att förlita sig på serverkommunikation kan skapas med <b>vanilla JavaScript</b> eller andra verktyg som <b>React, Vue, Angular, Svelte, etc</b>. Det vill säga, <i>med IFC.js kan vi förvandla vilken webbläsare som helst till en öppen BIM-app.</i></p>
+            },
+            {
+                icon: "🏢",
+                content: <p>
+Det finns fall där IFC-filen inte kan bearbetas hos kunden. En mobil enhet kanske till exempel inte har kapacitet att visa flera medelstora eller stora IFC-filer. I detta fall är det möjligt att <b>använda IFC.js på servern</b> via <a href={"https://nodejs.org/en/"}>Node.js</a> och skicka den redan förberedda Three.js-scenen till klienten.</p>
+            },
+            {
+                icon: "💻",
+                content: <p>
+Ibland vill vi inte skapa webbapplikationer, utan <b>nativa skrivbordsapplikationer som körs på Windows, iOS och Linux</b>. Detta är möjligt tack vare teknik som <a href={"https://www.electronjs.org/"}>Electron</a>. Dessa native applikationer kommer att programmeras på samma sätt som webbapplikationer; HTML, CSS, JavaScript, React, Vue etc.</p>
+            },
+            {
+                icon: "📱",
+                content:
+                    <p>
+IFC.js har också stöd för <a href={"https://reactnative.dev/"}>React Native</a>, som mappar WebGL-kod till OpenGL. Detta innebär att du enkelt kan skapa IFC-kompatibla <b>Open BIM-appar som körs på Android och iOS</b>.</p>
+            }
+        ]
+    }/>
+
+### Hastighet
+
+  ⚡️
+Om du har erfarenhet av webbapplikationer kanske du tänker att den svaga punkten för ett JavaScript-baserat IFC-bibliotek är prestanda. Kärnan i biblioteket är dock utvecklad i C i kombination med WebAssembly och [Emscripten](https://emscripten.org/). Det är särskilt utformat för **maximal prestanda**, vilket gör att IFC.js kan närma sig hastigheten och prestandan för skrivbordsprogram när det körs direkt i webbläsaren.
+
+### Funktioner
+
+  <IfcCard>
+    👓
+IFC.js kan <b>läsa</b> IFC-filer utan problem.
+  </IfcCard>
+
+  <IfcCard>
+    🏐
+Generera <b>3D-geometri</b> som körs med 60 fps i en webbläsare.
+  </IfcCard>
+
+  <IfcCard>
+    💄
+Redigera enkelt geometrins <b>utseende</b> med kraften i Three.js.
+  </IfcCard>
+
+  <IfcCard>
+    🏠🏠🏠
+Ladda <b>flera</b> federerade IFC-modeller.
+  </IfcCard>
+
+  <IfcCard>
+    📃
+Hämta <b>IFC-egenskaper</b> för rapporter och databaser.
+  </IfcCard>
+
+  <IfcCard>
+    ✍
+IFC.js kan också <b>redigera och skriva</b> IFC-filer från grunden.
+  </IfcCard>
+
+## Källkod
+
+IFC.js är ett stort bibliotek med flera språk (C , TypeScript JavaScript osv.). Att ha det i ett enda arkiv skulle vara svårt och otympligt. Av den anledningen finns biblioteket i flera olika arkiv, där vart och ett har sitt eget syfte. Du kan hitta dem [här](https://github.com/IFCjs).
+
+  <IfcTab items={
+    [
+        {
+            name: "web-ifc",
+            link: "https://github.com/tomvandig/web-ifc",
+            content:
+                <p>
+Kärnan i biblioteket: en IFC <b>parser och geometrigenerator</b> skriven från grunden i C och kompilerad via Emscripten till WebAssembly. Detta arkiv kapslar in komplexiteten i att läsa IFC-filer och läsa in deras data i minnet.</p>
+        },
+        {
+            name: "web-ifc-three",
+            link: "https://github.com/IFCjs/web-ifc-three",
+            content:
+                <p>
+Biblioteket som anpassar web-ifc till Three.js och genererar en <b>optimerad 3D-scen där användarna kan interagera direkt med IFC</b>. Det här biblioteket är <a href={"https://threejs.org/examples/webgl_loader_ifc.html"}>den officiella Three.js IFC Loader</a>. Tack vare denna adapter kan öppna BIM-applikationer skapas med Three.js på bara två rader kod.</p>
+        },
+        {
+            name: "web-ifc-viewer",
+            link: "https://github.com/IFCjs/web-ifc-viewer",
+            content:
+                <p>
+Detta är en webbläsarbaserad <a href={"https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/"}>IFC-viewer</a> med <b>många exempel på vad som kan göras med IFC.js</b>. Scennavigering, materialändringar, val av element genom att klicka på dem, sektionsplaner osv. Det finns ett exempel på alla dessa funktioner i det här arkivet, så det kan återanvändas i öppna BIM-applikationer direkt.</p>
+        }
+    ]
+  }/>
+
+## Bidrag
+
+Vill du hjälpa oss att fortsätta förbättra världen för öppen BIM-utveckling med IFC.js? Biblioteket är stort, så du måste välja var du vill delta.
+
+  <IfcCard
+    icon="🤝"
+    title=
+"Jag kan inte koda, men jag vill komma in">
+Det är fantastiskt! Det finns massor av saker du kan göra förutom att koda. Gå in i <a href={"https://discord.com/invite/g7Uzn2KSwB"}>Discord-kanalen</a> för att ta reda på hur.
+  </IfcCard>
+
+  <IfcCard
+    icon="🧠"
+    title=
+        "Parsing, geometri och C++">
+Om du brinner för C , WebAssembly, parsing eller IFC:s detaljer kan du hjälpa oss med branschens snabbaste BIM-parser med öppen källkod: <a href={"https://github.com/tomvandig/web-ifc"}>web-ifc</a>.
+  </IfcCard>
+
+  <IfcCard
+    icon="✨"
+    title=
+"Three.js, geometri och Typescript">
+Om du är en Three.js-utvecklare kan du hjälpa oss med <a
+    href={"https://github.com/IFCjs/web-ifc-three"}>web-ifc-three</a>,which is <a
+    href={"https://threejs.org/examples/webgl_loader_ifc.html"}>
+den officiella Three.js IFC Loader</a>.
+  </IfcCard>
+
+  <IfcCard
+    icon="🌈"
+    title=
+"BIM-verktyg, brainstorming och UX">
+Om du är intresserad av att skapa häftiga öppna BIM-applikationer och har bra idéer för BIM-verktyg eller användargränssnitt kan du hjälpa oss att göra <a href={"https://github.com/IFCjs/web-ifc-viewer"}>web-ifc-viewer</a> till marknadens bästa IFC-visare.
+  </IfcCard>
+
+I vilket fall som helst uppmanar vi dig att komma förbi [Discord-kanalen](https://discord.com/invite/g7Uzn2KSwB), säga hej och berätta vad du har på hjärtat, så att vi kan ge dig lite vägledning.

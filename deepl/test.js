@@ -10,8 +10,11 @@ const actions = {
   blog: "BLOG"
 }
 
-translateMDX("ja", actions.docs, "../docs/Introduction.mdx", "Introduction.mdx");
-// translateJSON("ja");
+// const languages = ['da', 'de', 'es', 'fi', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'sv', 'zh'];
+// languages.forEach(lang => translateMDX(lang, actions.blog, "../blog/2021-07-17-hola.mdx", "2021-07-17-hola.mdx"));
+
+// translateMDX("da", actions.blog, "../blog/2021-07-17-hola.mdx", "2021-07-17-hola.mdx");
+// translateJSON("da");
 
 async function translateMDX(lang, action, route, destination) {
   if (!fs.existsSync(route)) throw new Error(PATH_ERROR);
@@ -99,7 +102,7 @@ function createTranslatedJson(texts, translated) {
 function writeResultFile(content, route) {
   const jsonContent = JSON.stringify(content);
   fs.writeFile(route, jsonContent, "utf8", (err) => {
-    if (!err) console.log(WRITE_OK);
+    if (!err) return console.log(WRITE_OK);
     console.log(WRITE_ERROR);
     return console.log(err);
   });
