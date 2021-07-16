@@ -11,7 +11,7 @@ import {
 } from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
-export const IfcScene = () => {
+export const BasicScene = (props) => {
 
     const canvasRef = useRef(null);
 
@@ -20,7 +20,7 @@ export const IfcScene = () => {
         const threeCanvas = canvasRef.current;
 
         //Creates the Three.js scene
-        const scene = new Scene();
+        const scene = props.scene || new Scene();
 
         //Object to store the size of the viewport
         const size = {
