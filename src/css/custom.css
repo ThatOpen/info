@@ -134,6 +134,18 @@ iframe {
   }
 }
 
+@media (max-width: 450px) {
+  .collapsible-scene {
+    display: none;
+  }
+}
+
+@media (max-height: 450px) {
+  .collapsible-scene {
+    display: none;
+  }
+}
+
 @media (max-width: 1500px) {
   .main-wrapper > div {
     width: 100%;

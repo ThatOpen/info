@@ -16,17 +16,10 @@ export const IntroScene = (props) => {
                 const ifcPath = getIFCPath();
                 const wasmPath = getWasmPath();
                 if (wasmPath) loader.ifcManager.setWasmPath(wasmPath);
-                let isLoaded = false;
-
-                const loadIfc = () => {
-                    if(isLoaded) return;
-                    loader.load(ifcPath + "01.ifc", (ifcModel) => scene.add(ifcModel.mesh));
-                    isLoaded = true;
-                }
+                loader.load(ifcPath + "01.ifc", (ifcModel) => scene.add(ifcModel.mesh));
 
                 return (
-                    <div>
-                        <button onClick={loadIfc}>Open</button>
+                    <div className={"collapsible-scene"}>
                         <BasicScene scene={scene}/>
                     </div>)
             }}
