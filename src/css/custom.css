@@ -37,7 +37,7 @@ article {
 }
 
 .container {
-  max-width: 55rem;
+  max-width: 55rem !important;
 }
 
 /* Announcement Bar */
