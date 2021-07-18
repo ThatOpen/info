@@ -9,7 +9,10 @@ export const IfcIconLink = (props) => {
 
     return (
         <div className={styles.iconContainer + visibility}>
-            <a href={props.link} target="_blank" className={iconClass}>{props.icon || "🚀"}</a>
+            <a
+                href={props.link}
+               className={iconClass}>{props.icon || "🚀"}
+            </a>
         </div>
     );
 };

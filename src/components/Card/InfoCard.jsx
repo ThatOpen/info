@@ -7,7 +7,7 @@ export const IfcCard = (props) => {
   const title = props.title ? (
     <div className="card__header">
         <span className={styles.iconContainer}>
-            {props.icon && <IfcIconLink icon={props.icon} active="true"/>}
+            {props.icon && <IfcIconLink icon={props.icon} link={props.link} active="true"/>}
         </span>
       <h3 className={props.icon && styles.titleOffset}>{props.title}</h3>
     </div>

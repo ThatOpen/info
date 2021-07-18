@@ -10,10 +10,10 @@ sidebar_position: 2
 ## Introduction
 
   ⚡
-Creating a BIM application with IFC.js is very easy. You can find the complete project of the guide [here](https://github.com/IFCjs/hello-world/tree/main/scenes/helloworld) and the deployed application [here](https://ifcjs.github.io/hello-world/scenes/helloworld/). You only need to have <a href="https://nodejs.org/en/">Node.js</a> and any IDE installed in order to follow the steps below. Also, if you don't have any IFC files to follow along, you can get some [here](https://github.com/IFCjs/test-ifc-files).
+Creating a BIM application with IFC.js is very easy. You can find the complete project of the guide [here](https://github.com/IFCjs/hello-world/tree/main/scenes/helloworld) and the deployed application [here](https://ifcjs.github.io/hello-world/scenes/helloworld/). You only need to have <a href="https://nodejs.org/en/">Node.js</a> and any IDE installed to follow the steps below. Also, if you don't have any IFC files to follow along, you can get some [here](https://github.com/IFCjs/test-ifc-files).
 
   <IfcAlert>
-This tutorial requires a basic knowledge of web development (HTML, CSS, JavaScript) and Three.js. If you have no previous experience with Three.js, you should probably look <a href="https://threejsfundamentals.org/">here</a>.
+Using IFC.js requires a basic knowledge of web development (HTML, CSS, JavaScript) and Three.js. If you have no previous experience with Three.js, you should probably look <a href="https://threejsfundamentals.org/">here</a>.
   </IfcAlert>
 
   🐣
@@ -24,11 +24,11 @@ This minimal tutorial will be done with Vanilla JavaScript, without using framew
 ### Install libraries
 
   👩‍🏫
-The first thing to do is to create an empty folder and start a new npm project with the command `npm init`. This will create a `package.json` file containing some data such as the project name, version, commands and dependencies. In addition, the following dependencies must be installed with npm:
+The first thing to do is to create an empty folder and start a new npm project with the command `npm init`. This will generate a `package.json` file containing some data such as the project name, version, commands and dependencies. In addition, the following dependencies must be installed with npm:
 
 ```bash
     //Install IFC.js
-    npm i web-ifc-thre
+    npm i web-ifc-three
 
     // Install Three.js
     npm i three
@@ -40,9 +40,9 @@ The first thing to do is to create an empty folder and start a new npm project w
 
   📝
 The next step is to create an HTML file named `index.html` as the main document of the application. The HTML will have:
-- A **canvas element** that will be used to render the Three.js scene.
+- A **canvas element**, used to render the Three.js scene.
 - An **input element**, which will open IFC files from our computer to the application.
-- A **script** referencing a file called `Bundle.js`, which is the bundle of the app that will be created by rollup.
+- A **script** referencing a file called `bundle.js`, which is the bundle of the app that we will produce with rollup.
 
 ```html
 <!DOCTYPE html>
@@ -62,9 +62,9 @@ The next step is to create an HTML file named `index.html` as the main document 
 </html>
 ```
 
-### Addings style
+### Adding style
 
-  💄
+  🎨
 The following CSS file will make the canvas full screen:
 
 ```css
@@ -94,7 +94,7 @@ body {
 
 ### Bundling
 
-Next we'll create the rollup configuration file. This file has to be called `rollup.config.js` and includes the reference to the plugins we have previously installed.
+Next, we'll create the rollup configuration file. This file has to be called `rollup.config.js` and includes the reference to the plugins we have previously installed.
 
   <IfcCard icon="🧻" title="Rollup?">
 Rollup is a very popular bundling library. For instance, it's the bundler used by Three.js. Take a look at the <a href="https://rollupjs.org/guide/en/">rollup docs</a> to learn more.
@@ -119,11 +119,11 @@ export default {
 ```
 
   🎯
-Also, the `package.json` file needs to be modified to contain the commands to control rollup easily. In each command you'll have to specify the relative path to your rollup configuration file. If we have installed everything correctly, we should see the same dependencies in this file (the version of the libraries may differ).
+Also, the `package.json` file needs to be modified to contain the commands to control rollup easily. In each command, you'll have to specify the relative path to your rollup configuration file. If we have installed everything correctly, we should see the same dependencies in this file (the version of the libraries may differ).
 
 - `npm run build` will bundle the project and create a file called `bundle.js` in the root directory of the project.
 
-- `npm run watch` will activate the `watch mode`, updating that file automatically every time we make changes to the code and save.
+- `npm run watch` will activate the `watch mode`, updating that file automatically every time we make changes to the code and save it.
 
 ```json
 
@@ -152,12 +152,12 @@ Also, the `package.json` file needs to be modified to contain the commands to co
 ### WebAssembly
 
   📁
-The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\three\examples\jsm\loaders\ifc`. We can copy it wherever we want; in this example it will be copied to a folder called wasm in the root directory of the project.
+The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\three\examples\jsm\loaders\ifc`. We can copy it wherever we want; in this example, it will be copied to a folder called wasm in the root directory of the project.
 
 This file is necessary because it contains the compiled C++ logic of <a href="https://github.com/IFCjs/web-ifc">web-ifc</a>, which is the parsing core to read and write IFC files with native speed
 
   <IfcAlert>
-This files has to be served statically in your application. This might need different tweaks if you are using frameworks or libraries like React, Angular, Vue or Svelte.
+This file has to be served statically in your application. This might need different tweaks if you are using frameworks or libraries like React, Angular, Vue or Svelte.
   </IfcAlert>
 
 
@@ -254,7 +254,7 @@ We are going to create a basic 3D scene using Three.js.
 ```
 
   🌏
-To run the application locally we will need a local server. If you are using VS Code as IDE, one option is to install the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), which allows us to open an instance of Google Chrome, run our web application and see the changes we make to the code in real time.
+To run the application locally we will need a local server. If you are using VS Code as IDE, one option is to install the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), which allows us to open an instance of Google Chrome, run our web application and see the changes we make to the code in real-time.
 
 ## Loading IFC files
 
@@ -279,7 +279,7 @@ Finally, we will use IFC.js to load IFC files. This can be done by instantiating
 ```
 
   🎣
-Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of the project, you'll need to specify it's location with `setWasmPath`. For instance, if we had store `web-ifc.wasm` in a folder called `wasm` contained in a folder called `static` in the root of the project, we would do the following:
+Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of the project, you'll need to specify its location with `setWasmPath`. For instance, if we had store `web-ifc.wasm` in a folder called `wasm` contained in a folder called `static` in the root of the project, we would do the following:
 
 ```js
   ifcLoader.ifcManager.setWasmPath("static/wasm/");
@@ -290,7 +290,7 @@ Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of th
 If you have done everything correctly, you should be able to see something similar to [this](https://ifcjs.github.io/hello-world/scenes/helloworld/) in your local server. From here, the possibilities are endless.
 
   <IfcCard icon="🔥" title="What else can I do with IFC.js?">
-This is just the beginning. You can take a look at web-ifc-viewer to <a href="https://github.com/IFCjs/web-ifc-viewer">web-ifc-viewer</a> to see the IFC viewer we are building, which includes tools for object selection, changing geometry appearance, section planes and much more. You can try it <a href="https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/">here</a>.
+This is just the beginning. You can take a look at <a href="https://github.com/IFCjs/web-ifc-viewer">web-ifc-viewer</a>, which includes tools for object selection, changing geometry appearance, section planes and much more. You can try it <a href="https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/">here</a>.
   </IfcCard>
 
   🎉

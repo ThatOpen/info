@@ -45,6 +45,11 @@ module.exports = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
+          href: 'https://discord.com/invite/g7Uzn2KSwB',
+          label: 'Community',
+          position: 'right'
+        },
+        {
           href: 'https://github.com/IFCjs',
           label: 'GitHub',
           position: 'right',
