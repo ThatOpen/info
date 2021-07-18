@@ -10,4 +10,4 @@ You can use the following commands to get the repository up and running locally:
 
 `yarn` to install all local dependencies (you'll need to have [yarn](https://yarnpkg.com/) installed).
 
-`npm run start` to launch a local server and run the docs application.
+`yarn start` to launch a local server and run the docs application.
