@@ -272,7 +272,7 @@ Finally, we will use IFC.js to load IFC files. This can be done by instantiating
     "change",
     (changed) => {
       var ifcURL = URL.createObjectURL(changed.target.files[0]);
-      ifcLoader.load(ifcURL, (geometry) => scene.add(geometry));
+      ifcLoader.load(ifcURL, (ifcModel) => scene.add(ifcModel.mesh));
     },
     false
   );
