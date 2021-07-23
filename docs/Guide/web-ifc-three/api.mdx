@@ -4,6 +4,7 @@ sidebar_position: 3
 ---
 
 import {IfcCard} from "../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../src/components/Alert/Alert";
 
 ##  The list of awesome things you can do with web-ifc-three
 
@@ -15,9 +16,8 @@ However, we realise that reading intellisense or comments is not the most comfor
 
 ##  IfcLoader
 
-The only object we will import from the library. It contains all the logic needed to work with IFC.
-
-You can use its `load()` and `loadAsync()` methods to load IFCs from a URL, [just like any other Three.js Loader](https://threejs.org/docs/#api/en/loaders/Loader.load). For example, to load an IFC we can do the following:
+  💎
+The only object we will import from the library. It contains all the logic needed to work with IFC. You can use its `load()` and `loadAsync()` methods to load IFCs from a URL, [just like any other Three.js Loader](https://threejs.org/docs/#api/en/loaders/Loader.load). For example, to load an IFC we can do the following:
 
 ```js
 import { IFCLoader } from "web-ifc-three/IFCLoader";
@@ -28,35 +28,46 @@ ifcLoader.load(
     (ifcModel) => scene.add(ifcModel.mesh));
 ```
 
-With `web-ifc-three` you can load multiple models in the scene. Many of the API operations are executed on a specified model. To express on which model we want to operate we have to give its ModelID.
+  🏠🏠🏠
+With `web-ifc-three` you can load multiple models in the scene. Many of the API operations are executed on a specified model. To express on which model we want to operate we have to give its `ModelID`.
 
-You can get the ID of a model in the property `modelID` of the generated meshes. We add this property to Three.js default [mesh](https://threejs.org/docs/#api/en/objects/Mesh). This is also expressed in the typing of IFC.js API, so you should be able to see this in intellisense.
+  🔍
+You can get the ID of a model through the property `modelID` of the generated meshes. We add this property to [Three.js default mesh](https://threejs.org/docs/#api/en/objects/Mesh).
 
 ```js
 const modelID = ifcModel.mesh.modelID;
 ```
 
-In addition, `IfcLoader` has a property `IfcManager`, which contains all the methods to work with the IFCs we load into the scene.
+  ✌
+There are two ways to access the API:
 
-##  IfcManager
+- Through the instances of `IfcModel` that the `IfcLoader` generates with `load` and `loadAsync`.
 
-This object contains all the web-ifc-three API methods. It manages multiple loaded IFCs efficiently and allows access to their properties, change their appearance, etc.
+- Through `IfcLoader.IfcManager`.
+
+<IfcAlert>
+Both <b>IfcModel</b> instances and <b>IfcLoader.IfcManager</b> can be used interchangeably to access the API. There's one difference: when using <b>IfcModel</b>, the ModelID never has to be given as an argument (it's known implicitly).
+</IfcAlert>
 
 ###  setWasmPath
 
 ```js
-  IfcLoader.IfcManager.setWasmPath(
+  IfcLoader.IfcManager.setWasmPath (
                         path: string
-                        ): void
+                        ): void;
 ```
 
+  🧠
 Specifies the location of the web-ifc.wasm file. This file is the web-ifc file and is required to create any application with IFC.js. You can find it in node_modules/web-ifc/web-ifc.wasm.
 
-Be careful, because if you use frameworks or libraries like React, Angular, Vue or Svelte it is possible that the root path of the project doesn't correspond to the root path of the served application. You will have to check in each case how the paths of the statically served files are managed. If you have doubts, you can take a look at the [examples](https://github.com/IFCjs/examples) we have in several frameworks.
+
+<IfcCard icon={"🚧"} title={"Careful with your tooling!"} >
+If you use frameworks or libraries like React, Angular, Vue or Svelte it is possible that the root path of the project doesn't correspond to the root path of the served application. You will have to check in <a href="https://github.com/IFCjs/examples">each case</a> how the paths of the statically served files are managed.
+</IfcCard>
 
 #### Arguments:
 
-- `path` is the route of `web-ifc.wasm`.
+- `path` Route of `web-ifc.wasm`.
 
 #### Example:
 
@@ -69,28 +80,28 @@ If `web-ifc.wasm` is in dist/wasmDir:
 ###  setupThreeMeshBVH
 
 ```js
-  ifcLoader.IfcManager.setupThreeMeshBVH(
+  ifcLoader.IfcManager.setupThreeMeshBVH (
                         computeBoundsTree: any,
                         disposeBoundsTree: any,
                         acceleratedRaycast: any
                         ): void;
 ```
 
+  ⚡⚡⚡
 This method allows object picking to be much faster, especially for very large models with heavy geometry. This method actually allows IFC.js to use the Garrett Johnson's amazing [library ](https://github.com/gkjohnson/three-mesh-bvh).
 
 <IfcCard>
-It sounds complicated, but don't worry: just give us the objects and we'll take care of the integration.
+  ☝
+Using this method not mandatory, but if you want to be able to select objects in medium / large IFC models at 60 fps, it's necessary. You can install it with <i>npm i three-mesh-bvh</i> or <i>yarn add three-mesh-bvh</i>.
 </IfcCard>
-
-It's not mandatory, but if you want to be able to select objects in medium and large IFC models at 60 fps, you're going to have to use it. You can install it with `npm i three-mesh-bvh` or `yarn add three-mesh-bvh`.
 
 #### Arguments:
 
-- `computeBoundsTree` is a pre-made BufferGeometry extension function that builds a new BVH, assigns it to boundsTree, and applies the new index buffer to the geometry. - [source](https://github.com/gkjohnson/three-mesh-bvh#computeboundstree).
+- `computeBoundsTree` Pre-made BufferGeometry extension function that builds a new BVH, assigns it to boundsTree, and applies the new index buffer to the geometry. - [source](https://github.com/gkjohnson/three-mesh-bvh#computeboundstree).
 
-- `disposeBoundsTree` is a `BufferGeometry` extension function that disposes of the BVH. - [source](https://github.com/gkjohnson/three-mesh-bvh#disposeboundstree).
+- `disposeBoundsTree` BufferGeometry extension function that disposes of the BVH. - [source](https://github.com/gkjohnson/three-mesh-bvh#disposeboundstree).
 
-- `acceleratedRaycast`  An accelerated raycast function with the same signature as THREE.Mesh.raycast. Uses the BVH for raycasting if it's available otherwise it falls back to the built-in approach. - [source](https://github.com/gkjohnson/three-mesh-bvh#acceleratedraycast).
+- `acceleratedRaycast`  Accelerated raycast function with the same signature as THREE.Mesh.raycast. Uses the BVH for raycasting if it's available otherwise it falls back to the built-in approach. - [source](https://github.com/gkjohnson/three-mesh-bvh#acceleratedraycast).
 
 #### Example:
 
@@ -115,21 +126,20 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
 ###  getExpressId
 
 ```js
-  IfcLoader.IfcManager.getExpressId(
+  IfcLoader.IfcManager.getExpressId (
                         geometry: BufferGeometry,
                         faceIndex: number
                         ): number;
 ```
 
-Get the Express ID of an IFC element from a face index.
-
-Why a face index? Because when we select an object in 3d space with the mouse, we get the index of that face, and we usually want to find out the ID of the object we have selected to highlight it, isolate it or get all its properties.
+  💳
+Gets the Express ID of an IFC element from a face index. Why a face index? Because when we select an object in 3d space with the mouse we get the index of that face. We usually want the ID of the object where that face belongs to in order to highlight it, isolate it or get all its properties.
 
 #### Arguments:
 
-- `geometry` is the [geometry](https://threejs.org/docs/#api/en/core/BufferGeometry) of the model you clicked on with the mouse.
+- `geometry` [Geometry](https://threejs.org/docs/#api/en/core/BufferGeometry) of the model you clicked on with the mouse.
 
-- `faceIndex` is the index of the face intersected with the [raycaster](https://threejs.org/docs/#api/en/core/Raycaster). If you are not familiar with the raycaster, don't worry; we'll cover this in detail in the tutorial about picking.
+- `faceIndex` Index of the face intersected with the [raycaster](https://threejs.org/docs/#api/en/core/Raycaster). If you are not familiar with the raycaster, don't worry; we'll cover this in detail in the tutorial about picking.
 
 #### Example:
 
@@ -139,27 +149,53 @@ Why a face index? Because when we select an object in 3d space with the mouse, w
   const id = ifcLoader.ifcManager.getExpressId(mesh, index);
 ```
 
-###  getAllItemsOfType
+
+###  getIfcType
 
 ```js
-  IfcLoader.IfcManager.getAllItemsOfType(
-                            modelID: number,
-                            type: number,
-                            verbose: boolean
-                            ): number[] | object[]
+  IfcLoader.IfcManager.getIfcType (
+                        modelID: number,
+                        id: number,
+                        ): string;
 ```
-
-Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
-
-It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+🎸🪕🎻
+Gets the IFC type of the specified element (e.g. IFCWALLSTANDARDCASE).
 
 #### Arguments:
 
-- `modelID` is ID of the IFC model.
+- `modelID` ID of the IFC model.
 
-- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
 
-- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const type = manager.getIfcType(model, id);
+```
+
+###  getAllItemsOfType
+
+```js
+  IfcLoader.IfcManager.getAllItemsOfType (
+                            modelID: number,
+                            type: number,
+                            verbose: boolean
+                            ): number[] | object[];
+```
+
+  🎸🎸🎸
+Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model. It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `type` IFC type of the elements you want to get. You can import these types directly from `web-ifc` (see example below).
+
+- `verbose` If true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
 
 #### Example:
 
@@ -173,93 +209,310 @@ It can return an array of `expressIDs`, or (if `verbose = true`) an array of obj
 ###  getItemProperties
 
 ```js
-  IfcLoader.IfcManager.getItemProperties(
+  IfcLoader.IfcManager.getItemProperties (
                             modelID: number,
                             id: number,
                             recursive = false
-                            ): object;
+                            ): object[];
 ```
 
+  📕🔍
 Gets the native properties of the given element. In the IFC schema there are two types of properties: direct and indirect. How to obtain the indirect properties (psets, qsets and type properties) will be discussed later.
 
-Returns an object where the keys are the name of the properties and the values are their values.
+<IfcAlert>
+All methods related to properties return an array of objects where the keys are the name of the properties and the values are their values.
+</IfcAlert>
 
 #### Arguments:
 
-- `modelID` is ID of the IFC model.
+- `modelID` ID of the IFC model.
 
-- `id` is the Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
 
-- `recursive` if true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
+- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
 
 #### Example:
 
 ```js
   const model = ifcModel.mesh.modelID;
   const id = 2142;
-  const walls = manager.getItemProperties(model, id, false);
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getItemProperties(model, id, false);
 ```
 
 ###  getPropertySets
 
 ```js
-  IfcLoader.IfcManager.getPropertySets(
+  IfcLoader.IfcManager.getPropertySets (
                             modelID: number,
-                            type: number,
-                            verbose: boolean
-                            ): number[] | object[]
+                            id: number,
+                            recursive = false
+                            ): object[];
 ```
 
-Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
-
-It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+  📗🔍
+Gets the property sets and quantity sets of the given element.
 
 #### Arguments:
 
-- `modelID` is ID of the IFC model.
+- `modelID` ID of the IFC model.
 
-- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
 
-- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
 
 #### Example:
 
 ```js
-  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
-
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const walls = manager.getAllItemsOfType(0, W, false);
+  const props = manager.getPropertySets(model, id, false);
 ```
 
 ###  getTypeProperties
 
 ```js
-  IfcLoader.IfcManager.getTypeProperties(
+  IfcLoader.IfcManager.getTypeProperties (
                             modelID: number,
-                            type: number,
-                            verbose: boolean
-                            ): number[] | object[]
+                            id: number,
+                            recursive = false
+                            ): number[] | object[];
 ```
-
-Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
-
-It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+  📘🔍
+Gets the type properties of the given element.
 
 #### Arguments:
 
-- `modelID` is ID of the IFC model.
+- `modelID` ID of the IFC model.
 
-- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
 
-- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
 
 #### Example:
 
 ```js
-  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
-
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const walls = manager.getAllItemsOfType(0, W, false);
+  const props = manager.getTypeProperties(model, id, false);
 ```
 
-##  IfcModel
+###  getSpatialStructure
+
+```js
+  IfcLoader.IfcManager.getSpatialStructure (
+                        modelID: number
+                        ): object;
+```
+  🔗🔗🔗
+Gets the spatial structure of the project.
+
+<IfcAlert>
+The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schema/ifcproductextension/lexical/ifcspatialstructureelement.htm">spatial structure</a> is the hierarchical structure that organizes every IFC project (all physical items are referenced to an element of the spatial structure).
+</IfcAlert>
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const ifcProject = manager.getSpatialStructure(model);
+```
+
+###  getSubset
+
+```js
+  IfcLoader.IfcManager.getSubset (
+                        modelID: number,
+                        material?: Material
+                        ): object;
+```
+  🧱🔍
+Gets the mesh of the subset with the specified [material](https://threejs.org/docs/#api/en/materials/Material). If no material is given, this returns the subset with the original materials.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `material` (optional) Material assigned to the subset (if any).
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const subset = manager.getSubset(model);
+```
+
+###  createSubset
+
+```js
+  IfcLoader.IfcManager.createSubset (
+                        config: HighlightConfigOfModel
+                        ): object;
+```
+🧱✨
+Creates a new geometric subset.
+
+#### Arguments:
+
+- `config` A configuration object with the following options:
+
+  - `scene` Scene where the model is located.
+
+  - `modelID` ID of the model.
+
+  - `ids` Express IDs of the items of the model that will conform the subset.
+
+  - `removePrevious` Wether to remove the previous subset of this model with this material.
+
+  - `material` (optional) Material to apply to the subset. If no material is given, the subset has the original material.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const config = {
+        modelID: model
+        scene: scene,
+        ids: [id],
+        removePrevious: true
+  }
+  manager.createSubset(config);
+```
+
+###  removeSubset
+
+```js
+  IfcLoader.IfcManager.removeSubset (
+                        modelID: number,
+                        scene?: Scene,
+                        material?: Material
+                        ): object;
+```
+
+  🧱💣
+Removes the specified geometric subset.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `scene` (optional) Scene where the subset is located.
+
+- `material` (optional) Material assigned to the subset (if any).
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.removeSubset(model);
+```
+
+###  hideItems
+
+```js
+  IfcLoader.IfcManager.hideItems (
+                        modelID: number,
+                        ids: number[]
+                        ): void;
+```
+
+  🌒
+Hides the selected items in the specified model.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `ids` Express ID of the elements.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.hideItems(model, [id]);
+```
+
+###  hideAllItems
+
+```js
+  IfcLoader.IfcManager.hideAllItems (
+                        modelID: number
+                        ): void;
+```
+
+  🌒🌒🌒
+Hides all the items of the specified model.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.hideAllItems(model);
+```
+
+###  showItems
+
+```js
+  IfcLoader.IfcManager.hideItems(
+                        modelID: number,
+                        ids: number[]
+                        ): void;
+```
+
+  🌖
+Shows the selected items in the specified model.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `ids` Express ID of the elements.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.showItems(model, [id]);
+```
+
+###  showAllItems
+
+```js
+  IfcLoader.IfcManager.showAllItems(
+                        modelID: number
+                        ): void;
+```
+
+  🌖🌖🌖
+Shows all the items of the specified model.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.showAllItems(model);
+```
