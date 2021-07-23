@@ -28,7 +28,15 @@ ifcLoader.load(
     (ifcModel) => scene.add(ifcModel.mesh));
 ```
 
-In addition, this object has an `IfcManager` property, which contains all the methods to work with the IFCs we load into the scene.
+With `web-ifc-three` you can load multiple models in the scene. Many of the API operations are executed on a specified model. To express on which model we want to operate we have to give its ModelID.
+
+You can get the ID of a model in the property `modelID` of the generated meshes. We add this property to Three.js default [mesh](https://threejs.org/docs/#api/en/objects/Mesh). This is also expressed in the typing of IFC.js API, so you should be able to see this in intellisense.
+
+```js
+const modelID = ifcModel.mesh.modelID;
+```
+
+In addition, `IfcLoader` has a property `IfcManager`, which contains all the methods to work with the IFCs we load into the scene.
 
 ##  IfcManager
 
@@ -36,8 +44,10 @@ This object contains all the web-ifc-three API methods. It manages multiple load
 
 ###  setWasmPath
 
-```ts
-  IfcLoader.IfcManager.setWasmPath(path: string): void
+```js
+  IfcLoader.IfcManager.setWasmPath(
+                        path: string
+                        ): void
 ```
 
 Specifies the location of the web-ifc.wasm file. This file is the web-ifc file and is required to create any application with IFC.js. You can find it in node_modules/web-ifc/web-ifc.wasm.
@@ -58,7 +68,7 @@ If `web-ifc.wasm` is in dist/wasmDir:
 
 ###  setupThreeMeshBVH
 
-```ts
+```js
   ifcLoader.IfcManager.setupThreeMeshBVH(
                         computeBoundsTree: any,
                         disposeBoundsTree: any,
@@ -104,7 +114,7 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
 
 ###  getExpressId
 
-```ts
+```js
   IfcLoader.IfcManager.getExpressId(
                         geometry: BufferGeometry,
                         faceIndex: number
@@ -117,14 +127,139 @@ Why a face index? Because when we select an object in 3d space with the mouse, w
 
 #### Arguments:
 
-- `path` is the route of `web-ifc.wasm`.
+- `geometry` is the [geometry](https://threejs.org/docs/#api/en/core/BufferGeometry) of the model you clicked on with the mouse.
+
+- `faceIndex` is the index of the face intersected with the [raycaster](https://threejs.org/docs/#api/en/core/Raycaster). If you are not familiar with the raycaster, don't worry; we'll cover this in detail in the tutorial about picking.
 
 #### Example:
 
-If `web-ifc.wasm` is in dist/wasmDir:
+```js
+  const intersected = raycaster.intersectObject(mesh)[0];
+  const index = intersected.faceIndex;
+  const id = ifcLoader.ifcManager.getExpressId(mesh, index);
+```
+
+###  getAllItemsOfType
 
 ```js
-  ifcLoader.setWasmPath("dist/wasmDir/");
+  IfcLoader.IfcManager.getAllItemsOfType(
+                            modelID: number,
+                            type: number,
+                            verbose: boolean
+                            ): number[] | object[]
+```
+
+Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
+
+It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+
+#### Arguments:
+
+- `modelID` is ID of the IFC model.
+
+- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+
+- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
+
+  const manager = loader.ifcLoader.ifcManager;
+  const walls = manager.getAllItemsOfType(0, W, false);
+```
+
+###  getItemProperties
+
+```js
+  IfcLoader.IfcManager.getItemProperties(
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object;
+```
+
+Gets the native properties of the given element. In the IFC schema there are two types of properties: direct and indirect. How to obtain the indirect properties (psets, qsets and type properties) will be discussed later.
+
+Returns an object where the keys are the name of the properties and the values are their values.
+
+#### Arguments:
+
+- `modelID` is ID of the IFC model.
+
+- `id` is the Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
+
+- `recursive` if true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const walls = manager.getItemProperties(model, id, false);
+```
+
+###  getPropertySets
+
+```js
+  IfcLoader.IfcManager.getPropertySets(
+                            modelID: number,
+                            type: number,
+                            verbose: boolean
+                            ): number[] | object[]
+```
+
+Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
+
+It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+
+#### Arguments:
+
+- `modelID` is ID of the IFC model.
+
+- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+
+- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
+
+  const manager = loader.ifcLoader.ifcManager;
+  const walls = manager.getAllItemsOfType(0, W, false);
+```
+
+###  getTypeProperties
+
+```js
+  IfcLoader.IfcManager.getTypeProperties(
+                            modelID: number,
+                            type: number,
+                            verbose: boolean
+                            ): number[] | object[]
+```
+
+Returns all objects of the specified IFC type (e.g. all walls, all floors, all windows, etc.) of a specific model.
+
+It can return an array of `expressIDs`, or (if `verbose = true`) an array of objects containing the properties of the items found.
+
+#### Arguments:
+
+- `modelID` is ID of the IFC model.
+
+- `type` is the IFC type you want to get. You can import these types directly from `web-ifc` (see example below).
+
+- `verbose` if true, gets the properties of all the items found. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
+
+  const manager = loader.ifcLoader.ifcManager;
+  const walls = manager.getAllItemsOfType(0, W, false);
 ```
 
 ##  IfcModel
