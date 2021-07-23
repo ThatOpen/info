@@ -1,0 +1,130 @@
+---
+title: API
+sidebar_position: 3
+---
+
+import {IfcCard} from "../../../src/components/Card/InfoCard";
+
+##  The list of awesome things you can do with web-ifc-three
+
+  📃
+All APIs are documented, so when you use any of the objects or methods seen in this documentation, you should see help in Intellisense, regardless of the IDE you are using. [Check it out!](https://github.com/IFCjs/web-ifc-three/blob/main/src/IFC/Components/IFCManager.ts)
+
+  👩‍🏫
+However, we realise that reading intellisense or comments is not the most comfortable thing to do, so on this page we will make an overview of what the API can do. Everything will be covered in more detail in specific tutorials later on.
+
+##  IfcLoader
+
+The only object we will import from the library. It contains all the logic needed to work with IFC.
+
+You can use its `load()` and `loadAsync()` methods to load IFCs from a URL, [just like any other Three.js Loader](https://threejs.org/docs/#api/en/loaders/Loader.load). For example, to load an IFC we can do the following:
+
+```js
+import { IFCLoader } from "web-ifc-three/IFCLoader";
+
+const ifcLoader = new IFCLoader();
+ifcLoader.load(
+    "models/Example_model.ifc",
+    (ifcModel) => scene.add(ifcModel.mesh));
+```
+
+In addition, this object has an `IfcManager` property, which contains all the methods to work with the IFCs we load into the scene.
+
+##  IfcManager
+
+This object contains all the web-ifc-three API methods. It manages multiple loaded IFCs efficiently and allows access to their properties, change their appearance, etc.
+
+###  setWasmPath
+
+```ts
+  IfcLoader.IfcManager.setWasmPath(path: string): void
+```
+
+Specifies the location of the web-ifc.wasm file. This file is the web-ifc file and is required to create any application with IFC.js. You can find it in node_modules/web-ifc/web-ifc.wasm.
+
+Be careful, because if you use frameworks or libraries like React, Angular, Vue or Svelte it is possible that the root path of the project doesn't correspond to the root path of the served application. You will have to check in each case how the paths of the statically served files are managed. If you have doubts, you can take a look at the [examples](https://github.com/IFCjs/examples) we have in several frameworks.
+
+#### Arguments:
+
+- `path` is the route of `web-ifc.wasm`.
+
+#### Example:
+
+If `web-ifc.wasm` is in dist/wasmDir:
+
+```js
+  ifcLoader.setWasmPath("dist/wasmDir/");
+```
+
+###  setupThreeMeshBVH
+
+```ts
+  ifcLoader.IfcManager.setupThreeMeshBVH(
+                        computeBoundsTree: any,
+                        disposeBoundsTree: any,
+                        acceleratedRaycast: any
+                        ): void;
+```
+
+This method allows object picking to be much faster, especially for very large models with heavy geometry. This method actually allows IFC.js to use the Garrett Johnson's amazing [library ](https://github.com/gkjohnson/three-mesh-bvh).
+
+<IfcCard>
+It sounds complicated, but don't worry: just give us the objects and we'll take care of the integration.
+</IfcCard>
+
+It's not mandatory, but if you want to be able to select objects in medium and large IFC models at 60 fps, you're going to have to use it. You can install it with `npm i three-mesh-bvh` or `yarn add three-mesh-bvh`.
+
+#### Arguments:
+
+- `computeBoundsTree` is a pre-made BufferGeometry extension function that builds a new BVH, assigns it to boundsTree, and applies the new index buffer to the geometry. - [source](https://github.com/gkjohnson/three-mesh-bvh#computeboundstree).
+
+- `disposeBoundsTree` is a `BufferGeometry` extension function that disposes of the BVH. - [source](https://github.com/gkjohnson/three-mesh-bvh#disposeboundstree).
+
+- `acceleratedRaycast`  An accelerated raycast function with the same signature as THREE.Mesh.raycast. Uses the BVH for raycasting if it's available otherwise it falls back to the built-in approach. - [source](https://github.com/gkjohnson/three-mesh-bvh#acceleratedraycast).
+
+#### Example:
+
+```js
+import {
+    IFCLoader
+} from 'web-ifc-three/dist/IFCLoader';
+
+import {
+    acceleratedRaycast,
+    computeBoundsTree,
+    disposeBoundsTree
+} from 'three-mesh-bvh';
+
+const ifcLoader = new IFCLoader();
+ifcLoader.ifcManager.setupThreeMeshBVH(
+    acceleratedRaycast,
+    computeBoundsTree,
+    disposeBoundsTree);
+```
+
+###  getExpressId
+
+```ts
+  IfcLoader.IfcManager.getExpressId(
+                        geometry: BufferGeometry,
+                        faceIndex: number
+                        ): number;
+```
+
+Get the Express ID of an IFC element from a face index.
+
+Why a face index? Because when we select an object in 3d space with the mouse, we get the index of that face, and we usually want to find out the ID of the object we have selected to highlight it, isolate it or get all its properties.
+
+#### Arguments:
+
+- `path` is the route of `web-ifc.wasm`.
+
+#### Example:
+
+If `web-ifc.wasm` is in dist/wasmDir:
+
+```js
+  ifcLoader.setWasmPath("dist/wasmDir/");
+```
+
+##  IfcModel
