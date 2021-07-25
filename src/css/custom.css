@@ -82,6 +82,15 @@ div[class^='announcementBarContent'] a:hover {
 }
 
 .docusaurus-highlight-code-line {
+  background-color: rgb(230,230,230) !important;
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  /* Color which works with dark mode syntax highlighting theme */
+  background-color: rgb(20, 20, 30) !important;
+}
+
+.docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));

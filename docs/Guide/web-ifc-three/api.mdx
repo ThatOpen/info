@@ -49,6 +49,8 @@ There are two ways to access the API:
 Both <b>IfcModel</b> instances and <b>IfcLoader.IfcManager</b> can be used interchangeably to access the API. There's one difference: when using <b>IfcModel</b>, the ModelID never has to be given as an argument (it's known implicitly).
 </IfcAlert>
 
+##  🧰 Setup
+
 ###  setWasmPath
 
 ```js
@@ -88,11 +90,11 @@ If `web-ifc.wasm` is in dist/wasmDir:
 ```
 
   ⚡⚡⚡
-This method allows object picking to be much faster, especially for very large models with heavy geometry. This method actually allows IFC.js to use the Garrett Johnson's amazing [library ](https://github.com/gkjohnson/three-mesh-bvh).
+This method allows object picking to be much faster, especially for very large models with heavy geometry. This method actually allows IFC.js to use the Garrett Johnson's amazing [library ](https://github.com/gkjohnson/three-mesh-bvh). u can install it with `npm i three-mesh-bvh` or `yarn add three-mesh-bvh`.
 
 <IfcCard>
   ☝
-Using this method not mandatory, but if you want to be able to select objects in medium / large IFC models at 60 fps, it's necessary. You can install it with <i>npm i three-mesh-bvh</i> or <i>yarn add three-mesh-bvh</i>.
+Using this method not mandatory, but if you want to be able to select objects in medium / large IFC models at 60 fps, it's necessary. Yo
 </IfcCard>
 
 #### Arguments:
@@ -123,6 +125,8 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
     disposeBoundsTree);
 ```
 
+##  🔍 Getters
+
 ###  getExpressId
 
 ```js
@@ -133,7 +137,11 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
 ```
 
   💳
-Gets the Express ID of an IFC element from a face index. Why a face index? Because when we select an object in 3d space with the mouse we get the index of that face. We usually want the ID of the object where that face belongs to in order to highlight it, isolate it or get all its properties.
+Gets the Express ID of an IFC element from a face index.
+
+<IfcCard icon="📜" title="Why a face index?">
+Because when we select an object in 3d space with the mouse we get the index of that face. We usually want the ID of the object where that face belongs to in order to highlight it, isolate it or get all its properties.
+</IfcCard>
 
 #### Arguments:
 
@@ -160,6 +168,10 @@ Gets the Express ID of an IFC element from a face index. Why a face index? Becau
 ```
 🎸🪕🎻
 Gets the IFC type of the specified element (e.g. IFCWALL).
+
+<IfcAlert>
+Elements in IFC always have an associated type: IfcWall, IfcSlab, IfcWindow, IfcDoor, etc.
+</IfcAlert>
 
 #### Arguments:
 
@@ -240,36 +252,6 @@ All methods related to properties return an array of objects where the keys are 
   const props = manager.getItemProperties(model, id, false);
 ```
 
-###  getPropertySets
-
-```js
-  IfcLoader.IfcManager.getPropertySets (
-                            modelID: number,
-                            id: number,
-                            recursive = false
-                            ): object[];
-```
-
-  📗🔍
-Gets the property sets and quantity sets of the given element.
-
-#### Arguments:
-
-- `modelID` ID of the IFC model.
-
-- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
-
-- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
-
-#### Example:
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getPropertySets(model, id, false);
-```
-
 ###  getTypeProperties
 
 ```js
@@ -299,6 +281,41 @@ Gets the type properties of the given element.
   const props = manager.getTypeProperties(model, id, false);
 ```
 
+###  getPropertySets
+
+```js
+  IfcLoader.IfcManager.getPropertySets (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+📗🔍
+Gets the property sets and quantity sets of the given element.
+
+<IfcCard icon="📃" title="Property sets?" >
+    Native and type properties are those that are predefined by the IFC schema: they always contain the same information. Property sets, on the other hand, are arbitrary and can be defined by the user.
+</IfcCard>
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
+
+- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getPropertySets(model, id, false);
+```
+
+
 ###  getSpatialStructure
 
 ```js
@@ -325,6 +342,8 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
   const ifcProject = manager.getSpatialStructure(model);
 ```
 
+##  🧱 Subsets
+
 ###  getSubset
 
 ```js
@@ -335,6 +354,10 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 ```
   🧱🔍
 Gets the mesh of the subset with the specified [material](https://threejs.org/docs/#api/en/materials/Material). If no material is given, this returns the subset with the original materials.
+
+<IfcAlert>
+Geometric subsets are extracts of the geometry of the model. For example, you could extract a subset with all the IfcDoors and IfcWindows that meet a certain condition and highlight or export them.
+</IfcAlert>
 
 #### Arguments:
 
@@ -416,6 +439,8 @@ Removes the specified geometric subset.
   const manager = loader.ifcLoader.ifcManager;
   manager.removeSubset(model);
 ```
+
+##  👓 Visibility
 
 ###  hideItems
 

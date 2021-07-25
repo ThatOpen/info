@@ -46,18 +46,18 @@ In the following points, the API and its functionalities will be shown step by s
 With web-ifc you could build almost any BIM tool capable of reading and writing IFC. So why create a layer on top of it?
 
   🤷‍♀️
-Because almost all BIM tools are 3D, and we think it would not make sense for all developers to implement their own viewer from scratch. If you are only interested in the data, you may be better off using web-ifc directly.
+Because almost all BIM tools are 3D, and we think it would not make sense for all developers to implement a viewer from scratch. If you are only interested in the data, you may be better off using web-ifc directly.
 
 In addition, web-ifc-three makes working with IFCs much easier and safer even for the developer who has no previous experience with the format.
 
 <IfcAlert>
-    Web-ifc is way more flexible, but requires more knowledge of the IFC schema and a greater implementation effort.
+    Web-ifc is way more flexible but requires more knowledge of the IFC schema and a greater implementation effort.
 </IfcAlert>
 
 ### Can I use the `THREE.IFCLoader` directly?
 
   👬
-As mentioned above, web-ifc-three is the official IFCLoader of Three.js. That is, if you import the IFCLoader from Three.js, the code will be exactly the same as the code you will find in the web-ifc-three repository.
+As mentioned above, web-ifc-three is the official IFCLoader of Three.js. That is, if you import the IFCLoader from Three.js, the code will be the same as the code you will find in the web-ifc-three repository.
 
   🚧
 You might be tempted to import the `IFCLoader` from Three.js to avoid importing `web-ifc-three` in your project. This should work, but beware that Three.js is a very large library, and its update rate is much slower than that of IFC.js.
