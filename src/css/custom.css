@@ -210,6 +210,10 @@ iframe {
   .hero .hero__title {
     font-size: 2.5rem;
   }
+
+  .ifcTabContent_src-components-Tab- {
+    margin: 0 !important;
+  }
 }
 
 @media (max-height: 997px) and (min-width: 997px) {

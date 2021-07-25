@@ -118,6 +118,10 @@ function pick(event) {
 }
 ```
 
+<IfcAlert>
+    The Raycaster always returns an array of objects, even if <i>raycaster.firstHitOnly = true;</i>. In this case, the array will only contain one object that can be extracted with <i>[0]</i>.
+</IfcAlert>
+
 Finally, all that remains is to associate that function with an event (in this case it's a double click).
 
 ```js
