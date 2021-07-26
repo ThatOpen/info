@@ -152,7 +152,7 @@ Also, the `package.json` file needs to be modified to contain the commands to co
 ### WebAssembly
 
   📁
-The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\three\examples\jsm\loaders\ifc`. We can copy it wherever we want; in this example, it will be copied to a folder called wasm in the root directory of the project.
+The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\web-ifc\web-ifc.wasm` (or `node_modules\three\examples\jsm\loaders\ifc\web-ifc.wasm` if you are only using Three's IFCLoader). We can copy it wherever we want; in this example, it will be copied to a folder called wasm in the root directory of the project.
 
 This file is necessary because it contains the compiled C++ logic of <a href="https://github.com/IFCjs/web-ifc">web-ifc</a>, which is the parsing core to read and write IFC files with native speed
 
