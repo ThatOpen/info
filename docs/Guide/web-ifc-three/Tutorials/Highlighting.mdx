@@ -38,11 +38,11 @@ We'll also use the Raycaster, so you'll also need <a href="https://ifcjs.github.
 ### Highlight material
 
   🌀
-The first thing is to create the highlight material. You can do this however you like, although we like to use `depthTest=false` so that the object is visible from any viewpoint.
+The first thing is to create the **highlight material**. You can do this however you like, although we like to use `depthTest=false` so that the object is visible from any viewpoint.
 
 ```js
   // Creates subset material
-  const prepicked = new MeshLambertMaterial({
+  const preselectMat = new MeshLambertMaterial({
       transparent: true,
       opacity: 0.6,
       color: 0xff88ff,
@@ -50,27 +50,27 @@ The first thing is to create the highlight material. You can do this however you
   })
 ```
   ☝
-Note that geometric subsets are identified by their material.
+Note that geometric subsets are **uniquely identified** by their material.
 
 - If you create a subset with a wall using a material A, and then try to create a subset of another wall with the same material A, the second wall will be added to the subset of the first one.
 
 - If you create a subset with a wall using material A, and then try to create another subset of the same wall using material B, you will have created two independent subsets.
 
 <IfcAlert>
-You can have two separate subsets with the same appearance creating two instances of the same material.
+You can have two separate subsets with the same appearance using two instances of the same material.
 </IfcAlert>
 
 ### Single subset
 
-It is very common that when the user hovers the mouse over an element, the element is softly illuminated. We can achieve this effect using `createSubset`.
-
+  🐭
+It is very common that when the user hovers the mouse over an element, the element is softly illuminated. We can achieve this effect using <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/api#createsubset" target="_self">createSubset</a>.
 
 ```js
 
   const ifc = ifcLoader.ifcManager;
 
   // Reference to the previous selection
-  let model = { id: - 1};
+  let preselectModel = { id: - 1};
 
   function highlight(event, material, model) {
      const found = cast(event)[0];
@@ -99,26 +99,82 @@ It is very common that when the user hovers the mouse over an element, the eleme
      }
   }
 
-  window.onmousemove = (event) => highlight(event, prepicked, model);
+  window.onmousemove = (event) => highlight(
+                                        event,
+                                        preselectMat,
+                                        preselectModel);
 ```
 
 <Scene link={"https://ifcjs.github.io/hello-world/scenes/highlighting-single/"}/>
 
+  👀
 There are several interesting things to look out for:
 
 - The implementation of `cast()` was shown <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/#how-to-do-it" target="_self">previously</a>.
 
-- The variable `currentModel` is used to store a reference of the selected model; this way, when the user is not hovering an object, we are able to remove the previous subset with `removeSubset()`.
+- The variable `currentModel` is used to store a reference of the selected model; this way, when the user is not hovering an object, we are able to remove the previous subset with <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/api#removesubset" target="_self">removeSubset</a>.
 
-- The IDs of the items whose subset to create has to be given as an array (even if it's a single ID).
+- The IDs of the items whose subset to create have to be given as an **array** (even if it's a single ID).
 
 ### Multiple subsets
 
-WIP
+  💅💅💅
+Working with **multiple subsets** is as easy as working with a single subset. We just need to create a new material, create a new subset with the same function and associate the creation of that subset to an event.
+
+In this example we are going to associate it to **double click** to simulate the effect of highlighting objects when they are selected.
+
+```js
+const selectMat = new MeshLambertMaterial({
+                                transparent: true,
+                                opacity: 0.6,
+                                color: 0xff00ff,
+                                depthTest: false })
+
+const selectModel = { id: - 1};
+window.ondblclick = (event) => highlight(
+                                    event,
+                                    selectMat,
+                                    selectModel );
+```
+
+<Scene link={"https://ifcjs.github.io/hello-world/scenes/highlighting-multiple/"}/>
 
 ### Extracting geometry
 
-WIP
+  👩‍🏫
+If you create a geometry subset and do not specify a highlight material, the subset will have the **original materials**.
 
+<IfcAlert>
+    This would allow, for example, to create a geometric subset with all the ground floor elements of the BIM model and hide the rest.
+</IfcAlert>
 
+  🌚
+In the next example we will apply a transparent material to the loaded IFC model and create a subset with the original materials when the mouse hovers over an item. For this we will use almost the same code as before.
 
+```js {3,4,5,6,7,13,14,15,16}
+  ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
+      ifcModels.push(ifcModel.mesh);
+      ifcModel.mesh.material = new MeshLambertMaterial({
+          transparent: true,
+          opacity: 0.1,
+          color: 0x77aaff
+      });
+      scene.add(ifcModel.mesh)
+  });
+
+  // ...
+
+window.onmousemove = (event) => highlight(
+                                    event,
+                                    undefined,
+                                    highlightModel);
+```
+
+<Scene link={"https://ifcjs.github.io/hello-world/scenes/highlighting-single-original-material/"}/>
+
+## Next steps
+
+🎉🎉🎉
+Congratulations! You should now be able to highlight elements and extract geometry from the BIM model. Good job!
+
+📃 However, don't be so quick to claim victory. We haven't talked about the "I" in BIM yet, and that's even more important than the geometry. That's what the next lesson is for.
