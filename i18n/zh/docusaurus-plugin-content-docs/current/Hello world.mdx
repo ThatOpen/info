@@ -119,11 +119,11 @@ export default {
 ```
 
   🎯
-Also, the `package.json` file needs to be modified to contain the commands to control rollup easily. In each command, you'll have to specify the relative path to your rollup configuration file. If we have installed everything correctly, we should see the same dependencies in this file (the version of the libraries may differ).
+另外，`package.json`文件需要被修改，以包含控制rollup的命令。在每个命令中，你必须指定你的rollup配置文件的相对路径。如果我们已经正确安装了一切，我们应该在这个文件中看到相同的依赖关系（库的版本可能不同）。
 
-- `npm run build` will bundle the project and create a file called `bundle.js` in the root directory of the project.
+- `npm run build`将捆绑项目并在项目的根目录下创建一个名为`bundle.js`的文件。
 
-- `npm run watch` will activate the `watch mode`, updating that file automatically every time we make changes to the code and save it.
+- `npm run watch`将激活`watch模式`，在我们每次修改代码并保存时自动更新该文件。
 
 ```json
 
@@ -152,21 +152,21 @@ Also, the `package.json` file needs to be modified to contain the commands to co
 ### WebAssembly
 
   📁
-The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\web-ifc\web-ifc.wasm` (or `node_modules\three\examples\jsm\loaders\ifc\web-ifc.wasm` if you are only using Three's IFCLoader). We can copy it wherever we want; in this example, it will be copied to a folder called wasm in the root directory of the project.
+  接下来要做的是把`web-ifc.wasm`文件复制到你项目的一个目录中。它可以在`node_modules\web-ifc\web-ifc.wasm`中找到（如果你只使用Three的IFCLoader，则可以在`node_modulesthree\examples\jsm\loaders\ifc\web-ifc.wasm`中找到）。我们可以把它复制到我们想去的地方；在这个例子中，它将被复制到项目根目录下一个叫wasm的文件夹中。
 
-This file is necessary because it contains the compiled C++ logic of <a href="https://github.com/IFCjs/web-ifc">web-ifc</a>, which is the parsing core to read and write IFC files with native speed.
+这个文件是必要的，因为它包含了<a href="https://github.com/IFCjs/web-ifc">web-ifc</a>的编译的C++逻辑，它是以本地速度读写IFC文件的解析核心。
 
   <IfcAlert>
-This file has to be served statically in your application. This might need different tweaks if you are using frameworks or libraries like React, Angular, Vue or Svelte.
+这个文件必须在你的应用程序中静态地提供。如果你使用的是React、Angular、Vue或Svelte等框架或库，这可能需要进行不同的调整。
   </IfcAlert>
 
 
-## Setting up a 3D scene
+## 设置一个3D场景
 
-Finally, we are going to create the JavaScript file to write the code for our application. This file can be located anywhere and have any name, but you must reflect this in the `rollup.config.js`.
+最后，我们要创建一个JavaScript文件，为我们的应用程序编写代码。这个文件可以位于任何地方，有任何名字，但你必须在`rollup.config.js`中反映出来。
 
   🧱
-We are going to create a basic 3D scene using Three.js.
+我们将使用Three.js创建一个基本的3D场景。
 
 ```js
   import {
@@ -182,7 +182,7 @@ We are going to create a basic 3D scene using Three.js.
       OrbitControls
   } from "three/examples/jsm/controls/OrbitControls";
 
-  //Creates the Three.js scene
+  // 创建Three.js场景
   const scene = new Scene();
 
   //Object to store the size of the viewport
@@ -191,14 +191,14 @@ We are going to create a basic 3D scene using Three.js.
     height: window.innerHeight,
   };
 
-  //Creates the camera (point of view of the user)
+  // 创建摄像机（用户的视角）。
   const aspect = size.width / size.height;
   const camera = new PerspectiveCamera(75, aspect);
   camera.position.z = 15;
   camera.position.y = 13;
   camera.position.x = 8;
 
-  //Creates the lights of the scene
+  // 创建场景的灯光
   const lightColor = 0xffffff;
 
   const ambientLight = new AmbientLight(lightColor, 0.5);
@@ -210,7 +210,7 @@ We are going to create a basic 3D scene using Three.js.
   scene.add(directionalLight);
   scene.add(directionalLight.target);
 
-  //Sets up the renderer, fetching the canvas of the HTML
+  // 设置渲染器，获取HTML的画布。
   const threeCanvas = document.getElementById("three-canvas");
   const renderer = new WebGLRenderer({
       canvas: threeCanvas,
@@ -220,7 +220,7 @@ We are going to create a basic 3D scene using Three.js.
   renderer.setSize(size.width, size.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  //Creates grids and axes in the scene
+  // 在场景中创建网格和坐标轴
   const grid = new GridHelper(50, 30);
   scene.add(grid);
 
@@ -229,12 +229,12 @@ We are going to create a basic 3D scene using Three.js.
   axes.renderOrder = 1;
   scene.add(axes);
 
-  //Creates the orbit controls (to navigate the scene)
+  // 创建轨道控制（用于导航场景）。
   const controls = new OrbitControls(camera, threeCanvas);
   controls.enableDamping = true;
   controls.target.set(-2, 0, 0);
 
-  //Animation loop
+  // 动画循环
   const animate = () => {
     controls.update();
     renderer.render(scene, camera);
@@ -243,7 +243,7 @@ We are going to create a basic 3D scene using Three.js.
 
   animate();
 
-  //Adjust the viewport to the size of the browser
+  // 根据浏览器的大小调整视口
   window.addEventListener("resize", () => {
     size.width = window.innerWidth;
     size.height = window.innerHeight;
@@ -254,19 +254,19 @@ We are going to create a basic 3D scene using Three.js.
 ```
 
   🌏
-To run the application locally we will need a local server. If you are using VS Code as IDE, one option is to install the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), which allows us to open an instance of Google Chrome, run our web application and see the changes we make to the code in real-time.
+要在本地运行该应用程序，我们需要一个本地服务器。如果你使用VS Code作为IDE，一个选择是安装[实时服务器扩展](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)，它允许我们打开谷歌浏览器的一个实例，运行我们的网络应用程序，并实时查看我们对代码的修改。
 
-## Loading IFC files
+## 加载IFC文件
 
-### Loading user's models
+### 加载用户的模型
 
   🏠
-Finally, we will use IFC.js to load IFC files. This can be done by instantiating the loader and creating an event for when the user uploads an IFC file to the HTML input element.
+最后，我们将使用IFC.js来加载IFC文件。这可以通过实例化加载器并为用户向HTML输入元素上传IFC文件时创建一个事件来完成。
 
 ```js
   import { IFCLoader } from "web-ifc-three/IFCLoader";
 
-  // Sets up the IFC loading
+  // 设置IFC加载
   const ifcLoader = new IFCLoader();
 
   const input = document.getElementById("file-input");
@@ -284,7 +284,7 @@ Finally, we will use IFC.js to load IFC files. This can be done by instantiating
 ```
 
   🎣
-Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of the project, you'll need to specify its location with `setWasmPath`. For instance, if we had store `web-ifc.wasm` in a folder called `wasm` contained in a folder called `static` in the root of the project, we would do the following:
+  请记住，如果你没有把`web-ifc.wasm`文件保存在项目的根目录下，你需要用`setWasmPath`指定它的位置。例如，如果我们将`web-ifc.wasm`存放在项目根目录下的`wasm`文件夹中，该文件夹名为`static`，我们将做如下操作。
 
 ```js
   ifcLoader.ifcManager.setWasmPath("static/wasm/");
@@ -292,19 +292,19 @@ Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of th
 
 <Scene link={"https://ifcjs.github.io/hello-world/scenes/helloworld/"}/>
 
-If you have done everything correctly, you should be able to see something similar to [this](https://ifcjs.github.io/hello-world/scenes/helloworld/) in your local server. From here, the possibilities are endless.
+如果你所做的一切都正确，你应该能够在你的本地服务器中看到与[这](https://ifcjs.github.io/hello-world/scenes/helloworld/)类似的东西。从这里开始，可能性是无穷的。
 
-### Loading our models
+### 加载我们的模型
 
   🤔
-In the previous point we saw how to load BIM models directly, and that's great. What if we want to show our BIM models instead of allowing the user to upload theirs? This is very simple. Generally there are two possibilities:
+在上一点中，我们看到如何直接加载BIM模型，这很好。如果我们想显示我们的BIM模型而不是让用户上传他们的模型呢？这很简单。一般来说，有两种可能性。
 
-- Having the IFC in the same application where you want to display it.
-- Having to get it from an external storage service.
+- 把IFC放在你想显示它的同一个应用程序里。
+- 必须从外部存储服务中获取它。
 
 
   🎩
-In the first case, it is sufficient to reference the URL of the IFC file. That is, its relative path in the application. For example, if the IFC is in a folder called "models" in the root of the project, we could load that IFC when starting the application as follows:
+在第一种情况下，只需引用IFC文件的URL即可。就是说，它在应用程序中的相对路径。例如，如果IFC在项目根部一个叫 "models "的文件夹中，我们可以在启动应用程序时加载该IFC，如下所示。
 
 ```js
 ifcLoader.load(
@@ -313,16 +313,16 @@ ifcLoader.load(
 ```
 
 <IfcAlert>
-    Getting a file from a remote storage service varies depending on the service used. However, the logic is the same: get the information, create a URL and pass it as an argument to the IFCLoader.
+从远程存储服务中获取文件的方法因使用的服务而异。然而，逻辑是相同的：获取信息，创建一个URL并将其作为参数传递给IFCLoader。
 </IfcAlert>
 
 <Scene link={"https://ifcjs.github.io/hello-world/scenes/introduction/"}/>
 
-## Conclusion
+## 总结
 
   🎉
-Congratulations! You have just created your first IFC viewer. Go to the next pages of the docs to find out what else can you do with IFC.js.
+恭喜你！你刚刚创建了你的第一个IFC浏览器。你刚刚创建了你的第一个IFC浏览器。进入文档的下几页，看看你还能用IFC.js做什么。
 
-  <IfcCard icon="🔥" title="What else can I do with IFC.js?">
-This is just the beginning. You can take a look at <a href="https://github.com/IFCjs/web-ifc-viewer">web-ifc-viewer</a>, which includes tools for object selection, changing geometry appearance, section planes and much more. You can try it <a href="https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/">here</a>.
+  <IfcCard icon="🔥" title="我还能用IFC.js做什么？">
+这仅仅是个开始。你可以看看<a href="https://github.com/IFCjs/web-ifc-viewer">web-ifc-viewer</a>，它包括用于选择对象、改变几何体外观、剖面图和更多的工具。你可以试试<a href="https://ifcjs.github.io/web-ifc-viewer/examples/simple-html/">这里</a>。
   </IfcCard>
