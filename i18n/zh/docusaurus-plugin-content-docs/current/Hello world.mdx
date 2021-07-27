@@ -1,48 +1,48 @@
 ---
-title: Hello world
+title: 你好，世界
 sidebar_position: 2
 ---
 
-  import {IfcCard} from "../src/components/Card/InfoCard";
-  import {IfcAlert} from "../src/components/Alert/Alert";
-  import {Scene} from "../src/components/Scene/Scene";
+  import {IfcCard} from "../../../../src/components/Card/InfoCard";
+  import {IfcAlert} from "../../../../src/components/Alert/Alert";
+  import {Scene} from "../../../../src/components/Scene/Scene";
 
-## Introduction
+## 简介
 
   ⚡
-Creating a BIM application with IFC.js is very easy. You can find the complete project of the guide [here](https://github.com/IFCjs/hello-world/tree/main/scenes/helloworld) and the deployed application [here](https://ifcjs.github.io/hello-world/scenes/helloworld/). You only need to have <a href="https://nodejs.org/en/">Node.js</a> and any IDE installed to follow the steps below. Also, if you don't have any IFC files to follow along, you can get some [here](https://github.com/IFCjs/test-ifc-files).
+用IFC.js创建一个BIM应用程序是非常容易的。你可以找到指南的完整项目[这里](https://github.com/IFCjs/hello-world/tree/main/scenes/helloworld)和部署的应用程序[这里](https://ifcjs.github.io/hello-world/scenes/helloworld/)。你只需要有<a href="https://nodejs.org/en/">Node.js</a>和任何IDE的安装，就可以按照下面的步骤进行。另外，如果你没有任何IFC文件来跟随，你可以得到一些[这里](https://github.com/IFCjs/test-ifc-files)。
 
   <IfcAlert>
-Using IFC.js requires a basic knowledge of web development (HTML, CSS, JavaScript) and Three.js. If you have no previous experience with Three.js, you should probably look <a href="https://threejsfundamentals.org/">here</a>.
+使用IFC.js需要有网络开发（HTML、CSS、JavaScript）和Three.js的基本知识。如果您以前没有使用Three.js的经验，您也许应该看看<a href="https://threejsfundamentals.org/">这里</a>。
   </IfcAlert>
 
   🐣
-This minimal tutorial will be done with Vanilla JavaScript, without using frameworks like React, Vue, Angular, Svelte, etc. However, the same steps can be adapted and applied to any of these use cases.
+这个最小的教程将用Vanilla JavaScript完成，不使用像React、Vue、Angular、Svelte等框架。然而，同样的步骤可以适应并应用于任何这些用例。
 
-## Setting up the project
+## 设置项目
 
-### Install libraries
+### 安装图书馆
 
   👩‍🏫
-The first thing to do is to create an empty folder and start a new npm project with the command `npm init`. This will generate a `package.json` file containing some data such as the project name, version, commands and dependencies. In addition, the following dependencies must be installed with npm:
+首先要做的是创建一个空文件夹，用`npm init`命令启动一个新的npm项目。这将生成一个`package.json`文件，其中包含一些数据，如项目名称、版本、命令和依赖性。此外，以下依赖项必须与npm一起安装。
 
 ```bash
-    //Install IFC.js
+    // 安装IFC.js
     npm i web-ifc-three
 
-    // Install Three.js
+    // 安装Three.js
     npm i three
 
-    // Install a bundler: we will use rollup.js for this guide
+    // 安装一个捆绑程序：我们将在本指南中使用rollup.js。
     npm i rollup --save-dev
     npm i @rollup/plugin-node-resolve --save-dev
 ```
 
   📝
-The next step is to create an HTML file named `index.html` as the main document of the application. The HTML will have:
-- A **canvas element**, used to render the Three.js scene.
-- An **input element**, which will open IFC files from our computer to the application.
-- A **script** referencing a file called `bundle.js`, which is the bundle of the app that we will produce with rollup.
+下一步是创建一个名为`index.html`的HTML文件作为应用程序的主文件。该HTML将有。
+- 一个**canvas元素**，用于渲染Three.js场景。
+- 一个**输入元素**，它将从我们的计算机上打开IFC文件到应用程序中。
+- 一个**脚本**，引用一个叫`bundle.js`的文件，这是我们将用rollup制作的应用程序的捆绑文件。
 
 ```html
 <!DOCTYPE html>
@@ -62,10 +62,10 @@ The next step is to create an HTML file named `index.html` as the main document 
 </html>
 ```
 
-### Adding style
+### 添加样式
 
   🎨
-The following CSS file will make the canvas full screen:
+下面的CSS文件将使画布成为全屏。
 
 ```css
 * {
@@ -92,12 +92,12 @@ body {
 }
 ```
 
-### Bundling
+### 代码捆绑
 
-Next, we'll create the rollup configuration file. This file has to be called `rollup.config.js` and includes the reference to the plugins we have previously installed.
+接下来，我们将创建rollup配置文件。这个文件必须称为`rollup.config.js`，包括对我们之前安装的插件的引用。
 
   <IfcCard icon="🧻" title="Rollup?">
-Rollup is a very popular bundling library. For instance, it's the bundler used by Three.js. Take a look at the <a href="https://rollupjs.org/guide/en/">rollup docs</a> to learn more.
+Rollup是一个非常流行的捆绑库。例如，它是 Three.js 使用的捆绑器。请看一下<a href="https://rollupjs.org/guide/en/">rollup docs</a>，以了解更多。
   </IfcCard>
 
 

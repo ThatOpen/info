@@ -10,7 +10,7 @@ import {Scene} from "../../../../src/components/Scene/Scene"
 ## Introduction
 
   🎩
-In almost all BIM applications, user-selected elements are highlighted when the user moves the mouse over them or selects them. IFC.js is no exception, and in this tutorial we will see how to achieve this.
+In almost all BIM applications, elements are highlighted when the user moves the mouse over them or selects them. IFC.js is no exception, and in this tutorial we will see how to achieve this.
 
 <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/" target="_self">
     👩‍🏫
@@ -31,14 +31,14 @@ import {
 } from "three";
 ```
 
-We'll also use the Raycaster, so you'll also need <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/#import-threejs-dependencies" target="_self">those dependencies</a>, as well as <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/#import-three-mesh-bvh-optional" target="_self">three-mesh-bvh</a> if we want optimal performance.
+We'll use the Raycaster, so you'll also need <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/#import-threejs-dependencies" target="_self">those dependencies</a>, as well as <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/#import-three-mesh-bvh-optional" target="_self">three-mesh-bvh</a> if we want optimal performance.
 
 ## How to do it
 
 ### Highlight material
 
   🌀
-The first thing is to create the **highlight material**. You can do this however you like, although we like to use `depthTest=false` so that the object is visible from any viewpoint.
+The first thing is to create the **highlight material**.Play with the configuration and make the material look nice! Pro tip: you can use `depthTest=false` so that the object is visible from any viewpoint.
 
 ```js
   // Creates subset material
@@ -63,7 +63,7 @@ You can have two separate subsets with the same appearance using two instances o
 ### Single subset
 
   🐭
-It is very common that when the user hovers the mouse over an element, the element is softly illuminated. We can achieve this effect using <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/api#createsubset" target="_self">createSubset</a>.
+We can create a highlight effect when the user hovers with <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/api#createsubset" target="_self">createSubset</a>.
 
 ```js
 
@@ -121,7 +121,7 @@ There are several interesting things to look out for:
   💅💅💅
 Working with **multiple subsets** is as easy as working with a single subset. We just need to create a new material, create a new subset with the same function and associate the creation of that subset to an event.
 
-In this example we are going to associate it to **double click** to simulate the effect of highlighting objects when they are selected.
+In this example we are going to bind it to **double click** to simulate the effect of highlighting objects when they are selected.
 
 ```js
 const selectMat = new MeshLambertMaterial({
