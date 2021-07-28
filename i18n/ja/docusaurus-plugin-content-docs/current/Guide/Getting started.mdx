@@ -8,56 +8,56 @@ sidebar_position: 0
 ## IFC.jsを理解する
 
   🐟🐠🐡
-IFC.js is not just a library: it is an ecosystem of libraries and projects that make creating BIM tools trivial. There are two reasons for this modularity:
+IFC.jsは単なるライブラリではなく、BIMツールの作成を容易にするライブラリとプロジェクトのエコシステムです。このモジュール化には2つの理由があります。
 
-- To be able to use in our applications only what we need.
-- To make the library more maintainable.
+- 必要なものだけをアプリケーションで使用できるようにするため。
+- ライブラリのメンテナンス性を高めるため。
 
-It is important to understand which pieces make it up in order to know what to use in each case. IFC.js is essentially composed of 3 layers, each with a unique responsibility.
+それぞれのケースで何を使うべきかを知るためには、どの部分で構成されているかを理解することが重要です。IFC.jsは基本的に3つのレイヤーで構成されており、それぞれが独自の責任を持っています。
 
 <IfcCard icon="🧩" title="web-ifc" link="https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-An IFC file parser. It is able to read all information from an IFC, edit it and write new files. It has no 3d viewer, it only works with data.
+IFCファイルのパーサーです。IFCからすべての情報を読み取り、編集し、新しいファイルを書き込むことができます。3Dビューアはなく、データのみで動作します。
 </div>
 <div style={{margin: "1rem 0"}}>
 
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>使うときは</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to read or write IFC files without any viewer. This library gives full power over the data, but requires more understanding of the IFC schema to use it.
+ビューアを使わずにIFCファイルを読み書きしたいとき。このライブラリは、データに対してフルパワーを発揮しますが、使用するにはIFCスキーマの理解が必要です。
 </div>
-<div><b>Depends on: </b>-</div>
+<div><b>による。</b>-</div>
 </IfcCard>
 
 <IfcCard icon="🧩" title="web-ifc-three" link="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-A 3D BIM viewer. It allows to view and navigate the 3d model at 60 fps, select elements and easily read all the IFC data to display it to the end user. It is the official IFC Loader of three.js.
+3D BIMビューア。3Dモデルを60fpsで表示してナビゲートしたり、要素を選択したり、すべてのIFCデータを簡単に読み込んでエンドユーザに表示することができます。three.jsの公式IFCローダです。
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>使うときは</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to make a BIM viewer for your application and you want to have full control over all implemented functionalities
+アプリケーション用のBIMビューアを作成し、実装されたすべての機能を完全にコントロールしたい場合。
 </div>
 
-<div><b>Depends on: </b>web-ifc</div>
+<div><b>による。</b>web-ifc</div>
 </IfcCard>
 
 <IfcCard icon="🧩" title="web-ifc-viewer" link="https://ifcjs.github.io/info/docs/Guide/web-ifc-viewer/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-A 3D BIM viewer with many tools and functionalities already implemented (section drawings, dimensions, etc.), allowing you to create BIM tools with very little effort.
+多くのツールと機能（断面図、寸法など）がすでに実装されている3D BIMビューアで、ほとんど手間をかけずにBIMツールを作成することができます。
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>使うときは</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to create a BIM viewer and you don't want to spend time implementing all the model navigation tools you would like to have.
+BIMビューワを作りたいが、欲しいモデルナビゲーションツールをすべて実装するのには時間をかけたくないという場合。
 </div>
 
-<div><b>Depends on: </b>web-ifc-three</div>
+<div><b>による。</b>web-ifc-three</div>
 </IfcCard>
