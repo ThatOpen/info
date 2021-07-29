@@ -1,63 +1,63 @@
 ---
-title: Getting started
+title: 开始工作
 sidebar_position: 0
 ---
 
   import {IfcCard} from "../../../../../src/components/Card/InfoCard";
 
-## Understanding IFC.js
+## 了解IFC.js
 
   🐟🐠🐡
-IFC.js is not just a library: it is an ecosystem of libraries and projects that make creating BIM tools trivial. There are two reasons for this modularity:
+IFC.js不仅仅是一个库：它是一个库和项目的生态系统，使创建BIM工具变得微不足道。这种模块化的原因有两个。
 
-- To be able to use in our applications only what we need.
-- To make the library more maintainable.
+- 为了能够在我们的应用程序中只使用我们需要的东西。
+- 为了使库更容易维护。
 
-It is important to understand which pieces make it up in order to know what to use in each case. IFC.js is essentially composed of 3 layers, each with a unique responsibility.
+了解它是由哪些部分组成的很重要，以便知道在每种情况下应该使用什么。IFC.js本质上由3层组成，每层都有独特的责任。
 
 <IfcCard icon="🧩" title="web-ifc" link="https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-An IFC file parser. It is able to read all information from an IFC, edit it and write new files. It has no 3d viewer, it only works with data.
+一个IFC文件分析器。它能够从IFC中读取所有信息，编辑它并写入新文件。它没有3D浏览器，只对数据起作用。
 </div>
 <div style={{margin: "1rem 0"}}>
 
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>何时使用。</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to read or write IFC files without any viewer. This library gives full power over the data, but requires more understanding of the IFC schema to use it.
+当你想读或写IFC文件时，不需要任何查看器。这个库提供了对数据的全部权力，但需要对IFC模式有更多的了解才能使用它。
 </div>
-<div><b>Depends on: </b>-</div>
+<div><b>视情况而定。 </b>-</div>
 </IfcCard>
 
 <IfcCard icon="🧩" title="web-ifc-three" link="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-A 3D BIM viewer. It allows to view and navigate the 3d model at 60 fps, select elements and easily read all the IFC data to display it to the end user. It is the official IFC Loader of three.js.
+一个3D BIM查看器。它允许以60帧/秒的速度查看和浏览三维模型，选择元素并轻松读取所有的IFC数据以显示给终端用户。它是three.js的官方IFC加载器。
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>何时使用。</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to make a BIM viewer for your application and you want to have full control over all implemented functionalities
+当你想为你的应用程序制作一个BIM查看器，并且你想完全控制所有实现的功能。
 </div>
 
-<div><b>Depends on: </b>web-ifc</div>
+<div><b>视情况而定。 </b>web-ifc</div>
 </IfcCard>
 
 <IfcCard icon="🧩" title="web-ifc-viewer" link="https://ifcjs.github.io/info/docs/Guide/web-ifc-viewer/Introduction">
 
 <div style={{margin: "1rem 0"}}>
-A 3D BIM viewer with many tools and functionalities already implemented (section drawings, dimensions, etc.), allowing you to create BIM tools with very little effort.
+一个三维BIM浏览器，已经实现了许多工具和功能（剖面图、尺寸等），允许你用很少的努力来创建BIM工具。
 </div>
 
-<div><b>When to use:</b></div>
+<div><b>何时使用。</b></div>
 
 <div style={{margin: "1rem 0"}}>
-When you want to create a BIM viewer and you don't want to spend time implementing all the model navigation tools you would like to have.
+=当你想创建一个BIM浏览器，而你又不想花时间实现所有你想拥有的模型导航工具。
 </div>
 
-<div><b>Depends on: </b>web-ifc-three</div>
+<div><b>视情况而定。 </b>web-ifc-three</div>
 </IfcCard>

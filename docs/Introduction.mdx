@@ -91,12 +91,12 @@ Creating BIM applications with IFC.js is as easy as creating a webpage with Java
   import { IfcLoader } from 'web-ifc-three';
   import { Scene } from 'three';
 
-  //Creates THREE.js scene
+  // Creates THREE.js scene
   const scene = new Scene();
 
-  //...
+  // ...
 
-  //Loads IFC and adds it to the scene
+  // Loads IFC and adds it to the scene
   const ifcLoader = new IfcLoader();
   ifcLoader.load(ifcURL, (geometry) => scene.add(geometry));
   ```

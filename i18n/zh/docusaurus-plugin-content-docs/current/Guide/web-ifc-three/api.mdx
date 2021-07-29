@@ -1,0 +1,543 @@
+---
+title: API
+sidebar_position: 3
+---
+
+import {IfcCard} from "../../../../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../../../../src/components/Alert/Alert";
+
+##  你可以用web-ifc-three做的很棒的事情列表
+
+  📃
+所有的API都有记录，所以当你使用本文档中看到的任何对象或方法时，你应该在Intellisense中看到帮助，无论你使用的是哪种IDE。[看看吧！](https://github.com/IFCjs/web-ifc-three/blob/main/src/IFC/Components/IFCManager.ts)。
+
+  👩‍🏫
+然而，我们意识到，阅读intellisense或注释并不是最舒服的事情，所以在这一页，我们将对API能做什么做一个概述。一切都将在以后的具体教程中得到更详细的介绍。
+
+##  IfcLoader
+
+  💎
+这是我们将从库中导入的唯一对象。它包含了使用IFC所需的所有逻辑。你可以使用它的`load()`和`loadAsync()`方法从URL加载IFC，[就像其他Three.js加载器一样](https://threejs.org/docs/#api/en/loaders/Loader.load)。例如，要加载一个IFC，我们可以做以下工作。
+
+```js
+import { IFCLoader } from "web-ifc-three/IFCLoader";
+
+const ifcLoader = new IFCLoader();
+ifcLoader.load(
+    "models/Example_model.ifc",
+    (ifcModel) => scene.add(ifcModel.mesh));
+```
+
+  🏠🏠🏠
+通过`web-ifc-three`，你可以在场景中加载多个模型。许多API操作是在一个指定的模型上执行的。为了表达我们想在哪个模型上操作，我们必须给出它的`ModelID`。
+
+  🔍
+你可以通过生成的网格的属性`modelID`获得模型的ID。我们将这个属性添加到[Three.js default mesh](https://threejs.org/docs/#api/en/objects/Mesh)。
+
+```js
+const modelID = ifcModel.mesh.modelID;
+```
+
+  ✌
+  有两种方法可以访问API。
+
+- 通过`IfcLoader`用`load`和`loadAsync`生成的`IfcModel`的实例。
+
+- 通过`IfcLoader.IfcManager`。
+
+<IfcAlert>
+<b>IfcModel</b>实例和<b>IfcLoader.IfcManager</b>都可以互换使用，以访问API。有一个区别：当使用<b>IfcModel</b>时，ModelID不必作为一个参数给出（它是隐含的）。
+</IfcAlert>
+
+##  🧰 设置
+
+###  setWasmPath
+
+```js
+  IfcLoader.IfcManager.setWasmPath (
+                        path: string
+                        ): void;
+```
+
+  🧠
+指定web-ifc.wasm文件的位置。这个文件是web-ifc文件，使用IFC.js创建任何应用程序都需要它。你可以在node_modules/web-ifc/web-ifc.wasm中找到它。
+
+
+<IfcCard icon={"🚧"} title={"小心你使用的工具!"} >
+如果你使用React、Angular、Vue或Svelte等框架或库，那么项目的根路径有可能与被服务的应用程序的根路径不一致。你必须在<a href="https://github.com/IFCjs/examples">每种情况下</a>检查如何管理静态服务文件的路径。
+</IfcCard>
+
+#### 函数的参数。
+
+- `path` 文件`web-ifc.wasm`的路径。
+
+#### 例子。
+
+如果`web-ifc.wasm`在dist/wasmDir中。
+
+```js
+  ifcLoader.setWasmPath("dist/wasmDir/");
+```
+
+###  setupThreeMeshBVH
+
+```js
+  ifcLoader.IfcManager.setupThreeMeshBVH (
+                        computeBoundsTree: any,
+                        disposeBoundsTree: any,
+                        acceleratedRaycast: any
+                        ): void;
+```
+
+  ⚡⚡⚡
+这种方法可以使对象的拾取速度更快，特别是对于具有重度几何形状的非常大的模型。这个方法实际上允许IFC.js使用Garrett Johnson的惊人的[库](https://github.com/gkjohnson/three-mesh-bvh)。你可以用`npm i three-mesh-bvh`或`yarn add three-mesh-bvh`来安装它。
+
+<IfcCard>
+  ☝
+使用这种方法不是强制性的，但如果你想在60帧的情况下能够选择中型/大型IFC模型中的对象，这是必要的。
+</IfcCard>
+
+#### 函数的参数。
+
+- `computeBoundsTree` 预制的BufferGeometry扩展函数，它建立了一个新的BVH，将其分配给boundsTree，并将新的索引缓冲区应用到几何体上。- [来源](https://github.com/gkjohnson/three-mesh-bvh#computeboundstree)
+
+- `disposeBoundsTree` BufferGeometry扩展函数，用于处置BVH。- [来源](https://github.com/gkjohnson/three-mesh-bvh#disposeboundstree)。
+
+- `acceleratedRaycast` 与THREE.Mesh.raycast相同的加速射线传输函数。如果BVH可用的话，就使用它来进行光线投射，否则就回到内置方法。- [来源](https://github.com/gkjohnson/three-mesh-bvh#acceleratedraycast)。
+
+#### 例子。
+
+```js
+import {
+    IFCLoader
+} from 'web-ifc-three/dist/IFCLoader';
+
+import {
+    acceleratedRaycast,
+    computeBoundsTree,
+    disposeBoundsTree
+} from 'three-mesh-bvh';
+
+const ifcLoader = new IFCLoader();
+ifcLoader.ifcManager.setupThreeMeshBVH(
+    acceleratedRaycast,
+    computeBoundsTree,
+    disposeBoundsTree);
+```
+
+##  🔍 获取器
+
+###  getExpressId
+
+```js
+  IfcLoader.IfcManager.getExpressId (
+                        geometry: BufferGeometry,
+                        faceIndex: number
+                        ): number;
+```
+
+  💳
+从一个面的索引中获取IFC元素的快速ID。
+
+<IfcCard icon="📜" title="为什么要有脸部指数？">
+因为当我们用鼠标在三维空间中选择一个物体时，我们会得到该面的索引。我们通常希望得到该面所属物体的ID，以便高亮显示它，隔离它或获得其所有属性。
+</IfcCard>
+
+#### 函数的参数。
+
+- `geometry` 你用鼠标点击的模型的[Geometry](https://threejs.org/docs/#api/en/core/BufferGeometry)。
+
+- `faceIndex` 与[raycaster](https://threejs.org/docs/#api/en/core/Raycaster)相交的面的索引。如果你不熟悉raycaster，不要担心，我们会在关于picking的教程中详细介绍这个。
+
+#### 例子。
+
+```js
+  const intersected = raycaster.intersectObject(mesh)[0];
+  const index = intersected.faceIndex;
+  const id = ifcLoader.ifcManager.getExpressId(mesh, index);
+```
+
+
+###  getIfcType
+
+```js
+  IfcLoader.IfcManager.getIfcType (
+                        modelID: number,
+                        id: number,
+                        ): string;
+```
+🎸🪕🎻
+获取指定元素的IFC类型（例如：IFCWALL）。
+
+<IfcAlert>
+IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, IfcDoor，等等。
+</IfcAlert>
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `id` 要获取其属性的项目的Express ID。你可以通过`getExpressId`（如果你在3D视图中挑选一个对象）或者通过`getAllItemsOfType`或`getSpatialStructure`遍历模型来获得。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const type = manager.getIfcType(model, id);
+```
+
+###  getAllItemsOfType
+
+```js
+  IfcLoader.IfcManager.getAllItemsOfType (
+                            modelID: number,
+                            type: number,
+                            verbose: boolean
+                            ): number[] | object[];
+```
+
+  🎸🎸🎸
+  返回一个特定模型的所有IFC类型的对象（例如，所有墙壁、所有地板、所有窗户等）。它可以返回一个`expressIDs'数组，或者（如果`verbose = true'）一个包含找到的项目的属性的对象数组。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `type` 你想得到的元素的IFC类型。你可以直接从`web-ifc`导入这些类型（见下面的例子）。
+
+- `verbose` 如果是真的，则获得所有找到的项目的属性。要小心，因为这在较大的模型中可能是一个缓慢的操作。
+
+#### 例子。
+
+```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
+
+  const manager = loader.ifcLoader.ifcManager;
+  const walls = manager.getAllItemsOfType(0, W, false);
+```
+
+###  getItemProperties
+
+```js
+  IfcLoader.IfcManager.getItemProperties (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+  📕🔍
+获取给定元素的本地属性。在IFC模式中，有两种类型的属性：直接和间接。如何获得间接属性（psets、qsets和类型属性）将在后面讨论。
+
+<IfcAlert>
+所有与属性有关的方法都返回一个对象数组，其中键是属性的名称，值是它们的值。
+</IfcAlert>
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `id` 要获取其属性的项目的Express ID。你可以通过`getExpressId`（如果你在3D视图中挑选一个对象）或者通过`getAllItemsOfType`或`getSpatialStructure`遍历模型来获得。
+
+- `recursive` 如果是真的，就会递归地获得所有被引用的元素的属性。要小心，因为这在较大的模型中可能是一个缓慢的操作。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getItemProperties(model, id, false);
+```
+
+###  getTypeProperties
+
+```js
+  IfcLoader.IfcManager.getTypeProperties (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): number[] | object[];
+```
+  📘🔍
+获取给定元素的类型属性。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `id` 要获取其属性的项目的Express ID。你可以通过`getExpressId`（如果你在3D视图中挑选一个对象）或者通过`getAllItemsOfType`或`getSpatialStructure`遍历模型来获得。
+
+- `recursive` 如果是真的，就会递归地获得所有被引用的元素的属性。要小心，因为这在较大的模型中可能是一个缓慢的操作。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getTypeProperties(model, id, false);
+```
+
+###  getPropertySets
+
+```js
+  IfcLoader.IfcManager.getPropertySets (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+📗🔍
+获取给定元素的属性集和数量集。
+
+<IfcCard icon="📃" title="财产集？" >
+本地和类型属性是那些由IFC模式预定义的属性：它们总是包含相同的信息。另一方面，属性集则是任意的，可以由用户定义。
+</IfcCard>
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `id` 要获取其属性的项目的Express ID。你可以通过`getExpressId`（如果你在3D视图中挑选一个对象）或者通过`getAllItemsOfType`或`getSpatialStructure`遍历模型来获得。
+
+- `recursive` 如果是真的，就会递归地获得所有被引用的元素的属性。要小心，因为这在较大的模型中可能是一个缓慢的操作。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getPropertySets(model, id, false);
+```
+
+
+###  getSpatialStructure
+
+```js
+  IfcLoader.IfcManager.getSpatialStructure (
+                        modelID: number
+                        ): object;
+```
+  🔗🔗🔗
+获取项目的空间结构。
+
+<IfcAlert>
+The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schema/ifcproductextension/lexical/ifcspatialstructureelement.htm">spatial structure</a> is the hierarchical structure that organizes every IFC project (all physical items are referenced to an element of the spatial structure).
+</IfcAlert>
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const ifcProject = manager.getSpatialStructure(model);
+```
+
+##  🧱 子集
+
+###  getSubset
+
+```js
+  IfcLoader.IfcManager.getSubset (
+                        modelID: number,
+                        material?: Material
+                        ): object;
+```
+  🧱🔍
+获取指定[材质](https://threejs.org/docs/#api/en/materials/Material)的子集的网格。如果没有给定材质，则返回具有原始材质的子集。
+
+<IfcAlert>
+几何子集是对模型的几何形状的提取。例如，你可以提取所有符合某个条件的IfcDoors和IfcWindows的子集，并突出显示或导出它们。
+</IfcAlert>
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `material` (可选）分配给子集的材料（如果有的话）。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const subset = manager.getSubset(model);
+```
+
+###  createSubset
+
+```js
+  IfcLoader.IfcManager.createSubset (
+                        config: HighlightConfigOfModel
+                        ): object;
+```
+🧱✨
+创建一个新的几何子集。
+
+#### 函数的参数。
+
+- `config` 一个具有下列选项的配置对象。
+
+  - `scene` 模型所在的场景。
+
+  - `modelID` 该模型的ID。
+
+  - `ids` 将符合子集的模型的项目的ExpressIDs。
+
+  - `removePrevious` 是否要用这个材料删除这个模型的前一个子集。
+
+  - `material` (可选）应用于子集的材料。如果没有给出材料，子集就有原始材料。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  const config = {
+        modelID: model
+        scene: scene,
+        ids: [id],
+        removePrevious: true
+  }
+  manager.createSubset(config);
+```
+
+###  removeSubset
+
+```js
+  IfcLoader.IfcManager.removeSubset (
+                        modelID: number,
+                        scene?: Scene,
+                        material?: Material
+                        ): object;
+```
+
+  🧱💣
+移除指定的几何子集。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `scene` (可选）子集所在的场景。
+
+- `material` (可选）分配给子集的材料（如果有的话）。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.removeSubset(model);
+```
+
+##  👓 可见性
+
+###  hideItems
+
+```js
+  IfcLoader.IfcManager.hideItems (
+                        modelID: number,
+                        ids: number[]
+                        ): void;
+```
+
+  🌒
+隐藏指定模型中的选定项目。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `ids` 元素的ExpressID。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.hideItems(model, [id]);
+```
+
+###  hideAllItems
+
+```js
+  IfcLoader.IfcManager.hideAllItems (
+                        modelID: number
+                        ): void;
+```
+
+  🌒🌒🌒
+隐藏指定模型的所有项目。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.hideAllItems(model);
+```
+
+###  showItems
+
+```js
+  IfcLoader.IfcManager.hideItems(
+                        modelID: number,
+                        ids: number[]
+                        ): void;
+```
+
+  🌖
+显示指定模型中的选定项目。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `ids` 元素的ExpressID。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.showItems(model, [id]);
+```
+
+###  showAllItems
+
+```js
+  IfcLoader.IfcManager.showAllItems(
+                        modelID: number
+                        ): void;
+```
+
+  🌖🌖🌖
+显示指定模型的所有项目。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const manager = loader.ifcLoader.ifcManager;
+  manager.showAllItems(model);
+```
