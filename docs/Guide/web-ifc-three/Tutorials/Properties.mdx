@@ -3,10 +3,57 @@ title: 📃 Properties
 sidebar_position: 3
 ---
 
+import {IfcAlert} from "../../../../src/components/Alert/Alert";
 import {IfcCard} from "../../../../src/components/Card/InfoCard";
 
-## 🚧👷‍♀️ Under construction 👷‍♂️🚧
+## Introduction
 
-<IfcCard icon="💙" title="Thanks for your interest in IFC.js!">
-    We are building this section of the documentation right now. In the meantime, you can join the <a href="https://discord.com/invite/g7Uzn2KSwB">Discord channel</a> and ask us any questions you need to implement IFC.js or to join the project.
+🧬🧬🧬️
+Although virtually all BIM models have geometry, almost everyone agrees that what is really important is the "I" in BIM, i.e. **Information**. IFC.js can traverse any IFC file from top to bottom at **native speed** and with **almost no code**.
+
+💾
+This not only makes it possible to create web applications that read information from IFC files directly on the client side, but also to transfer that information into relational or non-relational databases and process it on the backend.
+
+<IfcAlert>
+IFC.js can read IFC files by IDs, by spatial tree and by filtered search.
+</IfcAlert>
+
+📚
+There are several types of properties in the IFC scheme, each with a specific purpose, and IFC.js can get all of them. Some of the most common are:
+
+<IfcCard>
+    <b>📕 Native properties</b>: specific to each IFC class.
 </IfcCard>
+
+<IfcCard>
+    <b>📗 Type properties</b>: describe properties of all elements of the same type (e.g. all envelope walls of a particular type).
+</IfcCard>
+
+<IfcCard>
+    <b>📘 Materials</b>: describes all the materials that make up the layers of that element.
+</IfcCard>
+
+<IfcCard>
+    <b>📙 Property sets</b>: arbitrary sets of user-defined properties. There may be multiple sets of properties associated with one or more elements. Each property set contains an arbitrary group of properties related to each other.
+</IfcCard>
+
+<IfcCard>
+    <b>📒 Quantity sets</b>: sets of properties describing the dimensions of the elements to which they refer. Although it would also be possible to infer element dimensions implicitly from the geometry definition, this explicit description makes it much easier to create applications that measure IFC models.
+</IfcCard>
+
+## How to do it
+
+### Hello properties
+
+
+<p>
+    👩‍🏫
+    The basic way to extract properties from an IFC is from the ID of an element. In many cases, when the user selects an element, we will want to get its direct and indirect properties. <a href="https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking/" target="_self">
+    Previous tutorials </a> have shown how to get it easily. </p>
+
+
+
+### Spatial tree
+
+### Traverse the IFC
+(get all items of type)
