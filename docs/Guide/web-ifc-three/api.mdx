@@ -315,6 +315,36 @@ Gets the property sets and quantity sets of the given element.
   const props = manager.getPropertySets(model, id, false);
 ```
 
+###  getMaterialProperties
+
+```js
+  IfcLoader.IfcManager.getMaterialProperties (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+📒🔍
+Gets the material information of the given element.
+
+#### Arguments:
+
+- `modelID` ID of the IFC model.
+
+- `id` Express ID of the item whose properties to obtain. You can get this either with `getExpressId` (if you are picking an object in the 3d view) or traversing the model with `getAllItemsOfType` or `getSpatialStructure`.
+
+- `recursive` If true, gets the properties of all the referenced elements recursively. Be careful, as this can be a slow operation in bigger models.
+
+#### Example:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getMaterialProperties(model, id, false);
+```
+
 
 ###  getSpatialStructure
 
