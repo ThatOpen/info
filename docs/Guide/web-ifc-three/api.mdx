@@ -315,10 +315,10 @@ Gets the property sets and quantity sets of the given element.
   const props = manager.getPropertySets(model, id, false);
 ```
 
-###  getMaterialProperties
+###  getMaterialsProperties
 
 ```js
-  IfcLoader.IfcManager.getMaterialProperties (
+  IfcLoader.IfcManager.getMaterialsProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -342,7 +342,7 @@ Gets the material information of the given element.
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getMaterialProperties(model, id, false);
+  const props = manager.getMaterialsProperties(model, id, false);
 ```
 
 

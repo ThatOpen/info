@@ -104,6 +104,13 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} IFC.js.`,
     },
+    algolia: {
+      apiKey: '40c1bb43219c45d7e9a2a236e16d9cee',
+      indexName: 'ifcjs',
+      searchParameters: { 'facetFilters': ["type:content"] },
+      debug: false
+      //... other Algolia params
+    },
   },
   presets: [
     [
