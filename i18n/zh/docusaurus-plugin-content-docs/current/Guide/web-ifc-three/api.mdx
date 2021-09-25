@@ -315,6 +315,36 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   const props = manager.getPropertySets(model, id, false);
 ```
 
+###  getMaterialsProperties
+
+```js
+  IfcLoader.IfcManager.getMaterialsProperties (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+📒🔍
+获取给定元素的材料信息。
+
+#### 函数的参数。
+
+- `modelID` IFC模型的ID。
+
+- `id` 要获取其属性的项目的Express ID。你可以通过`getExpressId`（如果你在3D视图中挑选一个对象）或者通过`getAllItemsOfType`或`getSpatialStructure`遍历模型来获得。
+
+- `recursive` 如果是真的，就会递归地获得所有被引用的元素的属性。要小心，因为这在较大的模型中可能是一个缓慢的操作。
+
+#### 例子。
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getMaterialsProperties(model, id, false);
+```
+
 
 ###  getSpatialStructure
 

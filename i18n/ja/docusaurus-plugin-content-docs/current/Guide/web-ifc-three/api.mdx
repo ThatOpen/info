@@ -314,6 +314,36 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   const props = manager.getPropertySets(model, id, false);
 ```
 
+###  getMaterialsProperties
+
+```js
+  IfcLoader.IfcManager.getMaterialsProperties (
+                            modelID: number,
+                            id: number,
+                            recursive = false
+                            ): object[];
+```
+
+📒🔍
+与えられた要素の素材情報を取得する。
+
+#### 関数の引数:
+
+- `modelID` IFCモデルのIDです。
+
+- `id` プロパティを取得したいアイテムのエクスプレスID。これは、`getExpressId` (3Dビューでオブジェクトを選択している場合)、または `getAllItemsOfType` や `getSpatialStructure` でモデルをトラバースすることで取得できます。
+
+- `recursive` trueの場合、参照されているすべての要素のプロパティを再帰的に取得します。大きなモデルでは、この操作に時間がかかることがあるので、注意が必要です。
+
+#### 例:
+
+```js
+  const model = ifcModel.mesh.modelID;
+  const id = 2142;
+  const manager = loader.ifcLoader.ifcManager;
+  const props = manager.getMaterialsProperties(model, id, false);
+```
+
 
 ###  getSpatialStructure
 
