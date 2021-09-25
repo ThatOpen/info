@@ -81,7 +81,7 @@ They are **native properties**, that is, the basic properties inherent to each i
 
 **🤔 Why do some properties have numbers as values?**
 
-This are not numbers, but **express IDs**! This means that you can use `getItemProperties()` again using that ID, and you'll get the properties of that **referenced** element.
+These are not numbers, but **express IDs**! This means that you can use `getItemProperties()` again using that ID, and you'll get the properties of that **referenced** element.
 
 <IfcCard>
     That is how IFC works: each <b>element</b> has <b>properties</b>, and each <b>property</b> can be the reference to other <b>element</b>. So you can basically traverse the whole IFC navigating through references.
@@ -91,7 +91,7 @@ This are not numbers, but **express IDs**! This means that you can use `getItemP
 
 Don't worry, we got you covered! You can use an optional third parameter of `getItemProperties()`, which is a boolean that is false by default. If you set it to true, we will get all referenced elements recursively and give you everything nicely packed in a single JavaScript object.
 
-Nonetheless, we usually recommend avoiding this in order to avoid runtime overheads.
+Nonetheless, we usually recommend avoiding this in order to avoid runtime overheads. Much better is to use `getItemProperties()` only for those IDs you need when you need them.
 
 **🙄 How can I get other types of properties?**
 
