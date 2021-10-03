@@ -97,8 +97,6 @@ export const Sponsoring = () => {
                     scene.add(root);
                     nodes.push({mesh: root, speed: getRandom(0.01, 0.002)});
                 }
-
-                console.log(Sponsors);
             }
 
             (function animation() {
