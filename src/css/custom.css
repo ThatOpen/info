@@ -36,6 +36,10 @@ article {
   padding-right: 2rem;
 }
 
+.navbar {
+  z-index: 99999;
+}
+
 .container {
   max-width: 55rem !important;
 }
