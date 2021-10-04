@@ -16,7 +16,7 @@ export const Sponsoring = () => {
         useEffect(() => {
 
             const nodes = [];
-            const nodeNumber = 300;
+            const nodeNumber = 50;
             let camera, scene, renderer, renderer2D, controls;
             let baseSpeed = 0.002;
             let logo;
