@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from "react";
 import styles from "./Sponsoring.module.css";
 import * as THREE from "three";
 import {CSS2DObject, CSS2DRenderer} from 'three/examples/jsm/renderers/CSS2DRenderer';
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import logoSrc from "../../../static/img/logo.png"
 import {Object3D} from "three";
 import Sponsors from "./Sponsors";
@@ -17,12 +16,11 @@ export const Sponsoring = () => {
 
             const nodes = [];
             const nodeNumber = 50;
-            let camera, scene, renderer, renderer2D, controls;
+            let camera, scene, renderer, renderer2D;
             let baseSpeed = 0.002;
             let logo;
 
             let canvas;
-            let prevTime = 0;
 
             init();
 
@@ -32,11 +30,6 @@ export const Sponsoring = () => {
 
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
                 camera.position.z = 1;
-                controls = new OrbitControls(camera, canvas);
-                controls.enablePan = false;
-                controls.enableZoom = false;
-                controls.enableDamping = true;
-                controls.dampingFactor = 0.08;
 
                 scene = new THREE.Scene();
 
@@ -102,7 +95,6 @@ export const Sponsoring = () => {
             (function animation() {
                 renderer.render(scene, camera);
                 renderer2D.render(scene, camera);
-                controls.update();
 
                 nodes.forEach(node => updateNode(node));
 
