@@ -90,12 +90,12 @@ export const Sponsoring = () => {
                     htmlRoot.appendChild(htmlImage);
 
                     const label = new CSS2DObject(htmlRoot);
-                    label.position.set(getRandom(0.3, 0.1),getRandom(0.3, 0.1), getRandom(0.3, 0.1));
+                    label.position.set(getRandom(0.2, 0.05),getRandom(0.2, 0.05), getRandom(0.2, 0.05));
 
                     // nodes.push(label);
                     root.add(label);
                     scene.add(root);
-                    nodes.push({mesh: root, speed: getRandom(0.01, 0.002)});
+                    nodes.push({mesh: root, speed: getRandom(0.01, 0.001)});
                 }
             }
 

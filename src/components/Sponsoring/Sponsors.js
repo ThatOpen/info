@@ -1,6 +1,8 @@
 import ansoni from "../../../static/img/sponsors/antonio.jpg"
 import tom from "../../../static/img/sponsors/tomvandig.png"
 import harry from "../../../static/img/sponsors/harry.jpg"
+import parametricos from "../../../static/img/sponsors/parametricos.png"
+import autility from "../../../static/img/sponsors/autility.png"
 
 const Sponsors = [
     {
@@ -17,6 +19,16 @@ const Sponsors = [
         name: "Harry (Maintainer)",
         source: harry,
         link: "https://www.linkedin.com/in/harrycollin/"
+    },
+    {
+        name: "Parametricos (Sponsor)",
+        source: parametricos,
+        link: "https://www.linkedin.com/company/parametricos/"
+    },
+    {
+        name: "Autility (Sponsor)",
+        source: autility,
+        link: "https://www.linkedin.com/company/autility/mycompany/"
     }
 ]
 
