@@ -3,6 +3,7 @@ import tom from "../../../static/img/sponsors/tomvandig.png"
 import harry from "../../../static/img/sponsors/harry.jpg"
 import parametricos from "../../../static/img/sponsors/parametricos.png"
 import autility from "../../../static/img/sponsors/autility.png"
+import apogea from "../../../static/img/sponsors/apogea.png"
 
 const Sponsors = [
     {
@@ -29,6 +30,11 @@ const Sponsors = [
         name: "Autility (Sponsor)",
         source: autility,
         link: "https://www.linkedin.com/company/autility/mycompany/"
+    },
+    {
+        name: "Apogea (Sponsor)",
+        source: apogea,
+        link: "https://www.linkedin.com/company/apogeaconsulting/"
     }
 ]
 
