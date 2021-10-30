@@ -54,7 +54,7 @@ Both <b>IfcModel</b> instances and <b>IfcLoader.IfcManager</b> can be used inter
 ###  setWasmPath
 
 ```js
-  IfcLoader.IfcManager.setWasmPath (
+  async IfcLoader.IfcManager.setWasmPath (
                         path: string
                         ): void;
 ```
@@ -76,13 +76,13 @@ If you use frameworks or libraries like React, Angular, Vue or Svelte it is poss
 If `web-ifc.wasm` is in dist/wasmDir:
 
 ```js
-  ifcLoader.setWasmPath("dist/wasmDir/");
+  await ifcLoader.ifcManager.setWasmPath("dist/wasmDir/");
 ```
 
 ###  setupThreeMeshBVH
 
 ```js
-  ifcLoader.IfcManager.setupThreeMeshBVH (
+  IfcLoader.IfcManager.setupThreeMeshBVH (
                         computeBoundsTree: any,
                         disposeBoundsTree: any,
                         acceleratedRaycast: any
@@ -123,6 +123,98 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
     acceleratedRaycast,
     computeBoundsTree,
     disposeBoundsTree);
+```
+
+###  setOnProgress
+
+```js
+  IfcLoader.IfcManager.setOnProgress (
+      onProgress: (event: ParserProgress) => void
+                                    ): void;
+```
+
+⏳
+Sets a callback function that is called every 10% of IFC loaded. This way, you can display a loading bar to show your user how the loading is going.
+
+#### Arguments:
+
+- `onProgress`: Callback function that is called every 10%. That function must have one argument that that receives an object with two properties: `loaded` (number of objects loaded) and `total` (number of objects in the file).
+
+#### Example:
+
+```js
+  function exampleCallback(event) {
+    const progress = event.total / event.progress * 100;
+    console.log("Progress: ", progress, "%");
+  }
+
+  ifcLoader.ifcManager.setOnProgress = exampleCallback;
+```
+
+###  applyWebIfcConfig
+
+```js
+  async IfcLoader.IfcManager.applyWebIfcConfig (
+                                    settings: LoaderSettings
+                                    ): void;
+```
+
+🎹🎹🎹
+Applies a configuration for [web-ifc](https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction), which is the parser that this library uses internally.
+
+#### Arguments:
+
+- `settings`: An object containing the following fields:
+
+- `COORDINATE_TO_ORIGIN: boolean`: Wether to bring the model to the center of the scene. This is useful
+- `USE_FAST_BOOLS: boolean`: Wether to use a faster (and less precise) boolean logic.
+- `BOOL_ABORT_THRESHOLD?: number`: The limit to the boolean operation computation.
+- `CIRCLE_SEGMENTS_LOW?: number`: The resolution for low segments curves.
+- `CIRCLE_SEGMENTS_MEDIUM?: number`: The resolution for medium segments curves (e.g. IfcSweptDiskSolid).
+- `CIRCLE_SEGMENTS_HIGH?: number`: The resolution for high segments curves (e.g. IfcCircle).
+
+#### Example:
+
+If a file is geolocated and we want to bring it to the origin of the scene:
+
+```js
+  await ifcLoader.ifcManager.applyWebIfcConfig({
+                         COORDINATE_TO_ORIGIN: true,
+                         USE_FAST_BOOLS: false
+                                            });
+```
+
+###  useWebworkers
+
+```js
+  async IfcLoader.IfcManager.applyWebIfcConfig (
+                                    settings: LoaderSettings
+                                    ): void;
+```
+
+🎹🎹🎹
+Applies a configuration for [web-ifc](https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction), which is the parser that this library uses internally.
+
+#### Arguments:
+
+- `settings`: An object containing the following fields:
+
+- `COORDINATE_TO_ORIGIN: boolean`: Wether to bring the model to the center of the scene. This is useful
+- `USE_FAST_BOOLS: boolean`: Wether to use a faster (and less precise) boolean logic.
+- `BOOL_ABORT_THRESHOLD?: number`: The limit to the boolean operation computation.
+- `CIRCLE_SEGMENTS_LOW?: number`: The resolution for low segments curves.
+- `CIRCLE_SEGMENTS_MEDIUM?: number`: The resolution for medium segments curves (e.g. IfcSweptDiskSolid).
+- `CIRCLE_SEGMENTS_HIGH?: number`: The resolution for high segments curves (e.g. IfcCircle).
+
+#### Example:
+
+If a file is geolocated and we want to bring it to the origin of the scene:
+
+```js
+  await ifcLoader.ifcManager.applyWebIfcConfig({
+                         COORDINATE_TO_ORIGIN: true,
+                         USE_FAST_BOOLS: false
+                                            });
 ```
 
 ##  🔍 Getters
