@@ -187,34 +187,101 @@ If a file is geolocated and we want to bring it to the origin of the scene:
 ###  useWebworkers
 
 ```js
-  async IfcLoader.IfcManager.applyWebIfcConfig (
-                                    settings: LoaderSettings
+  async IfcLoader.IfcManager.useWebWorkers (
+                                    active: boolean,
+                                    path?: string
                                     ): void;
 ```
 
-🎹🎹🎹
-Applies a configuration for [web-ifc](https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction), which is the parser that this library uses internally.
+👷‍♀️👷‍♀️👷‍♀️
+Toggles the web worker that contains the parsing logic. The rest of the API remains the same, but all the logic will happen in another thread of the machine, so the app will never be blocked by heavy operations.
+
+🚧 You need to copy the file `IFCWorker.js` to your project and pass the relative path as a second argument.
 
 #### Arguments:
 
-- `settings`: An object containing the following fields:
-
-- `COORDINATE_TO_ORIGIN: boolean`: Wether to bring the model to the center of the scene. This is useful
-- `USE_FAST_BOOLS: boolean`: Wether to use a faster (and less precise) boolean logic.
-- `BOOL_ABORT_THRESHOLD?: number`: The limit to the boolean operation computation.
-- `CIRCLE_SEGMENTS_LOW?: number`: The resolution for low segments curves.
-- `CIRCLE_SEGMENTS_MEDIUM?: number`: The resolution for medium segments curves (e.g. IfcSweptDiskSolid).
-- `CIRCLE_SEGMENTS_HIGH?: number`: The resolution for high segments curves (e.g. IfcCircle).
+- `active`: Wether to use web workers or not.
+- `path`: Relative path to the worker file. Necessary if `active = true`.
 
 #### Example:
 
-If a file is geolocated and we want to bring it to the origin of the scene:
+If the file `IFCWorker.js` is in a folder called: `files`:
 
 ```js
-  await ifcLoader.ifcManager.applyWebIfcConfig({
-                         COORDINATE_TO_ORIGIN: true,
-                         USE_FAST_BOOLS: false
+  await ifcLoader.ifcManager.useWebWorkers({
+                                true,
+                                "files/IFCWorker.js"
                                             });
+```
+
+###  useJSONData
+
+```js
+  async IfcLoader.IfcManager.useJSONData (
+                                    useJSON: boolean
+                                    ): void;
+```
+
+🚀
+Uses JSON property data instead of the WASM data, which consumes much less memory. Only use this in the following scenarios:
+- If you don't need to access the properties of the IFC
+- If you will provide the properties as JSON.
+You can get the JSON from an IFC file in advance following [this example](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc/ifc-to-json/node).
+
+#### Arguments:
+
+- `useJSON`: Wether to use JSON data or not.
+
+#### Example:
+
+```js
+  await ifcLoader.ifcManager.useJSONData(true);
+```
+
+###  addModelJSONData
+
+```js
+  async IfcLoader.IfcManager.addModelJSONData (
+                                modelID: number,
+                                data: { [id: number]: JSONObject
+                                        ): void;
+```
+
+📦📦📦
+Adds the properties of a model as JSON data. If you are using web workers, use `loadJsonDataFromWorker()` instead to avoid overheads.
+
+#### Arguments:
+
+- `modelID`: ID of the IFC model.
+- `data`: data as an object where the keys are the expressIDs and the values the properties. In addition, each value has the properties `expressID` (id of the item) and `type` (IFC class of the item).
+
+#### Example:
+
+```js
+  await ifcLoader.ifcManager.addModelJSONData(0, jsonData);
+```
+
+###  loadJsonDataFromWorker
+
+```js
+  async IfcLoader.IfcManager.loadJsonDataFromWorker (
+                                        modelID: number,
+                                        path: string
+                                            ): void;
+```
+
+📦📦📦
+Loads the data of an IFC model from a JSON file directly from a web worker. If you are not using web workers, use `addModelJSONData()` instead.
+
+#### Arguments:
+
+- `modelID`: ID of the IFC model.
+- `path`: the path to the JSON file **relative to the web worker file**.
+
+#### Example:
+
+```js
+  await ifcLoader.ifcManager.loadJsonDataFromWorker(0, "path/to/data.json");
 ```
 
 ##  🔍 Getters
@@ -283,7 +350,7 @@ Elements in IFC always have an associated type: IfcWall, IfcSlab, IfcWindow, Ifc
 ###  getAllItemsOfType
 
 ```js
-  IfcLoader.IfcManager.getAllItemsOfType (
+  async IfcLoader.IfcManager.getAllItemsOfType (
                             modelID: number,
                             type: number,
                             verbose: boolean
@@ -307,13 +374,13 @@ Returns all objects of the specified IFC type (e.g. all walls, all floors, all w
   import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
 
   const manager = loader.ifcLoader.ifcManager;
-  const walls = manager.getAllItemsOfType(0, W, false);
+  const walls = await manager.getAllItemsOfType(0, W, false);
 ```
 
 ###  getItemProperties
 
 ```js
-  IfcLoader.IfcManager.getItemProperties (
+  async IfcLoader.IfcManager.getItemProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -341,7 +408,7 @@ All methods related to properties return an array of objects where the keys are 
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getItemProperties(model, id, false);
+  const props = await manager.getItemProperties(model, id, false);
 ```
 
 ###  getTypeProperties
@@ -376,7 +443,7 @@ Gets the type properties of the given element.
 ###  getPropertySets
 
 ```js
-  IfcLoader.IfcManager.getPropertySets (
+  async IfcLoader.IfcManager.getPropertySets (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -404,13 +471,13 @@ Gets the property sets and quantity sets of the given element.
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getPropertySets(model, id, false);
+  const props = await manager.getPropertySets(model, id, false);
 ```
 
 ###  getMaterialsProperties
 
 ```js
-  IfcLoader.IfcManager.getMaterialsProperties (
+  async IfcLoader.IfcManager.getMaterialsProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -434,14 +501,14 @@ Gets the material information of the given element.
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getMaterialsProperties(model, id, false);
+  const props = await manager.getMaterialsProperties(model, id, false);
 ```
 
 
 ###  getSpatialStructure
 
 ```js
-  IfcLoader.IfcManager.getSpatialStructure (
+  async IfcLoader.IfcManager.getSpatialStructure (
                         modelID: number
                         ): object;
 ```
@@ -461,7 +528,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  const ifcProject = manager.getSpatialStructure(model);
+  const ifcProject = await manager.getSpatialStructure(model);
 ```
 
 ##  🧱 Subsets

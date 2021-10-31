@@ -55,11 +55,16 @@ Before doing anything else, it is necessary to save a reference to the IFC model
 //Sets up the IFC loading
 const ifcModels = [];
 const ifcLoader = new IFCLoader();
-ifcLoader.ifcManager.setWasmPath("../../");
-ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
-  ifcModels.push(ifcModel.mesh);
-  scene.add(ifcModel.mesh)
-});
+
+async function loadIFC() {
+    await ifcLoader.ifcManager.setWasmPath("../../");
+    ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
+        ifcModels.push(ifcModel.mesh);
+        scene.add(ifcModel.mesh);
+    });
+}
+
+loadIFC();
 ```
 
 ## How to do it
