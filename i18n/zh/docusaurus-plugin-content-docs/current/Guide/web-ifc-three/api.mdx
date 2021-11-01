@@ -54,7 +54,7 @@ const modelID = ifcModel.mesh.modelID;
 ###  setWasmPath
 
 ```js
-  IfcLoader.IfcManager.setWasmPath (
+  async IfcLoader.IfcManager.setWasmPath (
                         path: string
                         ): void;
 ```
@@ -76,13 +76,13 @@ const modelID = ifcModel.mesh.modelID;
 如果`web-ifc.wasm`在dist/wasmDir中。
 
 ```js
-  ifcLoader.setWasmPath("dist/wasmDir/");
+  await ifcLoader.setWasmPath("dist/wasmDir/");
 ```
 
 ###  setupThreeMeshBVH
 
 ```js
-  ifcLoader.IfcManager.setupThreeMeshBVH (
+  IfcLoader.IfcManager.setupThreeMeshBVH (
                         computeBoundsTree: any,
                         disposeBoundsTree: any,
                         acceleratedRaycast: any
@@ -124,6 +124,166 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
     computeBoundsTree,
     disposeBoundsTree);
 ```
+
+###  setOnProgress
+
+```js
+  IfcLoader.IfcManager.setOnProgress (
+      onProgress: (event: ParserProgress) => void
+                                    ): void;
+```
+
+⏳
+设置一个回调函数，每加载10%的IFC都会被调用。这样，你可以显示一个加载条，向你的用户展示加载的情况。
+
+#### 函数的参数。
+
+- `onProgress`: 回调函数，每10%被调用。该函数必须有一个参数，该参数接收一个具有两个属性的对象。`loaded`（加载的对象数量）和`total`（文件中的对象数量）。
+
+#### 例子。
+
+```js
+  function exampleCallback(event) {
+    const progress = event.total / event.progress * 100;
+    console.log("Progress: ", progress, "%");
+  }
+
+  ifcLoader.ifcManager.setOnProgress = exampleCallback;
+```
+
+###  applyWebIfcConfig
+
+```js
+  async IfcLoader.IfcManager.applyWebIfcConfig (
+                                    settings: LoaderSettings
+                                    ): void;
+```
+
+🎹🎹🎹
+应用[web-ifc](https://ifcjs.github.io/info/docs/Guide/web-ifc/Introduction)的配置，它是这个库内部使用的分析器。
+
+#### 函数的参数。
+
+- `settings`: 一个包含以下字段的对象。
+
+- `COORDINATE_TO_ORIGIN: boolean`: 是否将模型带到场景的中心。对地理定位的模型有用。
+- `USE_FAST_BOOLS: boolean`: 是否使用更快的（不那么精确的）布尔逻辑。
+- `BOOL_ABORT_THRESHOLD?: number`: 布尔运算计算的极限。
+- `CIRCLE_SEGMENTS_LOW?: number`: 低段曲线的分辨率。
+- `CIRCLE_SEGMENTS_MEDIUM?: number`: 中段曲线的分辨率（例如IfcSweptDiskSolid）。
+- `CIRCLE_SEGMENTS_HIGH?: number`: 高段曲线的分辨率（如IfcCircle）。
+
+#### 例子。
+
+如果一个文件是地理定位的，我们想把它带到场景的原点。
+
+```js
+  await ifcLoader.ifcManager.applyWebIfcConfig({
+                         COORDINATE_TO_ORIGIN: true,
+                         USE_FAST_BOOLS: false
+                                            });
+```
+
+###  useWebworkers
+
+```js
+  async IfcLoader.IfcManager.useWebWorkers (
+                                    active: boolean,
+                                    path?: string
+                                    ): void;
+```
+
+👷‍♀️👷‍♀️👷‍♀️
+切换包含解析逻辑的网络工作者。API的其余部分保持不变，但所有的逻辑将发生在机器的另一个线程中，因此应用程序永远不会被繁重的操作所阻断。
+
+🚧 你需要将文件`IFCWorker.js`复制到你的项目中，并将相对路径作为第二个参数传递。
+
+#### 函数的参数。
+
+- `active`: 是否使用网络工作者。
+- `path`: 工作器文件的相对路径。如果 `active = true`，这是必要的。
+
+#### 例子。
+
+如果`IFCWorker.js`是在一个叫做: `files`。
+
+```js
+  await ifcLoader.ifcManager.useWebWorkers({
+                                true,
+                                "files/IFCWorker.js"
+                                            });
+```
+
+###  useJSONData
+
+```js
+  async IfcLoader.IfcManager.useJSONData (
+                                    useJSON: boolean
+                                    ): void;
+```
+
+🚀
+使用JSON属性数据，而不是WASM数据，它消耗的内存要少得多。只在以下情况下使用。
+- 如果你不需要访问IFC的属性
+- 如果你将提供JSON格式的属性。
+你可以按照[这个例子](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc/ifc-to-json/node)提前从IFC文件中获取JSON。
+
+#### 函数的参数。
+
+- `useJSON`: 是否使用JSON数据。
+
+#### 例子。
+
+```js
+  await ifcLoader.ifcManager.useJSONData(true);
+```
+
+###  addModelJSONData
+
+```js
+  async IfcLoader.IfcManager.addModelJSONData (
+                                modelID: number,
+                                data: { [id: number]: JSONObject
+                                        ): void;
+```
+
+📦📦📦
+将一个模型的属性作为JSON数据添加。如果你使用网络工作者，请使用`loadJsonDataFromWorker()`代替，以避免开销。
+
+#### 函数的参数。
+
+- `modelID`: IFC模型的ID。
+- `data`: 数据是一个对象，其中键是expressIDs，值是属性。此外，每个值都有属性`expressID`（项目的id）和`type`（项目的IFC类别）。
+
+#### 例子。
+
+```js
+  await ifcLoader.ifcManager.addModelJSONData(0, jsonData);
+```
+
+###  loadJsonDataFromWorker
+
+```js
+  async IfcLoader.IfcManager.loadJsonDataFromWorker (
+                                        modelID: number,
+                                        path: string
+                                            ): void;
+```
+
+📦📦📦
+从JSON文件中直接从Web Worker加载IFC模型的数据。如果你不使用网络工作者，请使用`addModelJSONData()`代替。
+
+#### 函数的参数。
+
+- `modelID`: IFC模型的ID。
+- `path`: JSON文件的路径 **相对于网络工作者的文件**。
+
+#### 例子。
+
+```js
+  await ifcLoader.ifcManager.loadJsonDataFromWorker(0, "path/to/data.json");
+```
+
 
 ##  🔍 获取器
 
@@ -191,7 +351,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 ###  getAllItemsOfType
 
 ```js
-  IfcLoader.IfcManager.getAllItemsOfType (
+  async IfcLoader.IfcManager.getAllItemsOfType (
                             modelID: number,
                             type: number,
                             verbose: boolean
@@ -215,13 +375,13 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
 
   const manager = loader.ifcLoader.ifcManager;
-  const walls = manager.getAllItemsOfType(0, W, false);
+  const walls = await manager.getAllItemsOfType(0, W, false);
 ```
 
 ###  getItemProperties
 
 ```js
-  IfcLoader.IfcManager.getItemProperties (
+  async IfcLoader.IfcManager.getItemProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -249,13 +409,13 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getItemProperties(model, id, false);
+  const props = await manager.getItemProperties(model, id, false);
 ```
 
 ###  getTypeProperties
 
 ```js
-  IfcLoader.IfcManager.getTypeProperties (
+  async IfcLoader.IfcManager.getTypeProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -278,13 +438,13 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getTypeProperties(model, id, false);
+  const props = await manager.getTypeProperties(model, id, false);
 ```
 
 ###  getPropertySets
 
 ```js
-  IfcLoader.IfcManager.getPropertySets (
+  async IfcLoader.IfcManager.getPropertySets (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -312,13 +472,13 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getPropertySets(model, id, false);
+  const props = await manager.getPropertySets(model, id, false);
 ```
 
 ###  getMaterialsProperties
 
 ```js
-  IfcLoader.IfcManager.getMaterialsProperties (
+  async IfcLoader.IfcManager.getMaterialsProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -342,14 +502,14 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getMaterialsProperties(model, id, false);
+  const props = await manager.getMaterialsProperties(model, id, false);
 ```
 
 
 ###  getSpatialStructure
 
 ```js
-  IfcLoader.IfcManager.getSpatialStructure (
+  async IfcLoader.IfcManager.getSpatialStructure (
                         modelID: number
                         ): object;
 ```
@@ -369,7 +529,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  const ifcProject = manager.getSpatialStructure(model);
+  const ifcProject = await manager.getSpatialStructure(model);
 ```
 
 ##  🧱 子集

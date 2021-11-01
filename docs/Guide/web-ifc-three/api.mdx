@@ -166,7 +166,7 @@ Applies a configuration for [web-ifc](https://ifcjs.github.io/info/docs/Guide/we
 
 - `settings`: An object containing the following fields:
 
-- `COORDINATE_TO_ORIGIN: boolean`: Wether to bring the model to the center of the scene. This is useful
+- `COORDINATE_TO_ORIGIN: boolean`: Wether to bring the model to the center of the scene. Useful for geolocated models.
 - `USE_FAST_BOOLS: boolean`: Wether to use a faster (and less precise) boolean logic.
 - `BOOL_ABORT_THRESHOLD?: number`: The limit to the boolean operation computation.
 - `CIRCLE_SEGMENTS_LOW?: number`: The resolution for low segments curves.
@@ -414,7 +414,7 @@ All methods related to properties return an array of objects where the keys are 
 ###  getTypeProperties
 
 ```js
-  IfcLoader.IfcManager.getTypeProperties (
+  async IfcLoader.IfcManager.getTypeProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -437,7 +437,7 @@ Gets the type properties of the given element.
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getTypeProperties(model, id, false);
+  const props = await manager.getTypeProperties(model, id, false);
 ```
 
 ###  getPropertySets

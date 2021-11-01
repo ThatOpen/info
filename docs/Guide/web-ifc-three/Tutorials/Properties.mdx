@@ -187,7 +187,7 @@ async function logAllSlabs() {
 
     for(let i = 0; i <= slabsID.length; i++) {
         const slabID = slabsID[i];
-        const slabProperties = ifc.getItemProperties(0, slabID);
+        const slabProperties = await ifc.getItemProperties(0, slabID);
         console.log(slabProperties);
     }
 

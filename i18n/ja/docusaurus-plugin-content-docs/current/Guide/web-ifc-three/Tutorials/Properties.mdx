@@ -59,7 +59,7 @@ IFCスキームにはいくつかのタイプのプロパティがあり、そ�
 
 ```js {9}
 // アイテムがピックされたときに実行されるイベント
-function pick(event) {
+async function pick(event) {
     const found = cast(event)[0];
     if (found) {
         const index = found.faceIndex;
@@ -67,7 +67,7 @@ function pick(event) {
         const ifc = ifcLoader.ifcManager;
         const id = ifc.getExpressId(geometry, index);
         const modelID = found.object.modelID;
-        const props = ifc.getItemProperties(modelID, id);
+        const props = await ifc.getItemProperties(modelID, id);
         output.innerHTML = JSON.stringify(props, null, 2);
     }
 }
@@ -182,11 +182,18 @@ import { IFCSLAB } from "web-ifc";
 const ifc = ifcLoader.ifcManager;
 const modelID = 0;
 
-const slabsID = ifc.getAllItemsOfType(modelID, IFCSLAB);
+  async function logAllSlabs() {
+      const slabsID = await ifc.getAllItemsOfType(modelID, IFCSLAB);
 
-slabsID.forEach(slabID => {
-    console.log(ifc.getItemProperties(0, slabID))
-});
+      for(let i = 0; i <= slabsID.length; i++) {
+          const slabID = slabsID[i];
+          const slabProperties = await ifc.getItemProperties(0, slabID);
+          console.log(slabProperties);
+      }
+
+  }
+
+  logAllSlabs();
 ```
 
 ## Next steps

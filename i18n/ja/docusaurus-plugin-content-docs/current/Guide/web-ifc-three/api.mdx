@@ -54,7 +54,7 @@ const modelID = ifcModel.mesh.modelID;
 ###  setWasmPath
 
 ```js
-  IfcLoader.IfcManager.setWasmPath (
+  async IfcLoader.IfcManager.setWasmPath (
                         path: string
                         ): void;
 ```
@@ -76,13 +76,13 @@ React、Angular、Vue、Svelteなどのフレームワークやライブラリ�
 `web-ifc.wasm` が dist/wasmDir にある場合。
 
 ```js
-  ifcLoader.setWasmPath("dist/wasmDir/");
+  await ifcLoader.setWasmPath("dist/wasmDir/");
 ```
 
 ###  setupThreeMeshBVH
 
 ```js
-  ifcLoader.IfcManager.setupThreeMeshBVH (
+  IfcLoader.IfcManager.setupThreeMeshBVH (
                         computeBoundsTree: any,
                         disposeBoundsTree: any,
                         acceleratedRaycast: any
@@ -122,6 +122,165 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
     acceleratedRaycast,
     computeBoundsTree,
     disposeBoundsTree);
+```
+
+###  setOnProgress
+
+```js
+  IfcLoader.IfcManager.setOnProgress (
+      onProgress: (event: ParserProgress) => void
+                                    ): void;
+```
+
+⏳
+IFCが10％ロードされるごとに呼び出されるコールバック関数を設定します。これにより、ローディングバーを表示して、ユーザーにローディングの状況を示すことができます。
+
+#### 関数の引数
+
+- `onProgress`: 10%ごとに呼び出されるコールバック関数です。この関数は、2つのプロパティを持つオブジェクトを受け取る1つの引数を持つ必要があります。`loaded`（読み込まれたオブジェクトの数）と `total`（ファイル内のオブジェクトの数）です。
+
+#### 例
+
+```js
+  function exampleCallback(event) {
+    const progress = event.total / event.progress * 100;
+    console.log("Progress: ", progress, "%");
+  }
+
+  ifcLoader.ifcManager.setOnProgress = exampleCallback;
+```
+
+###  applyWebIfcConfig
+
+```js
+  async IfcLoader.IfcManager.applyWebIfcConfig (
+                                    settings: LoaderSettings
+                                    ): void;
+```
+
+🎹🎹🎹
+このライブラリが内部で使用しているパーサーである[web-ifc](https://ifcjs.github.io/info/ja/docs/Guide/web-ifc/Introduction)の設定を適用します。
+
+#### 関数の引数
+
+- `settings`: 以下のフィールドを含むオブジェクトです。
+
+- `COORDINATE_TO_ORIGIN: boolean`: モデルをシーンの中央に配置するかどうか。 ジオロケーションモデルに有効です。
+- `USE_FAST_BOOLS: boolean`: より高速な（正確さに欠ける）ブーリアンロジックを使用するかどうか。
+- `BOOL_ABORT_THRESHOLD?: number`: ブーリアン演算の計算の限界。
+- `CIRCLE_SEGMENTS_LOW?: number`: 低いセグメントの曲線の解像度。
+- `CIRCLE_SEGMENTS_MEDIUM?: number`: 中程度のセグメントの曲線（例：IfcSweptDiskSolid）の解像度です。
+- `CIRCLE_SEGMENTS_HIGH?: number`: 高セグメントの曲線（例：IfcCircle）の解像度です。
+
+#### 例
+
+ファイルが地理的に配置されていて、それをシーンの原点に持ってきたい場合。
+
+```js
+  await ifcLoader.ifcManager.applyWebIfcConfig({
+                         COORDINATE_TO_ORIGIN: true,
+                         USE_FAST_BOOLS: false
+                                            });
+```
+
+###  useWebworkers
+
+```js
+  async IfcLoader.IfcManager.useWebWorkers (
+                                    active: boolean,
+                                    path?: string
+                                    ): void;
+```
+
+👷‍♀️👷‍♀️👷‍♀️
+解析ロジックを含むウェブワーカーをトグルします。APIの残りの部分は同じですが、すべてのロジックはマシンの別のスレッドで実行されるため、重い操作でアプリがブロックされることはありません。
+
+🚧 ファイル`IFCWorker.js`をプロジェクトにコピーして、第2引数に相対パスを渡す必要があります。
+
+#### 関数の引数
+
+- `active`: ウェブワーカーを使用するかどうか。
+- `path`: ワーカーファイルの相対パスです。`active = true`の場合に必要です。
+
+#### 例
+
+というフォルダに`IFCWorker.js`がある場合。`files` という名前のフォルダにあります。
+
+```js
+  await ifcLoader.ifcManager.useWebWorkers({
+                                true,
+                                "files/IFCWorker.js"
+                                            });
+```
+
+###  useJSONData
+
+```js
+  async IfcLoader.IfcManager.useJSONData (
+                                    useJSON: boolean
+                                    ): void;
+```
+
+🚀
+WASMデータの代わりにJSONプロパティデータを使用し、メモリ消費量が大幅に減少します。以下のシナリオでのみ使用してください。
+- IFCのプロパティにアクセスする必要がない場合は。
+- プロパティをJSONで提供する場合。
+IFCファイルからのJSONの取得は、以下のように事前に行うことができます[この例](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc/ifc-to-json/node)。
+
+#### 関数の引数
+
+- `useJSON`: JSONデータを使用するかどうか。
+
+#### 例
+
+```js
+  await ifcLoader.ifcManager.useJSONData(true);
+```
+
+###  addModelJSONData
+
+```js
+  async IfcLoader.IfcManager.addModelJSONData (
+                                modelID: number,
+                                data: { [id: number]: JSONObject
+                                        ): void;
+```
+
+📦📦📦
+モデルのプロパティをJSONデータとして追加します。Web Workerを使用している場合は、オーバーヘッドを避けるために、代わりに`loadJsonDataFromWorker()`を使用してください。
+
+#### 関数の引数
+
+- `modelID`: IFCモデルのIDです。
+- `data`: のデータを，キーがexpressID，値がプロパティであるオブジェクトとして取得します。さらに、各値はプロパティとして、`expressID`（アイテムのID）と`type`（アイテムのIFCクラス）を持っています。
+
+#### 例
+
+```js
+  await ifcLoader.ifcManager.addModelJSONData(0, jsonData);
+```
+
+###  loadJsonDataFromWorker
+
+```js
+  async IfcLoader.IfcManager.loadJsonDataFromWorker (
+                                        modelID: number,
+                                        path: string
+                                            ): void;
+```
+
+📦📦📦
+JSONファイルからIFCモデルのデータをWeb Workerから直接読み込みます。ウェブワーカーを使用していない場合は、代わりに `addModelJSONData()` を使用してください。
+
+#### 関数の引数
+
+- `modelID`: IFCモデルのIDです。
+- `path`: JSONファイルへのパスは、Web Workerファイルへの相対パスです。
+
+#### 例
+
+```js
+  await ifcLoader.ifcManager.loadJsonDataFromWorker(0, "path/to/data.json");
 ```
 
 ##  🔍 ゲッターズ
@@ -190,7 +349,7 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
 ###  getAllItemsOfType
 
 ```js
-  IfcLoader.IfcManager.getAllItemsOfType (
+  async IfcLoader.IfcManager.getAllItemsOfType (
                             modelID: number,
                             type: number,
                             verbose: boolean
@@ -214,13 +373,13 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
 
   const manager = loader.ifcLoader.ifcManager;
-  const walls = manager.getAllItemsOfType(0, W, false);
+  const walls = await manager.getAllItemsOfType(0, W, false);
 ```
 
 ###  getItemProperties
 
 ```js
-  IfcLoader.IfcManager.getItemProperties (
+  async IfcLoader.IfcManager.getItemProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -248,13 +407,13 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getItemProperties(model, id, false);
+  const props = await manager.getItemProperties(model, id, false);
 ```
 
 ###  getTypeProperties
 
 ```js
-  IfcLoader.IfcManager.getTypeProperties (
+  async IfcLoader.IfcManager.getTypeProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -277,13 +436,13 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getTypeProperties(model, id, false);
+  const props = await manager.getTypeProperties(model, id, false);
 ```
 
 ###  getPropertySets
 
 ```js
-  IfcLoader.IfcManager.getPropertySets (
+  async IfcLoader.IfcManager.getPropertySets (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -311,13 +470,13 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getPropertySets(model, id, false);
+  const props = await manager.getPropertySets(model, id, false);
 ```
 
 ###  getMaterialsProperties
 
 ```js
-  IfcLoader.IfcManager.getMaterialsProperties (
+  async IfcLoader.IfcManager.getMaterialsProperties (
                             modelID: number,
                             id: number,
                             recursive = false
@@ -341,14 +500,14 @@ IFCの要素には、必ず関連するタイプがあります。IfcWall、IfcS
   const model = ifcModel.mesh.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
-  const props = manager.getMaterialsProperties(model, id, false);
+  const props = await manager.getMaterialsProperties(model, id, false);
 ```
 
 
 ###  getSpatialStructure
 
 ```js
-  IfcLoader.IfcManager.getSpatialStructure (
+  async IfcLoader.IfcManager.getSpatialStructure (
                         modelID: number
                         ): object;
 ```
@@ -368,7 +527,7 @@ Gets the spatial structure of the project.
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  const ifcProject = manager.getSpatialStructure(model);
+  const ifcProject = await manager.getSpatialStructure(model);
 ```
 
 ##  🧱 Subsets

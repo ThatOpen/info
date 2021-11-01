@@ -56,11 +56,15 @@ ifcLoader.ifcManager.setupThreeMeshBVH(
   // IFCの読み込みを設定する
   const ifcModels = [];
   const ifcLoader = new IFCLoader();
-  ifcLoader.ifcManager.setWasmPath("../../");
-  ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
-    ifcModels.push(ifcModel.mesh);
-    scene.add(ifcModel.mesh)
-  });
+  async function loadIFC() {
+      await ifcLoader.ifcManager.setWasmPath("../../");
+      ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
+          ifcModels.push(ifcModel.mesh);
+          scene.add(ifcModel.mesh);
+      });
+  }
+
+loadIFC();
 ```
 
 ## その方法とは
