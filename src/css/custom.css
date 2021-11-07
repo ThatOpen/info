@@ -137,6 +137,10 @@ iframe {
   max-height: 70vh;
 }
 
+.menu--responsive {
+  margin-top: 4rem;
+}
+
 @keyframes logo-spin {
   0% {
     transform: rotate(0);
