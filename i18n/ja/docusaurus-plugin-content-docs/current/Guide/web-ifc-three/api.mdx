@@ -565,7 +565,7 @@ Gets the spatial structure of the project.
 
 ```js
   IfcLoader.IfcManager.createSubset (
-                        config: HighlightConfigOfModel
+                        config: SubsetConfig
                         ): object;
 ```
 🧱✨
@@ -584,6 +584,8 @@ Gets the spatial structure of the project.
   - `removePrevious` このモデルの前のサブセットをこの素材で削除するかどうか。
 
   - `material` (オプション) サブセットに適用する素材。素材が指定されていない場合、サブセットには元の素材が適用されます。
+
+  - `customID` (オプション) サブセットに付けるオプションのカスタム名。これにより、同じ材料で複数のサブセットを作成することができます。
 
 #### 例
 
@@ -628,104 +630,35 @@ Gets the spatial structure of the project.
   manager.removeSubset(model);
 ```
 
-##  👓 視認性
-
-###  hideItems
+###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.hideItems (
+  IfcLoader.IfcManager.removeSubset (
                         modelID: number,
-                        ids: number[]
+                        ids: number[],
+                        customID?: string,
+                        material?: Material
                         ): void;
 ```
 
-  🌒
-Hides the selected items in the specified model.
+🧱💥🤏
+指定した幾何学的サブセットから指定した項目を削除します。
 
 #### 関数の引数
 
 - `modelID` IFCモデルのIDです。
 
-- `ids` 要素のExpress ID。
+- `ids` サブセットに適合するモデルのアイテムのIDを表す。
 
-#### 例
+- `material` (オプション) サブセットに適用する素材。素材が指定されていない場合、サブセットには元の素材が適用されます。
 
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.hideItems(model, [id]);
-```
-
-###  hideAllItems
-
-```js
-  IfcLoader.IfcManager.hideAllItems (
-                        modelID: number
-                        ): void;
-```
-
-  🌒🌒🌒
-指定したモデルのすべてのアイテムを非表示にします。
-
-#### 関数の引数
-
-- `modelID` IFCモデルのID。
+- `customID` (オプション) サブセットに付けるオプションのカスタム名。これにより、同じ材料で複数のサブセットを作成することができます。
 
 #### 例
 
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  manager.hideAllItems(model);
-```
-
-###  showItems
-
-```js
-  IfcLoader.IfcManager.showItems(
-                        modelID: number,
-                        ids: number[]
-                        ): void;
-```
-
-  🌖
-指定したIFCモデルで選択した項目を表示します。
-
-#### 関数の引数
-
-- `modelID` IFCモデルのID。
-
-- `ids` 要素のExpress ID。
-
-#### 例
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showItems(model, [id]);
-```
-
-###  showAllItems
-
-```js
-  IfcLoader.IfcManager.showAllItems(
-                        modelID: number
-                        ): void;
-```
-
-  🌖🌖🌖
-指定したモデルのすべてのアイテムを表示します。
-
-#### 関数の引数
-
-- `modelID` IFCモデルのID。
-
-#### 例
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showAllItems(model);
+  const walls = await manager.getAllItemsOfType(0, W, false);
+  manager.removeFromSubset(model, walls);
 ```

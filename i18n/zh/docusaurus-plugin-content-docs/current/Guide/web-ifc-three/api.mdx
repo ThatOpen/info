@@ -567,7 +567,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 
 ```js
   IfcLoader.IfcManager.createSubset (
-                        config: HighlightConfigOfModel
+                        config: SubsetConfig
                         ): object;
 ```
 🧱✨
@@ -586,6 +586,8 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
   - `removePrevious` 是否要用这个材料删除这个模型的前一个子集。
 
   - `material` (可选）应用于子集的材料。如果没有给出材料，子集就有原始材料。
+
+  - `customID` (可选） 可选的自定义名称，用于给子集命名。这允许用相同的材料创建多个子集。
 
 #### 例子。
 
@@ -630,104 +632,35 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
   manager.removeSubset(model);
 ```
 
-##  👓 可见性
-
-###  hideItems
+###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.hideItems (
+  IfcLoader.IfcManager.removeSubset (
                         modelID: number,
-                        ids: number[]
+                        ids: number[],
+                        customID?: string,
+                        material?: Material
                         ): void;
 ```
 
-  🌒
-隐藏指定模型中的选定项目。
+🧱💥🤏
+从指定的几何子集中删除指定的项目。
 
 #### 函数的参数。
 
 - `modelID` IFC模型的ID。
 
-- `ids` 元素的ExpressID。
+- `ids`  将符合子集的模型的项目的ExpressIDs。
 
-#### 例子。
+- `material` (可选）分配给子集的材料（如果有的话）。
 
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.hideItems(model, [id]);
-```
-
-###  hideAllItems
-
-```js
-  IfcLoader.IfcManager.hideAllItems (
-                        modelID: number
-                        ): void;
-```
-
-  🌒🌒🌒
-隐藏指定模型的所有项目。
-
-#### 函数的参数。
-
-- `modelID` IFC模型的ID。
+- `customID` (可选) 可选的自定义名称，用于给子集命名。这允许用相同的材料创建多个子集。
 
 #### 例子。
 
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  manager.hideAllItems(model);
-```
-
-###  showItems
-
-```js
-  IfcLoader.IfcManager.showItems(
-                        modelID: number,
-                        ids: number[]
-                        ): void;
-```
-
-  🌖
-显示指定模型中的选定项目。
-
-#### 函数的参数。
-
-- `modelID` IFC模型的ID。
-
-- `ids` 元素的ExpressID。
-
-#### 例子。
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showItems(model, [id]);
-```
-
-###  showAllItems
-
-```js
-  IfcLoader.IfcManager.showAllItems(
-                        modelID: number
-                        ): void;
-```
-
-  🌖🌖🌖
-显示指定模型的所有项目。
-
-#### 函数的参数。
-
-- `modelID` IFC模型的ID。
-
-#### 例子。
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showAllItems(model);
+  const walls = await manager.getAllItemsOfType(0, W, false);
+  manager.removeFromSubset(model, walls);
 ```

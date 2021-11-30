@@ -566,7 +566,7 @@ Geometric subsets are extracts of the geometry of the model. For example, you co
 
 ```js
   IfcLoader.IfcManager.createSubset (
-                        config: HighlightConfigOfModel
+                        config: SubsetConfig
                         ): object;
 ```
 🧱✨
@@ -585,6 +585,8 @@ Creates a new geometric subset.
   - `removePrevious` Wether to remove the previous subset of this model with this material.
 
   - `material` (optional) Material to apply to the subset. If no material is given, the subset has the original material.
+
+  - `customID` (optional) Optional custom name to give to the subset. This allows to create multiple subsets with the same material.
 
 #### Example:
 
@@ -629,104 +631,35 @@ Removes the specified geometric subset.
   manager.removeSubset(model);
 ```
 
-##  👓 Visibility
-
-###  hideItems
+###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.hideItems (
+  IfcLoader.IfcManager.removeSubset (
                         modelID: number,
-                        ids: number[]
+                        ids: number[],
+                        customID?: string,
+                        material?: Material
                         ): void;
 ```
 
-  🌒
-Hides the selected items in the specified model.
+🧱💥🤏
+Removes the specified items from the specified geometric subset.
 
 #### Arguments:
 
 - `modelID` ID of the IFC model.
 
-- `ids` Express ID of the elements.
+- `ids` Express IDs of the items of the model that will conform the subset.
 
-#### Example:
+- `material` (optional) Material assigned to the subset (if any).
 
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.hideItems(model, [id]);
-```
-
-###  hideAllItems
-
-```js
-  IfcLoader.IfcManager.hideAllItems (
-                        modelID: number
-                        ): void;
-```
-
-  🌒🌒🌒
-Hides all the items of the specified model.
-
-#### Arguments:
-
-- `modelID` ID of the IFC model.
+- `customID` (optional) Optional custom name to give to the subset. This allows to create multiple subsets with the same material.
 
 #### Example:
 
 ```js
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
-  manager.hideAllItems(model);
-```
-
-###  showItems
-
-```js
-  IfcLoader.IfcManager.showItems(
-                        modelID: number,
-                        ids: number[]
-                        ): void;
-```
-
-  🌖
-Shows the selected items in the specified model.
-
-#### Arguments:
-
-- `modelID` ID of the IFC model.
-
-- `ids` Express ID of the elements.
-
-#### Example:
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const id = 2142;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showItems(model, [id]);
-```
-
-###  showAllItems
-
-```js
-  IfcLoader.IfcManager.showAllItems(
-                        modelID: number
-                        ): void;
-```
-
-  🌖🌖🌖
-Shows all the items of the specified model.
-
-#### Arguments:
-
-- `modelID` ID of the IFC model.
-
-#### Example:
-
-```js
-  const model = ifcModel.mesh.modelID;
-  const manager = loader.ifcLoader.ifcManager;
-  manager.showAllItems(model);
+  const walls = await manager.getAllItemsOfType(0, W, false);
+  manager.removeFromSubset(model, walls);
 ```
