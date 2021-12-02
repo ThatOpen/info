@@ -152,12 +152,12 @@ Also, the `package.json` file needs to be modified to contain the commands to co
 ### WebAssembly
 
   📁
-The next thing to do is to copy the `web-ifc.wasm` file to a directory in your project. It can be found in `node_modules\web-ifc\web-ifc.wasm` (or `node_modules\three\examples\jsm\loaders\ifc\web-ifc.wasm` if you are only using Three's IFCLoader). We can copy it wherever we want; in this example, it will be copied to a folder called wasm in the root directory of the project.
+The next thing to do is to copy the `web-ifc.wasm` and `web-ifc-mt.wasm` files to a directory in your project. It can be found in `node_modules\web-ifc` (or `node_modules\three\examples\jsm\loaders\ifc` if you are only using Three's IFCLoader). We can copy them wherever we want; in this example, they will be copied to a folder called wasm in the root directory of the project.
 
-This file is necessary because it contains the compiled C++ logic of <a href="https://github.com/IFCjs/web-ifc">web-ifc</a>, which is the parsing core to read and write IFC files with native speed.
+These files are necessary because they contain the compiled C++ logic of <a href="https://github.com/IFCjs/web-ifc">web-ifc</a>, which is the parsing core to read and write IFC files with native speed.
 
   <IfcAlert>
-This file has to be served statically in your application. This might need different tweaks if you are using frameworks or libraries like React, Angular, Vue or Svelte.
+These files have to be served statically in your application. This might need different tweaks if you are using frameworks or libraries like React, Angular, Vue or Svelte.
   </IfcAlert>
 
 
@@ -284,7 +284,7 @@ Finally, we will use IFC.js to load IFC files. This can be done by instantiating
 ```
 
   🎣
-Keep in mind that if you haven't saved the file `web-ifc.wasm` in the root of the project, you'll need to specify its location with `setWasmPath`. For instance, if we had store `web-ifc.wasm` in a folder called `wasm` contained in a folder called `static` in the root of the project, we would do the following:
+Keep in mind that if you haven't saved the wasm files in the root of served files of the project, you'll need to specify its location with `setWasmPath`. For instance, if we had them stored in a folder called `wasm` contained in a folder called `static` in the root of the project, we would do the following:
 
 ```js
   ifcLoader.ifcManager.setWasmPath("static/wasm/");

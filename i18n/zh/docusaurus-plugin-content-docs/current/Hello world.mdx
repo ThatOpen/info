@@ -152,13 +152,13 @@ export default {
 ### WebAssembly
 
   📁
-  接下来要做的是把`web-ifc.wasm`文件复制到你项目的一个目录中。它可以在`node_modules\web-ifc\web-ifc.wasm`中找到（如果你只使用Three的IFCLoader，则可以在`node_modulesthree\examples\jsm\loaders\ifc\web-ifc.wasm`中找到）。我们可以把它复制到我们想去的地方；在这个例子中，它将被复制到项目根目录下一个叫wasm的文件夹中。
+  接下来要做的是把`web-ifc.wasm`和`web-ifc-mt.wasm`文件复制到你项目中的一个目录。它可以在`node_modules\web-ifc`中找到（如果你只使用Three的IFCLoader，则可以在`node_modules\three\examples\jsmloaders\ifc`中找到）。我们可以把它们复制到我们想要的地方；在这个例子中，它们将被复制到项目根目录下一个叫wasm的文件夹中。
 
-这个文件是必要的，因为它包含了<a href="https://github.com/IFCjs/web-ifc">web-ifc</a>的编译的C++逻辑，它是以本地速度读写IFC文件的解析核心。
+这些文件是必要的，因为它们包含了<a href="https://github.com/IFCjs/web-ifc">web-ifc</a>的编译的C++逻辑，它是以本地速度读写IFC文件的解析核心。
 
-  <IfcAlert>
-这个文件必须在你的应用程序中静态地提供。如果你使用的是React、Angular、Vue或Svelte等框架或库，这可能需要进行不同的调整。
-  </IfcAlert>
+<IfcAlert>
+    这些文件必须在你的应用程序中静态地提供。如果你使用的是React、Angular、Vue或Svelte等框架或库，这可能需要进行不同的调整。
+</IfcAlert>
 
 
 ## 设置一个3D场景
@@ -284,7 +284,7 @@ export default {
 ```
 
   🎣
-  请记住，如果你没有把`web-ifc.wasm`文件保存在项目的根目录下，你需要用`setWasmPath`指定它的位置。例如，如果我们将`web-ifc.wasm`存放在项目根目录下的`wasm`文件夹中，该文件夹名为`static`，我们将做如下操作。
+  请记住，如果你没有把wasm文件保存在项目的服务文件根目录下，你需要用`setWasmPath`指定它的位置。例如，如果我们把它们保存在项目根目录下的`wasm`文件夹中，该文件夹名为`static`，我们将做如下工作。
 
 ```js
   ifcLoader.ifcManager.setWasmPath("static/wasm/");
