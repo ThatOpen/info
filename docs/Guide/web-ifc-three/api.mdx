@@ -658,6 +658,7 @@ Removes the specified items from the specified geometric subset.
 #### Example:
 
 ```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const walls = await manager.getAllItemsOfType(0, W, false);

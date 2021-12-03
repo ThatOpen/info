@@ -657,6 +657,7 @@ Gets the spatial structure of the project.
 #### 例
 
 ```js
+  import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
   const model = ifcModel.mesh.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const walls = await manager.getAllItemsOfType(0, W, false);
