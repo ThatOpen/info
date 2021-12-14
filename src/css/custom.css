@@ -165,6 +165,21 @@ iframe {
   }
 }
 
+@media (min-width: 1500px) {
+  [class="tableOfContents_node_modules-@docusaurus-theme-classic-lib-next-theme-TOC- thin-scrollbar"]{
+    width: 15rem;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 997px)  {
+  [class="col col--3"]{
+    visibility: collapse;
+  }
+  [class="col docItemCol_node_modules-@docusaurus-theme-classic-lib-next-theme-DocItem-"]{
+    margin-left: 3rem !important;
+  }
+}
+
 @media (max-width: 1500px) {
   .main-wrapper > div {
     width: 100%;
