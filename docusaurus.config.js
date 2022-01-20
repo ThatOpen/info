@@ -105,8 +105,9 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} IFC.js.`,
     },
     algolia: {
-      apiKey: '40c1bb43219c45d7e9a2a236e16d9cee',
       indexName: 'ifcjs',
+      appId: 'JKKUEA9VHK',
+      apiKey: '1a1194316534ad4344db54dd773d5d26',
       searchParameters: { 'facetFilters': ["type:content"] },
       debug: false
       //... other Algolia params
