@@ -48,7 +48,7 @@ module.exports = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://discord.com/invite/g7Uzn2KSwB',
+          href: 'https://discord.gg/FXfyR4XrKT',
           label: 'Community',
           position: 'right'
         },
@@ -80,7 +80,7 @@ module.exports = {
           items: [
             {
               label: 'Discord',
-              href: 'https://discord.com/invite/g7Uzn2KSwB',
+              href: 'https://discord.gg/FXfyR4XrKT',
             },
             {
               label: 'Twitter',

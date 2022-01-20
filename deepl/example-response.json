@@ -29,7 +29,7 @@
   "__H2__Para quién es esta biblioteca",
   "Esta biblioteca está dirigida a cualquier persona que quiera desarrollar aplicaciones BIM. Esto incluye tanto a los desarrolladores que crean aplicaciones para el sector de la construcción como a los arquitectos y otros profesionales que quieren aprovechar los datos de sus archivos IFC.",
   "Para utilizar esta biblioteca es necesario tener un conocimiento básico de JavaScript, HTML y CSS. Estos conocimientos están fuera del alcance de esta documentación. También necesitarás utilizar alguna librería 3D para mostrar la geometría del IFC (Three.js o Babylon.js).",
-  "Si no sabes por dónde empezar, te sugerimos que eches un vistazo [aquí](https://threejsfundamentals.org/) o que te unas al [Canal de Discordia](https://discord.com/invite/g7Uzn2KSwB) y nos saludes.",
+  "Si no sabes por dónde empezar, te sugerimos que eches un vistazo [aquí](https://threejsfundamentals.org/) o que te unas al [Canal de Discordia](https://discord.gg/FXfyR4XrKT) y nos saludes.",
   "__H2__¿Por qué es diferente IFC.js?",
   "IFC.js es una biblioteca escrita por y para JavaScript, posiblemente uno de los lenguajes más ubicuos. Esto significa que es compatible con los navegadores web y las aplicaciones de escritorio y móviles. Además, JavaScript es uno de los lenguajes más fáciles de aprender y permite construir interfaces de usuario con HTML y CSS. En otras palabras, crear aplicaciones BIM con IFC.js es tan fácil como crear una página web.",
   "H3__Multiplataforma",
@@ -61,5 +61,5 @@
   "Si eres un desarrollador de Three.js, puedes ayudarnos con <a",
   "\"Herramientas BIM, brainstorming y UX\">",
   "Si estás interesado en crear aplicaciones BIM abiertas y tienes grandes ideas para herramientas BIM o interfaces de usuario, ayúdanos a hacer <a href={\"https://github.com/IFCjs/web-ifc-viewer\"}>web-ifc-viewer</a> el mejor visor IFC del mercado.",
-  "En cualquier caso, te animamos a que te pases por el [canal de Discord](https://discord.com/invite/g7Uzn2KSwB), nos saludes y nos cuentes lo que te preocupa, para que podamos orientarte."
+  "En cualquier caso, te animamos a que te pases por el [canal de Discord](https://discord.gg/FXfyR4XrKT), nos saludes y nos cuentes lo que te preocupa, para que podamos orientarte."
 ]
