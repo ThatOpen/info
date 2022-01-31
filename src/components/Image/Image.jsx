@@ -3,7 +3,6 @@ import styles from "./Image.module.css";
 import Translate from '@docusaurus/Translate';
 
 export const IfcImage = (props) => {
-    console.log(props);
   return (
     <div>
       {props.image}
