@@ -6,7 +6,7 @@ export const Scene = (props) => {
         <iframe
             className={styles.threeScene}
             width="100%"
-            height="300"
+            height="600px"
             key={Math.random()}
             src={props.link}
             frameBorder="0"

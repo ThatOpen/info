@@ -1,51 +1,72 @@
-# IFC.js info
+<p align="center">
+  <a href="https://ifcjs.github.io/info/">ifc.js</a>
+  |
+  <a href="https://https://ifcjs.github.io/info/docs/Guide/web-ifc-viewer/Introduction">documentation</a>
+  |
+  <a href="https://ifcjs.github.io/web-ifc-viewer/example/index">demo</a>
+  |
+  <a href="https://discord.gg/FXfyR4XrKT">discord</a>
+  |
+  <a href="https://github.com/IFCjs/web-ifc-viewer/tree/master/example">usage example</a>
+  |
+  <a href="https://www.npmjs.com/package/web-ifc-viewer">npm package</a>
+  |
+  <a href="https://github.com/IFCjs/web-ifc-viewer/blob/main/contributing.md">contributing</a>
+</p>
 
-Welcome to the official documentation for IFC.js! You can visit it [here](https://ifcjs.github.io/info/).
+<img src="banner.png">
+<h1>IFC.js docs <img src="https://ifcjs.github.io/info/img/logo.svg" width="32"></h1>
 
-## Getting started
+![opencollective](https://opencollective.com/ifcjs/tiers/badge.svg)
 
-You can use the following commands to get the repository up and running locally:
+This repository is the official documentation of [IFC.js](https://github.com/IFCjs). You can visit it live [here](https://ifcjs.github.io/info/). It contains all the information regarding the project, including:
 
-`git clone https://github.com/IFCjs/info` to download the last version of the docs.
+* The motivation behind IFC.js.
 
-`yarn` to install all local dependencies (you'll need to have [yarn](https://yarnpkg.com/) installed).
+* Introduction to all the modules of the library.
 
-`yarn start` to launch a local server and run the docs application.
+* API reference.
 
-## Community
+* Step by step tutorials.
 
-Join the [Discord channel](https://discord.gg/g7Uzn2KSwB) to meet other people interested in this project!
+* Informal articles of the authors.
 
-## Contribution
+* Collaboration system and patreon.
 
-Do you want to contribute to make this even better? Bear in mind that this project is split in multiple repositories, so you might want to contribute to the part that interests you most.
+* Community highlight.
 
-- [web-ifc](https://github.com/tomvandig/web-ifc) if you are interested in low-level IFC parsing, WebAssembly, Emscripten, C++.
+* Link to social networks.
 
-- [web-ifc-three](https://github.com/IFCjs/web-ifc-three) if you want to help us with the Three.js geometry generation.
+## Status
 
-- [web-ifc-viewer](https://github.com/IFCjs/web-ifc-viewer) if you have ideas about cool tools that could help others develop BIM applications!
+This documentation has been made using  [docusaurus](https://docusaurus.io/). It is hand-crafted, not automatically generated. At the same time, IFC.js is a fast-moving project, and that means that the documentation requires intensive maintenance until the project is consolidated.
 
-- This repository if you want to help us by creating more example implementations of IFC.js.
+We are aware of the extra effort this implies, but we want to avoid generic and robotic APIs and make something more human and easy to start with.
 
-- Try it and spread the word!
+This maintenance includes mainly updating the API methods and classes, creating new tutorials as requested by the community. This is a work in progress, so if you see something missing or incorrect, don't hesitate to let us know.
 
-## Issues
+## Quick setup
 
-You can refer your issue to the specific repository: 
+First, download this project or clone the repository and install the dependencies with `yarn install`. You can then start the project locally using `yarn start`.
 
-- [web-ifc](https://github.com/tomvandig/web-ifc) if you have any problem with the parsing / loading (items not being readed / loaded correctly, information missing).
+To start the project in another lanaguage, you can use the `--locale` flag:
 
-- [web-ifc-three](https://github.com/agviegas/web-ifc-three) if you have any problem with the adaptation we did for Three.js (efficiency, Three geometry generation, etc).
+- japanese: `yarn start --locale ja`
 
-- [web-ifc-viewer](https://github.com/IFCjs/web-ifc-viewer) if you have any problem with the boilerplate code it offers to develop BIM viewers.
+- chinese: `yarn start --locale zh`
 
-- This repository if you have any problem with the specific implementation of an example.
+## Content
 
-## Testing files
+This project consists of the following folders:
 
-You can find the IFC files for testing [here](https://github.com/agviegas/test-ifc-files).
+* **docs**: the markdown documents of the docs.
 
-## License
+* **i18n**: the markdown documents of the docs in other languages.
 
-This project is licensed under the MIT License.
+* **i18n**: the markdown documents of the docs in other languages.
+
+## Contributing
+
+Want to help out? Great!
+
+Please checkout [our contribution suggestsions](https://github.com/IFCjs/web-ifc-viewer/blob/main/contributing.md) or speak to us directly in [Discord](https://discord.gg/FXfyR4XrKT).

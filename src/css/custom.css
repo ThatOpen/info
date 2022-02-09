@@ -312,3 +312,13 @@ html[data-theme='dark'] .DocSearch {
           var(--ifm-color-emphasis-100) 100%
   );
 }
+
+.openCollectiveBanner {
+  margin-bottom: -5rem;
+}
+
+@media only screen and (max-width: 390px) {
+  .openCollectiveBanner {
+    margin-bottom: -10rem;
+  }
+}
