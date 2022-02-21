@@ -83,9 +83,17 @@ module.exports = {
               href: 'https://discord.gg/FXfyR4XrKT',
             },
             {
+              "label": "Funding",
+              "href": "https://opencollective.com/ifcjs"
+            },
+            {
               label: 'Twitter',
               href: 'https://twitter.com/agviegasBIM',
             },
+            {
+              "label": "Twitch",
+              "href": "https://www.twitch.tv/ifc_js/about"
+            }
           ],
         },
         {
@@ -99,6 +107,10 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/IFCjs',
             },
+            {
+              "label": "Roadmap",
+              "href": "https://trello.com/b/d5frRnSe/roadmap"
+            }
           ],
         },
       ],

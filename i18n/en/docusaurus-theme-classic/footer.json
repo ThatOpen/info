@@ -1,18 +1,18 @@
 {
   "link.title.Docs": {
-    "message": "ドキュメント",
+    "message": "Docs",
     "description": "The title of the footer links column with title=Docs in the footer"
   },
   "link.title.Community": {
-    "message": "コミュニティ",
+    "message": "Community",
     "description": "The title of the footer links column with title=Community in the footer"
   },
   "link.title.More": {
-    "message": "さらに",
+    "message": "More",
     "description": "The title of the footer links column with title=More in the footer"
   },
   "link.item.label.Tutorial": {
-    "message": "チュートリアル",
+    "message": "Tutorial",
     "description": "The label of footer link with label=Tutorial linking to /docs/introduction"
   },
   "link.item.label.Discord": {
@@ -20,23 +20,31 @@
     "description": "The label of footer link with label=Discord linking to https://discord.gg/FXfyR4XrKT"
   },
   "link.item.label.Twitter": {
-    "message": "ツイッター",
+    "message": "Twitter",
     "description": "The label of footer link with label=Twitter linking to https://twitter.com/agviegasBIM"
   },
   "link.item.label.Blog": {
-    "message": "ブログ",
+    "message": "Blog",
     "description": "The label of footer link with label=Blog linking to /blog"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
     "description": "The label of footer link with label=GitHub linking to https://github.com/IFCjs"
   },
-  "link.item.label.Funding": {
-    "message": "資金について",
-    "description": "The label of footer link with label=Funding linking to https://opencollective.com/ifcjs"
-  },
   "copyright": {
-    "message": "著作権は2021年IFC.jsに帰属します。",
+    "message": "Copyright © 2022 IFC.js.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Twitch": {
+    "message": "Twitch",
+    "description": "The label of footer link with label=Twitch linking to https://www.twitch.tv/ifc_js/about"
+  },
+  "link.item.label.Roadmap": {
+    "message": "Roadmap",
+    "description": "The label of footer link with label=Roadmap linking to https://trello.com/b/d5frRnSe/roadmap"
+  },
+  "link.item.label.Funding": {
+    "message": "Funding",
+    "description": "The label of footer link with label=Funding linking to https://opencollective.com/ifcjs"
   }
 }

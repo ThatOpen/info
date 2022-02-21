@@ -16,8 +16,12 @@
     "description": "The label for category 🧩 web-ifc-three in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.🎓 Tutorials": {
-    "message": "🎓 Tutorials",
+    "message": "🎓 チュートリアル",
     "description": "The label for category 🎓 Tutorials in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Courses": {
+    "message": "コース紹介",
+    "description": "The label for category Courses in sidebar"
   },
   "sidebar.tutorialSidebar.category.🧩 web-ifc-viewer": {
     "message": "🧩 web-ifc-viewer",
