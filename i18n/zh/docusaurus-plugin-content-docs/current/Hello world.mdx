@@ -1,6 +1,6 @@
 ---
 title: 你好，世界
-sidebar_position: 2
+sidebar_position: 4
 ---
 
   import {IfcCard} from "../../../../src/components/Card/InfoCard";
@@ -13,7 +13,7 @@ sidebar_position: 2
 用IFC.js创建一个BIM应用程序是非常容易的。你可以找到指南的完整项目[这里](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-three/helloworld)和部署的应用程序[这里](https://ifcjs.github.io/hello-world/examples/web-ifc-three/helloworld/)。你只需要有<a href="https://nodejs.org/en/">Node.js</a>和任何IDE的安装，就可以按照下面的步骤进行。另外，如果你没有任何IFC文件来跟随，你可以得到一些[这里](https://github.com/IFCjs/test-ifc-files)。
 
   <IfcAlert>
-使用IFC.js需要有网络开发（HTML、CSS、JavaScript）和Three.js的基本知识。如果您以前没有使用Three.js的经验，您也许应该看看<a href="https://threejsfundamentals.org/">这里</a>。
+使用IFC.js需要有网络开发（HTML、CSS、JavaScript）和Three.js的基本知识。如果您以前没有使用Three.js的经验，您也许应该看看<a href="https://threejs.org/manual/">这里</a>。
   </IfcAlert>
 
   🐣
@@ -144,7 +144,7 @@ export default {
   },
   "dependencies": {
     "three": "^0.128.0",
-    "web-ifc-three": "0.0.32"
+    "web-ifc-three": "0.0.102"
   }
 }
 ```
@@ -277,7 +277,7 @@ export default {
       var ifcURL = URL.createObjectURL(file);
       ifcLoader.load(
             ifcURL,
-            (ifcModel) => scene.add(ifcModel.mesh));
+            (ifcModel) => scene.add(ifcModel));
     },
     false
   );
@@ -309,7 +309,7 @@ export default {
 ```js
 ifcLoader.load(
     "models/Example_model.ifc",
-    (ifcModel) => scene.add(ifcModel.mesh));
+    (ifcModel) => scene.add(ifcModel));
 ```
 
 <IfcAlert>

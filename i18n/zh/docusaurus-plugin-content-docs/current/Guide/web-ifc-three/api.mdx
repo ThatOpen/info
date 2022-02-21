@@ -25,17 +25,17 @@ import { IFCLoader } from "web-ifc-three/IFCLoader";
 const ifcLoader = new IFCLoader();
 ifcLoader.load(
     "models/Example_model.ifc",
-    (ifcModel) => scene.add(ifcModel.mesh));
+    (ifcModel) => scene.add(ifcModel));
 ```
 
   🏠🏠🏠
 通过`web-ifc-three`，你可以在场景中加载多个模型。许多API操作是在一个指定的模型上执行的。为了表达我们想在哪个模型上操作，我们必须给出它的`ModelID`。
 
   🔍
-你可以通过生成的网格的属性`modelID`获得模型的ID。我们将这个属性添加到[Three.js default mesh](https://threejs.org/docs/#api/en/objects/Mesh)。
+你可以通过生成的网格的属性`modelID`获得模型的ID。
 
 ```js
-const modelID = ifcModel.mesh.modelID;
+const modelID = ifcModel.modelID;
 ```
 
   ✌
@@ -342,7 +342,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
   const type = manager.getIfcType(model, id);
@@ -406,7 +406,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
   const props = await manager.getItemProperties(model, id, false);
@@ -435,7 +435,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
   const props = await manager.getTypeProperties(model, id, false);
@@ -469,7 +469,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
   const props = await manager.getPropertySets(model, id, false);
@@ -499,7 +499,7 @@ IFC中的元素总是有一个相关的类型。IfcWall, IfcSlab, IfcWindow, Ifc
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const id = 2142;
   const manager = loader.ifcLoader.ifcManager;
   const props = await manager.getMaterialsProperties(model, id, false);
@@ -527,7 +527,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const ifcProject = await manager.getSpatialStructure(model);
 ```
@@ -558,7 +558,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const subset = manager.getSubset(model);
 ```
@@ -592,7 +592,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const config = {
         modelID: model
@@ -608,8 +608,8 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 ```js
   IfcLoader.IfcManager.removeSubset (
                         modelID: number,
-                        scene?: Scene,
-                        material?: Material
+                        material?: Material,
+                        customID?: string,
                         ): object;
 ```
 
@@ -620,14 +620,14 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 
 - `modelID` IFC模型的ID。
 
-- `scene` (可选）子集所在的场景。
-
 - `material` (可选）分配给子集的材料（如果有的话）。
+
+- `customID` (可选) 可选的自定义名称，用于给子集命名。这允许用相同的材料创建多个子集。
 
 #### 例子。
 
 ```js
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const manager = loader.ifcLoader.ifcManager;
   manager.removeSubset(model);
 ```
@@ -660,7 +660,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 
 ```js
   import { IFCWALLSTANDARDCASE as W } from 'web-ifc';
-  const model = ifcModel.mesh.modelID;
+  const model = ifcModel.modelID;
   const manager = loader.ifcLoader.ifcManager;
   const walls = await manager.getAllItemsOfType(0, W, false);
   manager.removeFromSubset(model, walls);

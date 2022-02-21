@@ -1,6 +1,6 @@
 ---
 title: ハローワールド
-sidebar_position: 2
+sidebar_position: 4
 ---
 
   import {IfcCard} from "../../../../src/components/Card/InfoCard";
@@ -13,7 +13,7 @@ sidebar_position: 2
   IFC.jsを使ったBIMアプリケーションの作成はとても簡単です。ガイドの完全なプロジェクト[こちら](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-three/helloworld)と、デプロイされたアプリケーション[こちら](https://ifcjs.github.io/hello-world/examples/web-ifc-three/helloworld/)をご覧いただけます。以下の手順を実行するには、<a href="https://nodejs.org/en/">Node.js</a>と任意のIDEがインストールされている必要があります。また、IFCファイルをお持ちでない方は、[こちら](https://github.com/IFCjs/test-ifc-files)から入手できます。
 
   <IfcAlert>
-IFC.jsを使用するには、Web開発（HTML、CSS、JavaScript）とThree.jsの基本的な知識が必要です。Three.jsの使用経験がない場合は、<a href="https://threejsfundamentals.org/">こちら</a>をご覧いただくとよいでしょう。
+IFC.jsを使用するには、Web開発（HTML、CSS、JavaScript）とThree.jsの基本的な知識が必要です。Three.jsの使用経験がない場合は、<a href="https://threejs.org/manual/">こちら</a>をご覧いただくとよいでしょう。
   </IfcAlert>
 
   🐣
@@ -144,7 +144,7 @@ export default {
   },
   "dependencies": {
     "three": "^0.128.0",
-    "web-ifc-three": "0.0.32"
+    "web-ifc-three": "0.0.102"
   }
 }
 ```
@@ -277,7 +277,7 @@ export default {
       var ifcURL = URL.createObjectURL(file);
       ifcLoader.load(
             ifcURL,
-            (ifcModel) => scene.add(ifcModel.mesh));
+            (ifcModel) => scene.add(ifcModel));
     },
     false
   );
@@ -309,7 +309,7 @@ export default {
 ```js
 ifcLoader.load(
     "models/Example_model.ifc",
-    (ifcModel) => scene.add(ifcModel.mesh));
+    (ifcModel) => scene.add(ifcModel));
 ```
 
 <IfcAlert>
