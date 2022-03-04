@@ -231,7 +231,7 @@ Googleのガイドに従って、新しいGoogle Cloudプロジェクトを作�
 
 ### Chrome拡張機能
 
-さて、これからGoogle Chromeの拡張機能を作って、**ユーザーが開きたいファイルを選択できるようにします**。今までやったことがない人には難しく聞こえるかもしれませんが、実際にはとても簡単です。完成したものは[こちら](https://github.com/IFCjs/Drive-CDE)でご覧いただけます。
+さて、これからGoogle Chromeの拡張機能を作って、**ユーザーが開きたいファイルを選択できるようにします**。今までやったことがない人には難しく聞こえるかもしれませんが、実際にはとても簡単です。完成したものは[こちら](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE)でご覧いただけます。
 
   <IfcCard>
 🔑🔑🔑
@@ -244,9 +244,9 @@ Googleのガイドに従って、新しいGoogle Cloudプロジェクトを作�
 🧱
 重要なファイルは2つしかありません。
 
-- [background.js](https://github.com/IFCjs/Drive-CDE/blob/master/background.js): ユーザーが何かをクリックしたときなど、ページのイベントを制御しますが、ページのコンテンツにはアクセスできません。
+- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/background.js): ユーザーが何かをクリックしたときなど、ページのイベントを制御しますが、ページのコンテンツにはアクセスできません。
 
-- [foreground.js](https://github.com/IFCjs/Drive-CDE/blob/master/foreground.js): ページのコンテンツにはアクセスできますが、イベントにはアクセスできません。
+- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/foreground.js): ページのコンテンツにはアクセスできますが、イベントにはアクセスできません。
 
 👬
 想像できるように、私たちが望むことを実行するためには、両方のファイルがお互いに通信しなければなりません。コードを見るとわかるように、シンプルなメッセージシステムでそれを行っています。

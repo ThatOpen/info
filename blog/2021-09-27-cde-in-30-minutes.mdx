@@ -232,7 +232,7 @@ If you take a look at the code we have posted, you will see that **we have copie
 
 ### Chrome extension
 
-Now we are going to make a Google Chrome extension so that the **user can select the files they want to open**. If you've never done this before, it may sound intimidating, but it's actually very simple. You can find the finished result [here](https://github.com/IFCjs/Drive-CDE).
+Now we are going to make a Google Chrome extension so that the **user can select the files they want to open**. If you've never done this before, it may sound intimidating, but it's actually very simple. You can find the finished result [here](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE).
 
   <IfcCard>
 🔑🔑🔑
@@ -245,9 +245,9 @@ There are many [step-by-step guides](https://dev.to/anobjectisa/how-to-build-a-c
 🧱
 There are really only 2 important files:
 
-- [background.js](https://github.com/IFCjs/Drive-CDE/blob/master/background.js): controls the events of the page, like when the user clicks on something, but doesn't have access to the page content.
+- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/background.js): controls the events of the page, like when the user clicks on something, but doesn't have access to the page content.
 
-- [foreground.js](https://github.com/IFCjs/Drive-CDE/blob/master/foreground.js): has access to the page content, but not to the events.
+- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/foreground.js): has access to the page content, but not to the events.
 
 👬
 So, as you can imagine, both files have to communicate with each other in order to do what we want. As you can see in the code, they do it with a simple message system.
