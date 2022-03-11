@@ -148,7 +148,7 @@ Sets a callback function that is called every 10% of IFC loaded. This way, you c
     console.log("Progress: ", progress, "%");
   }
 
-  ifcLoader.ifcManager.setOnProgress = exampleCallback;
+  ifcLoader.ifcManager.setOnProgress(exampleCallback);
 ```
 
 ###  applyWebIfcConfig

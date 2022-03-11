@@ -147,7 +147,7 @@ IFCが10％ロードされるごとに呼び出されるコールバック関数
     console.log("Progress: ", progress, "%");
   }
 
-  ifcLoader.ifcManager.setOnProgress = exampleCallback;
+  ifcLoader.ifcManager.setOnProgress(exampleCallback);
 ```
 
 ###  applyWebIfcConfig
