@@ -245,9 +245,9 @@ There are many [step-by-step guides](https://dev.to/anobjectisa/how-to-build-a-c
 🧱
 There are really only 2 important files:
 
-- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/background.js): controls the events of the page, like when the user clicks on something, but doesn't have access to the page content.
+- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/background.js): controls the events of the page, like when the user clicks on something, but doesn't have access to the page content.
 
-- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/foreground.js): has access to the page content, but not to the events.
+- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/foreground.js): has access to the page content, but not to the events.
 
 👬
 So, as you can imagine, both files have to communicate with each other in order to do what we want. As you can see in the code, they do it with a simple message system.

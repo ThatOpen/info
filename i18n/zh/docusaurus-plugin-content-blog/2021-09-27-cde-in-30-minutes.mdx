@@ -244,9 +244,9 @@ Google Drive有很多功能：我们可以控制对文件的读写权限、版�
 🧱
 实际上只有2个重要的文件。
 
-- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/background.js)：控制页面的事件，比如当用户点击某个东西时，但不能访问页面内容。
+- [background.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/background.js)：控制页面的事件，比如当用户点击某个东西时，但不能访问页面内容。
 
-- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/blob/master/foreground.js): 可以访问页面内容，但不能访问事件。
+- [foreground.js](https://github.com/IFCjs/hello-world/tree/main/examples/extensions/Drive-CDE/foreground.js): 可以访问页面内容，但不能访问事件。
 
 👬
 因此，正如你所想象的，这两个文件必须相互沟通，以便做我们想要的事情。正如你在代码中看到的，它们用一个简单的消息系统来做。
