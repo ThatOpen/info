@@ -1,164 +1,102 @@
 ---
-title: 🚀 Advanced Loading
-sidebar_position: 5
+title: 🚀 Multithreading
+sidebar_position: 6
 ---
 
 import {IfcCard} from "../../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../../src/components/Alert/Alert";
+import {Scene} from "../../../../src/components/Scene/Scene"
 
 ## Introduction
 
-👩‍🏫
-With what we have seen in other tutorials we already know how to select elements in 3D, access their properties and select them using subsets (for example to highlight them).
+🥶🥶🥶
+Everything seen so far is very cool, but we have a problem: when we load a very large model **the application freezes for some seconds**. This problem also happens when we want to extract many properties from the model. Is there any way to avoid this?
 
-🚪🧱
-However, in many BIM applications it is also possible to hide and isolate elements to, for example, hide all elements that do not comply with a certain filter or show only those objects belonging to a floor of the building. This is also possible using IFC.js.
+🔥
+Of course, IFC.js has foreseen this situation and has implemented **multithreading**. This means that heavy operations will be carried out in a parallel process that will not block the application, which will be updated asynchronously when the process concludes.
+
+👌
+This sounds complicated, and it is. But don't worry: we've got it all set up so you can have this in your BIM applications in a couple of lines of code.
 
 <IfcCard>
-   In this example we are going to create filters by category, so that the user can show or hide items using checkboxes.
+    You can find the full example of this tutorial <a href="https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-three/multithreading">here</a>.
 </IfcCard>
 
-As with the other tutorials, you can find the full example [here](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-three/hiding).
 
 ## How to do it
 
-### Get subsets of categories
+### Set up the webworker
 
-Visibility in IFC.js is based on subset operations. This allows complex visualisations to be created with minimal memory usage.
+👩‍🏫
+In order to enable multithreading, the **webworker** must be configured. But what is a webworker? The webworker is the mechanism that web browsers have to be able to work with multithreading. But don't worry if you haven't heard of them before, **you don't need them to use multithreading in IFC.js**.
 
-The first thing we are going to do is to define which categories we are going to allow the user to show or hide. To save memory, categories in IFC.js are defined as numeric constants. So let's create an object that maps the name of those constants to their numeric value, and a function to retrieve them:
+📦📦📦
+If you work with `npm`, `yarn` or another package manager in your project there should be a folder called `node_modules`, with all the folders of the libraries your project is using. In `node_modules/web-ifc-three` you will find the two files needed to use webworkers: `IFCWorker.js` and `IFCWorker.js.map`.
 
-```js
-import {
-    IFCWALLSTANDARDCASE,
-    IFCSLAB,
-    IFCDOOR,
-    IFCWINDOW,
-    IFCFURNISHINGELEMENT,
-    IFCMEMBER,
-    IFCPLATE
-} from 'web-ifc';
+<IfcCard>
+You have to copy these two files to a directory in your project that will be served with the final application. This varies depending on the technology you are using (vanilla JS, React, Angular, etc). You can use the same directory you are using for the wasm files.
+</IfcCard>
 
-// List of categories names
-const categories = {
-    IFCWALLSTANDARDCASE,
-    IFCSLAB,
-    IFCFURNISHINGELEMENT,
-    IFCDOOR,
-    IFCWINDOW,
-    IFCPLATE,
-    IFCMEMBER
-};
-
-// Gets the name of a category
-function getName(category) {
-    const names = Object.keys(categories);
-    return names.find(name => categories[name] === category);
-}
-```
-
-Now let's create a couple of functions to get all the IDs of the elements belonging to a category and create a subset with those IDs. Remember that many IFC.js functions are asynchronous, so we're going to use async and await:
-
+🌍
+Then you have to specify where this file is located, in the same way as with the wasm file. This can be done like this:
 
 ```js
-// Gets the IDs of all the items of a specific category
-async function getAll(category) {
-	const manager = ifcLoader.ifcManager;
-    return manager.getAllItemsOfType(0, category, false);
+async function setUpMultiThreading() {
+    const manager = ifcLoader.ifcManager;
+    // These paths depend on how you structure your project
+	await manager.useWebWorkers(true, 'IFCWorker.js');
+	await manager.setWasmPath('../../../');
 }
 
-// Creates a new subset containing all elements of a category
-async function newSubsetOfType(category) {
-    const ids = await getAll(category);
-    return ifcLoader.ifcManager.createSubset({
-        modelID: 0,
-        scene,
-        ids,
-        removePrevious: true,
-        customID: category.toString()
-    })
-}
+setUpMultiThreading();
 ```
 
-### Set up GUI
+🥶⛔
+And, voi lá! Believe it or not, you have already enabled multithreading in your project. If you now try to load a file in your application or try to get many properties at once, you will see that **the application does not freeze**.
 
-We will now create a simple graphical interface to allow the user to control which categories are visible or invisible. This can easily be done with a little HTML and CSS:
+<IfcAlert>
+    Note that if you activate the webworker, the path to the wasm files must be relative to the webworker.
+</IfcAlert>
+
+🤖❓📚
+Keep in mind that **the version of the webworker has to match the version of the library** you are using. This means that if you update the version of `web-ifc-three` in the future, you'll need to copy these files again. You can automate this using a command-line library to copy files like `cpy`.
+
+### Loading progress
+
+🔥
+Using multithreading in your BIM application has numerous advantages. The most immediate is that we can now **show the user the loading progress of a model**. First we'll add a simple HTML message to show the progress:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="../../../favicon.ico">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>IFC.js</title>
-</head>
-<body>
-<canvas id="three-canvas"></canvas>
-
-<div class="checkboxes">
-    <div>
-        <input checked="true" id="IFCWALLSTANDARDCASE" type="checkbox">
-        Walls
-    </div>
-    <div>
-        <input checked="true" id="IFCSLAB" type="checkbox">
-        Slabs
-    </div>
-    <div>
-        <input checked="true" id="IFCWINDOW" type="checkbox">
-        Windows
-    </div>
-    <div>
-        <input checked="true" id="IFCFURNISHINGELEMENT" type="checkbox">
-        Furniture
-    </div>
-    <div>
-        <input checked="true" id="IFCDOOR" type="checkbox">
-        Doors
-    </div>
-    <div>
-        <input checked="true" id="IFCMEMBER" type="checkbox">
-        Curtain wall structure
-    </div>
-    <div>
-        <input checked="true" id="IFCPLATE" type="checkbox">
-        Curtain wall plates
-    </div>
-</div>
-
-<script src="bundle.js"></script>
-</body>
-</html>
+div id="text-container">
+   <p>Progress:</p><p id="progress-text">0</p><p>%</p>
+/div>
 ```
 
-```css
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+✨✨✨
+Next we are going to **link this HTML element to the model load event**. This can be easily done with the `setOnProgress()` method. Let's also apply some basic math to **convert progress into a percentage**.
+
+```js
+function setupProgressNotification() {
+    const text = document.getElementById('progress-text');
+    ifcLoader.ifcManager.setOnProgress((event) => {
+      const percent = event.loaded / event.total * 100;
+    	const result = Math.trunc(percent);
+    	text.innerText = result.toString();
+    });
 }
 
-html, body {
-    overflow: hidden;
-}
-
-#three-canvas{
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-}
-
-#file-input{
-    z-index: 1;
-    position: absolute;
-}
-
-.checkboxes {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-}
+setupProgressNotification();
 ```
+
+🌈
+If you have done everything correctly, we should be able to see the following viewer. If you try to load an IFC model, not only you will see that **the loading process does not block the 3D view**, but the **html text shows the loading progress in real time**.
+
+<Scene link={"https://ifcjs.github.io/hello-world/examples/web-ifc-three/multithreading/index.html"}/>
+
+## Next steps
+
+🎉🎉🎉
+Congratulations! You can now **create multithreaded BIM applications** that never freeze.
+
+😎
+You are now familiar with some advanced tools of IFC.js, but there's much more to learn. In later tutorials we will see how to not only read, but also **edit and create IFC files**.

@@ -139,6 +139,7 @@ iframe {
 
 .menu--responsive {
   margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 @keyframes logo-spin {
