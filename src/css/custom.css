@@ -139,7 +139,14 @@ iframe {
 
 .menu--responsive {
   margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1000px) {
+  .menu--responsive {
+    margin-top: 3rem;
+    margin-bottom: 0;
+  }
 }
 
 @keyframes logo-spin {
