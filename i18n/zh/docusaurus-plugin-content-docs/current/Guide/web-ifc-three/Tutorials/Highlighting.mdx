@@ -148,17 +148,22 @@ window.ondblclick = (event) => highlight(
 </IfcAlert>
 
   🌚
-在下一个例子中，我们将对加载的IFC模型应用透明材料，并在鼠标悬停在一个项目上时创建一个具有原始材料的子集。为此，我们将使用与之前几乎相同的代码。
+在下一个例子中，我们将把透明材料应用于加载IFC模型的副本，当鼠标悬停在一个项目上时，用原始材料创建一个子集。为此，我们将使用与之前几乎相同的代码。
 
 ```js {3,4,5,6,7,13,14,15,16}
-  ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
-      ifcModels.push(ifcModel);
-      ifcModel.material = new MeshLambertMaterial({
-          transparent: true,
-          opacity: 0.1,
-          color: 0x77aaff
-      });
-      scene.add(ifcModel)
+ ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
+    ifcModel.visible = false;
+
+    const modelCopy = new Mesh(
+        ifcModel.geometry,
+        new MeshLambertMaterial({
+                transparent: true,
+                opacity: 0.1,
+                color: 0x77aaff
+        }));
+
+    scene.add(ifcModel)
+    scene.add(modelCopy)
   });
 
   // ...

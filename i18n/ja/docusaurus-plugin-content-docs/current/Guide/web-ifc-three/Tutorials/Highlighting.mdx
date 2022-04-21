@@ -148,17 +148,22 @@ window.ondblclick = (event) => highlight(
 </IfcAlert>
 
   🌚
-次の例では、読み込まれたIFCモデルに透明なマテリアルを適用し、マウスがアイテムの上に乗ったときに元のマテリアルでサブセットを作成します。これには先ほどとほぼ同じコードを使います。
+次の例では、読み込んだ IFC モデルのコピーに透明なマテリアルを適用し、マウスをアイテムの上に置いたときに、オリジナルのマテリアルを持つサブセットを作成します。これには、前とほぼ同じコードを使用します。
 
 ```js {3,4,5,6,7,13,14,15,16}
-  ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
-      ifcModels.push(ifcModel);
-      ifcModel.material = new MeshLambertMaterial({
-          transparent: true,
-          opacity: 0.1,
-          color: 0x77aaff
-      });
-      scene.add(ifcModel)
+ ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
+    ifcModel.visible = false;
+
+    const modelCopy = new Mesh(
+        ifcModel.geometry,
+        new MeshLambertMaterial({
+                transparent: true,
+                opacity: 0.1,
+                color: 0x77aaff
+        }));
+
+    scene.add(ifcModel)
+    scene.add(modelCopy)
   });
 
   // ...

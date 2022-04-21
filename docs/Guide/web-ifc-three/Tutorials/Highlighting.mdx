@@ -148,17 +148,22 @@ If you create a geometry subset and do not specify a highlight material, the sub
 </IfcAlert>
 
   🌚
-In the next example we will apply a transparent material to the loaded IFC model and create a subset with the original materials when the mouse hovers over an item. For this we will use almost the same code as before.
+In the next example we will apply a transparent material to a copy of loaded IFC model and create a subset with the original materials when the mouse hovers over an item. For this we will use almost the same code as before.
 
 ```js {3,4,5,6,7,13,14,15,16}
   ifcLoader.load("../../IFC/01.ifc", (ifcModel) => {
-      ifcModels.push(ifcModel);
-      ifcModel.material = new MeshLambertMaterial({
-          transparent: true,
-          opacity: 0.1,
-          color: 0x77aaff
-      });
-      scene.add(ifcModel)
+    ifcModel.visible = false;
+
+    const modelCopy = new Mesh(
+        ifcModel.geometry,
+        new MeshLambertMaterial({
+                transparent: true,
+                opacity: 0.1,
+                color: 0x77aaff
+        }));
+
+    scene.add(ifcModel)
+    scene.add(modelCopy)
   });
 
   // ...

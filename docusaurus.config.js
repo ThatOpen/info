@@ -88,7 +88,7 @@ module.exports = {
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/agviegasBIM',
+              href: 'https://twitter.com/ifc_js',
             },
             {
               "label": "Twitch",
