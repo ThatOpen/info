@@ -634,7 +634,7 @@ Removes the specified geometric subset.
 ###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.removeSubset (
+  IfcLoader.IfcManager.removeFromSubset (
                         modelID: number,
                         ids: number[],
                         customID?: string,
@@ -649,11 +649,11 @@ Removes the specified items from the specified geometric subset.
 
 - `modelID` ID of the IFC model.
 
-- `ids` Express IDs of the items of the model that will conform the subset.
-
-- `material` (optional) Material assigned to the subset (if any).
+- `ids` Express IDs of the items to remove from the subset.
 
 - `customID` (optional) Optional custom name to give to the subset. This allows to create multiple subsets with the same material.
+
+- `material` (optional) Material assigned to the subset (if any).
 
 #### Example:
 

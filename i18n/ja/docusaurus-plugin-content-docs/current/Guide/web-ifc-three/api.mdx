@@ -633,7 +633,7 @@ Gets the spatial structure of the project.
 ###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.removeSubset (
+  IfcLoader.IfcManager.removeFromSubset (
                         modelID: number,
                         ids: number[],
                         customID?: string,
@@ -648,11 +648,11 @@ Gets the spatial structure of the project.
 
 - `modelID` IFCモデルのIDです。
 
-- `ids` サブセットに適合するモデルのアイテムのIDを表す。
-
-- `material` (オプション) サブセットに適用する素材。素材が指定されていない場合、サブセットには元の素材が適用されます。
+- `ids` サブセットから削除するアイテムの ID。
 
 - `customID` (オプション) サブセットに付けるオプションのカスタム名。これにより、同じ材料で複数のサブセットを作成することができます。
+
+- `material` (オプション) サブセットに適用する素材。素材が指定されていない場合、サブセットには元の素材が適用されます。
 
 #### 例
 

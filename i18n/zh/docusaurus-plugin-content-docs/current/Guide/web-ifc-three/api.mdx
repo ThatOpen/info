@@ -635,7 +635,7 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 ###  removeFromSubset
 
 ```js
-  IfcLoader.IfcManager.removeSubset (
+  IfcLoader.IfcManager.removeFromSubset (
                         modelID: number,
                         ids: number[],
                         customID?: string,
@@ -650,11 +650,11 @@ The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_2/FINAL/HTML/schem
 
 - `modelID` IFC模型的ID。
 
-- `ids`  将符合子集的模型的项目的ExpressIDs。
-
-- `material` (可选）分配给子集的材料（如果有的话）。
+- `ids`  要从子集中删除的项目的ID。
 
 - `customID` (可选) 可选的自定义名称，用于给子集命名。这允许用相同的材料创建多个子集。
+
+- `material` (可选）分配给子集的材料（如果有的话）。
 
 #### 例子。
 
