@@ -522,7 +522,8 @@ const ifcProject = await manager.getSpatialStructure(model);
 ```js
   IfcLoader.IfcManager.getSubset (
                         modelID: number,
-                        material?: Material
+                        material?: Material,
+                        customID?: string
                         ): object;
 ```
 
@@ -536,6 +537,8 @@ Gets the mesh of the subset with the specified [material](https://threejs.org/do
 - `modelID` ID of the IFC model.
 
 - `material` (optional) Material assigned to the subset (if any).
+
+- `customID` (optional) Optional custom name of the subset (if any). 
 
 #### Example:
 
