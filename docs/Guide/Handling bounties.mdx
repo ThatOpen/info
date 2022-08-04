@@ -1,0 +1,156 @@
+---
+title: Handling bounties
+sidebar_position: 1
+---
+
+import { IfcAlert } from "../../src/components/Alert/Alert";
+import { IfcCard } from "../../src/components/Card/InfoCard";
+
+## Let's learn to handle bounties
+
+🦅
+We follow the steps to take the selected reward and claim the payment
+
+## Bounty Bot & Take
+
+To interact with the bounty bot and manipulate its status, submit a comment containing only one of these commands:
+
+### ::take
+
+🎨
+To assign a bounty we will have to write `(::take)` in the comment box of the selected bounty.
+The due date of your assignment is the next 21st date UTC.
+
+<IfcCard icon={"🎁"} title={"Taked bounty successfully"}>
+  Hi,<b>YOUR_NAME</b>! Thanks for taking this bounty! The due date is <b>DATE_TIME</b>.
+</IfcCard>
+
+📜
+If you've received a comment like this... Congratulations, you just took this bounty.
+
+#### Requeriments:
+
+- Sender: Anyone,
+- Status: Available
+
+### ::extend
+
+🐣
+Extend the due date by 21 days. Can only be done once.
+
+#### Requeriments:
+
+- Sender: Assignee,
+- Status: In progress
+
+### ::freeze
+
+✨
+Freeze the bounty clock. The due date will be adjusted once the `!::unfreeze` is executed.
+The bounty manager can use this while reviewing the works without decreasing the duration available for the assignee.
+
+#### Requeriments:
+
+- Sender: Manager,
+- Status: In progress,
+- Frozen: False
+
+### ::unfreeze
+
+🔥
+Unfreeze the bounty clock. The new due date will be informed.
+
+#### Requeriments:
+
+- Sender: Manager,
+- Status: In progress,
+- Frozen: True
+
+### ::done
+
+🎓
+Change the status of this bounty to done. If your tasks require you to create pull requests,
+a PR title that either starts with the bounty ID or is exactly the same as the bounty name
+will automatically do the same thing when merged.
+
+#### Requeriments:
+
+- Sender: Manager,
+- Status: In progress
+
+### ::undone
+
+🧠
+Change the status of this bounty to in progress. Use this if the bounty is marked as done by mistake.
+
+#### Requeriments:
+
+- Sender: Manager,
+- Status: done
+
+### ::drop
+
+🎯
+Give up on this bounty.
+
+#### Requeriments:
+
+- Sender: Assignee,
+- Status: In progress
+
+### ::expense::\_\_\_\_
+
+🌈
+After you’re done with the tasks, you need to submit an expense to IFC.js Open Collective.
+To ensure the authenticity of the expense, you need to tell us the invoice number via this command.
+Replace the **\_\_\_\_** with the invoice number (only the number).
+
+#### Requeriments:
+
+- Sender: Assignee,
+- Status: Done
+
+## Create Pull Request
+
+🛑
+The tutorial should be made in the repository <a href="https://github.com/ifcjs/info">IFCjs/info.</a>
+
+😊
+You need to submit some Pull Request(PR) to complete the task, make sure that the last
+and only the last PR has a title that either starts with the bounty ID or is exactly the
+same as the bounty name.
+
+🌴
+If you have to develop an example for the tutorial do it <a href="https://github.com/ifcjs/hello-world">here</a>.
+
+<IfcCard icon={"🏆"} title={"Pull Request Status"}>
+  After the PR is merged, this bounty`s status will automatically changed to done.
+</IfcCard>
+
+## Generate Payment Request
+
+⚡
+This step is done through `Open Collective` if you still do not have your user you can
+create it <a href="https://opencollective.com/create-account?next=%2F">here.</a>
+
+☝
+To generate a payment request linked to your user, you must be logged in and access your account.
+You can do it through the following <a href="https://opencollective.com/ifcjs">link.</a>
+
+🧊
+Once the invoice is generated, we need the ID number to attach it to the command `::expense::`.
+(E.g. ::expense::<b>ID_INVOICE</b>)
+
+<IfcCard icon={"🥇"} title={"Pull Request Status"}>
+  Thank you for the confirmation. We will proceed to review the expense. Once approved, payment will be scheduled
+</IfcCard>
+
+🚩🚩🚩
+Your request is being studied, in case it is approved. We will send a message like this:
+
+<IfcAlert>
+  Your expense has been <b>approved!</b>
+</IfcAlert>
+
+🌱🌲🌎
+Congratulations and thanks for contributing to IFCjs.
