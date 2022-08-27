@@ -1,0 +1,177 @@
+---
+title: 📃 Editing Properties
+sidebar_position: 2
+---
+
+import { IfcAlert } from "../../../../src/components/Alert/Alert";
+import { IfcCard } from "../../../../src/components/Card/InfoCard";
+import { Scene } from "../../../../src/components/Scene/Scene";
+
+## Introduction
+
+🧊
+IFC.js does not only read and parse data from IFC files; the web-ifc library has writing capabilities. This cool feature allow users to edit or create ifc items. In this tutorial we will explore the methods of **editing properties** in an IFC file and save changes to a new file\*\*.
+
+💾
+This tutorial will help us to **Edit Properties** of IFC without a viewer😎.
+
+<IfcCard>
+    👉 You can check out the final result deployed <a href="https://ifcjs.github.io/hello-world/examples/web-ifc/ifc-to-json/properties/index.html">here</a> and the full code <a href="https://github.com/ifcjs/hello-world/tree/main/examples/web-ifc/ifc-to-json/editing-properties">here</a>.
+
+</IfcCard>
+
+📚
+There are several types of properties in the IFC scheme, each with a specific purpose, and IFC.js can get **all of them**. The list of all properties and how to retrieve them has been explained in details in the properties tutorial.
+
+<IfcCard icon="📕" title="Native properties">
+  Specific to each IFC class.
+</IfcCard>
+
+🚴‍♂️ But enough theory! Let's get down to work.
+
+## How to do it
+
+### Setting up
+
+**Install web-ifc package**
+
+`npm install web-ifc`
+
+**Imports and Global Variables**
+
+Make sure you copy the wasm files into the root directory or
+copy wasm files to a directory of your choice but you will have to call setWasmPath
+
+```js
+import {
+    IfcAPI, IFCBUILDINGSTOREY
+} from "web-ifc/web-ifc-api";
+..
+
+..
+..
+```
+
+**Reading File**
+
+We will read file and call [`LoadFileData()`](<https://github.com/IFCjs/hello-world/blob/main/examples/web-ifc/ifc-to-json/properties/app.js#:~:text=async%20function%20LoadFile(ifcAsText)>) and send IFC data as Text
+
+```js
+fetch("../../../../IFC/01.ifc")
+  .then((response) => response.text())
+  .then((data) => {
+    // This will send the file data to our LoadFileData method
+    LoadFileData(data);
+  });
+..
+  async function LoadFileData(ifcAsText) {
+    const uint8array = new TextEncoder().encode(ifcAsText);
+    modelID = await OpenIfc(uint8array);
+    getLevels();
+    ..
+}
+..
+```
+
+** Let's say we want to change the name of building storey i.e. level.**
+
+First we need to get all items of type building storey or IFCBUILDINGSTOREY
+In this example we will get all items of type IFC building elements then we will filter by the Name property for Nivel 2
+when the selected level is found, we will change the name to 'Level 2' and save the line to a new file.
+
+web-ifc api has a function GetLineIDsWithType which returns IDs of all elements in a given model for a specific type. the function takes two arguments model id and element type.
+IFC types are included in the web-ifc api as enumerations and should be imported to be used with GetLineIDsWithType function
+
+```js {8}
+..
+
+async function getLevels() {
+  levels = await ifcapi.GetLineIDsWithType(modelID, IFCBUILDINGSTOREY);
+  for (let i = 0; i < levels.size(); i++) {
+    const lvl = ifcapi.GetLine(modelID, levels.get(i));
+    if (lvl.Name.value === "Nivel 2") {
+      lvl.LongName.value = "Level 2";
+      ifcapi.WriteLine(modelID, lvl);
+      createDownloadLink(lvl);
+    }
+  }
+}
+..
+
+}
+```
+
+The returned object lvl is an array of objects coresponding to the selected type (IFCBUILDINGSTOREY in our case). This object contains the properties
+An example of the returned object for IFCBUILDINGSTOREY is shown below.
+
+👉 the properties have their values nested. i.e. Name property will not return the value corresponding to it, an object will be return having
+{type: 1, value: "Nivel 2"}
+
+So in order to return the name value we will have to refer to it as lvl.Name.value
+
+```json {8}
+{
+  "expressID": 144,
+  "type": 3124254112,
+  "GlobalId": {
+    "type": 1,
+    "value": "0w984V0GL6yR4z75YWgVzB"
+  },
+  "OwnerHistory": {
+    "type": 5,
+    "value": 41
+  },
+  "Name": {
+    "type": 1,
+    "value": "Nivel 2"
+  },
+  "Description": null,
+  "ObjectType": {
+    "type": 1,
+    "value": "Nivel:Nivel 1"
+  },
+  "ObjectPlacement": {
+    "type": 5,
+    "value": 143
+  },
+  "Representation": null,
+  "LongName": {
+    "type": 1,
+    "value": "Level 2"
+  },
+  "CompositionType": {
+    "type": 3,
+    "value": "ELEMENT"
+  },
+  "Elevation": {
+    "type": 4,
+    "value": 3
+  }
+}
+```
+
+### Creating the modified file
+
+After processing all changes, we will create a new file and add a download link to the web page so the user can download the file
+
+```js {8}
+function createDownloadLink(lvl) {
+  const data = ifcapi.ExportFileAsIFC(modelID);
+  const blob = new Blob([data]);
+  const file = new File([blob], "modified.ifc");
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.innerText = "Download";
+  link.download = "modified.ifc";
+  link.setAttribute("href", url);
+
+  document.body.appendChild(link);
+}
+```
+
+## Next steps
+
+🎉
+Congratulations! You should now be able to **traverse any IFC** and extract the properties you are looking for.
+
+You can use the web-ifc APIs to edit properties and store the edited data into a new IFC file.
