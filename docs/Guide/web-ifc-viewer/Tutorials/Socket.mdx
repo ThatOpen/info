@@ -1,0 +1,239 @@
+---
+title: 🌐 Socket.IO
+sidebar_position: 1
+---
+import {IfcCard} from "../../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../../src/components/Alert/Alert";
+import {Scene} from "../../../../src/components/Scene/Scene"
+
+## Introduction
+
+🚶‍♀️ With unlimited power of IFC.js at your fingertips you can now easily view and perform operations on IFC files easily. What about **networking**? In this tutorial we will learn how to share camera position over **Socket.IO** and view it in other user's browser. 
+
+<IfcCard>
+✌ Dig into the code and check out all the details about the <a href="https://github.com/aka-blackboots/hello-world/tree/main/examples/web-ifc-viewer/socket-io">Socket.IO Integration</a> on Github. 
+</IfcCard>
+
+## Import dependencies
+
+### Express
+```bash
+    npm install express
+```
+Express provides us with tooling for HTTP server, it is framework based upon Node.
+
+### Socket.IO
+```bash
+    npm install socket.io
+```
+Socket.IO provides bi-directional communication between a server and client.
+
+
+## How to do it 
+
+### Folder Structure
+
+👩‍🏫 For this tutorial, our folder strucutre will be a little different, but if you've been following other tutorials. This will be easy!
+
+
+#### index.js
+Create a ```index.js``` file, this file will hold the code for **Server Management**.
+We will create a express app and using that app we will create a server using **Socket.IO**
+
+```js
+const express = require('express');
+
+// Creating a express app
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+
+const { Server } = require("socket.io");
+// Creating Socket Server
+const io = new Server(server);
+
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+```
+
+
+#### Static Folder
+We will use this folder to store all the files that will be necessary and will be served to user when they open the browser.
+Let's get started by creating a ```static``` folder inside your directory. Add ```wasm``` files and ```ifc``` files into this folder.
+
+```js
+// Adding Static Folder path, which will be used to store required files
+app.use("/static", express.static('./static/'));
+```
+
+#### Socket 
+We can consider Socket as data forwarder, whenever there is connection made to **Server** we will send out the camera position to other clients connected on network.
+```js {8,10}
+// Connection Event which is triggered when someone enters their initials and is registered on network
+io.on('connection', (socket) => {
+    socket.on('username', (initials) => {
+        console.log('Connected User'+initials);
+    });
+
+    // When Client Camera is moved we will Emit this data to other Clients
+    socket.on('camera_move', (data) => {
+        data.id = socket.id;
+        io.emit('camera_move', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User Disconnected');
+    });
+})
+```
+
+### Getting User Initials/Details
+We will get User Initials from a basic **form** which will be created inside ```index.html```
+```html {4}
+<div id="socket-connection-form">
+    <label for="initials-name">Enter Your Initials</label><br>
+    <input maxlength="2" type="text" id="initials-name" name="initials-name"><br>
+    <button id="socket-Connect-Button" onclick="connectToSocket()">Connect</button>
+</div>
+
+// Socket.IO creates a local client folder
+<script src="/socket.io/socket.io.js"></script>
+
+// Bundle File will be fetched from static folder    
+<script src="static/bundle.js"></script>
+```
+When user clicks on **Connect** button a call to ```connectToSocket``` will be made which will create the connection.
+
+
+### Getting Camera Position and Sending to Server
+
+Importing and Variables
+``` bash
+import {
+    CSS2DObject
+} from 'three/examples/jsm/renderers/CSS2DRenderer';
+
+let socket;
+// To Store your Position
+let clients = {}; 
+// To Store the Positions of other user's Camera Location
+let pointers = {};
+```
+
+Once the button is clicked we need to Pass the Initials user has entered with **Camera** position, **Initials** will help to visualise the User's camera position as label created using <a href="https://threejs.org/docs/#examples/en/renderers/CSS2DRenderer">CSS2DRenderer</a>
+
+This code will be a little lengthy but trust us, it is easy!
+``` js
+function connectToSocket() {
+    const initials = document.getElementById("initials-name").value;
+    console.log(initials)
+
+    if (initials) {
+        const connectButton = document.getElementById("socket-Connect-Button");
+        connectButton.innerHTML = "Connected!";
+        connectButton.disabled = true;
+
+        socket = io();
+        console.log(initials + ":Connecting to socket");
+        socket.emit('username', initials);
+
+        socket.on('camera_move, function (data) {
+            if (!clients.hasOwnProperty(data.id)) {
+                // Creating a New Label when there are no previous Labels available
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'label';
+                labelDiv.textContent = data.initials;
+                labelDiv.style.marginTop = '-1em';
+
+                // Passing the Label div to CSS2DObject()
+                pointers[data.id] = new CSS2DObject(labelDiv);
+                pointers[data.id].position.set(data.x, data.y, data.z);
+                viewer.context.scene.add(pointers[data.id]);
+                pointers[data.id].layers.set(0);
+            }
+
+            // Updating the Label position according to new Data
+            pointers[data.id].position.set(data.x, data.y, data.z);
+
+            clients[data.id] = data;
+        });
+
+        // Updating Camera Position every time it is updated and sending it using emit()
+        viewer.context.ifcCamera.cameraControls.addEventListener('update', e => {
+            const cameraPos = {
+                "initials": initials,
+                "id": "",
+                "x": viewer.context.getCamera().position.x,
+                "y": viewer.context.getCamera().position.y,
+                "z": viewer.context.getCamera().position.z
+            }
+
+            socket.emit('camera_move', cameraPos);
+        })
+    }
+}
+```
+
+### Little styling
+We will add basic styling for Connection form and Labels that will represent the position
+``` css
+.label 
+{
+    color: #FFF;
+    font-family: sans-serif;
+    padding: 2px;
+    background: rgba( 0, 0, 0, .6 );
+}
+
+#socket-connection-form{
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+    background: white;
+}
+#socket-connection-form>label{
+    font-size: 18px;
+    padding: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#socket-connection-form>input{
+    margin-top: 10px;
+    font-size: 18px;
+    padding: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    margin-bottom: 14px;
+}
+#socket-connection-form>button{
+    padding: 12px;
+    border: unset;
+    background: #f57c00;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 18px;
+}
+#socket-connection-form>button:hover{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: 0.2s;
+}
+```
+
+
+
+## The result
+
+🖥️ Here is an example of everything we've learned today: 🖥️
+
+<a href="https://github.com/aka-blackboots/hello-world/tree/main/examples/web-ifc-viewer/socket-io/">Github repo</a>
+
+## Next steps
+
+🎉🎉🎉
+Congrats! Now you know how to use **Socket.IO** to share the User's Camera position, now you can perform variety of Operations and Share those over network! 
