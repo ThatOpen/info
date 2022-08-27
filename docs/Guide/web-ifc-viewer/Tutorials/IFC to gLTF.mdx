@@ -1,0 +1,277 @@
+---
+title: 🗃️ IFC to gLTF
+sidebar_position: 3
+---
+
+import { IfcCard } from "../../../../src/components/Card/InfoCard";
+import { IfcAlert } from "../../../../src/components/Alert/Alert";
+import { Scene } from "../../../../src/components/Scene/Scene";
+
+## Introduction
+
+⚡
+web-ifc-viewer is a 3D BIM viewer. From its vast set of tools, converting IFC to gLTF is one useful tool. This tutorial will guide you step by step how you can upload IFC file and get them converted to gLTF along with the relevant properties. 
+
+You can find the complete source of the export functionality [here](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-viewer/gltf-export) and source code of import functionality [here](https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-viewer/gltf-import)
+
+
+<IfcAlert>
+  Using IFC.js requires a basic knowledge of web development (HTML, CSS, JavaScript) and Three.js. If you have no previous experience with Three.js, you should probably look <a href="https://threejs.org/manual/">here</a>.
+</IfcAlert>
+
+
+## Setting up the project
+Before diving in deep, it is recommended that you have your **Two Projects** created one which will be used for **Exporting IFC to gLTF** and other for **Viewing gLTF Files**.
+
+You can use this [section](https://ifcjs.github.io/info/docs/Guide/web-ifc-viewer/Introduction#setting-up-3d-scene-web-ifc-viewer). Don't worry! it is just boiler plate code for getting web-ifc-viewer running.
+
+We will divide this tutorial into two sections as well, first for exporting and later for importing.
+
+## 1️⃣ IFC to gLTF
+
+### Importing Dependencies
+
+```js
+   import {
+        IFCWALL,
+        IFCWALLSTANDARDCASE,
+        IFCSLAB,
+        IFCWINDOW,
+        IFCMEMBER,
+        IFCPLATE,
+        IFCCURTAINWALL,
+        IFCDOOR} from 'web-ifc'; 
+```
+
+
+### Conversion
+The next step is to add function call `onchange` of input in `app.js`
+
+- Whenever input tag is clicked upon we will call `loadIfc`
+```js {2}
+const input = document.getElementById('file-input');
+input.onchange = loadIfc;
+
+async function loadIfc(event) {
+    // IFC to gLTF conversion will happen here
+    ...
+    }
+```
+
+**Next**, we will work on conversion 🔥
+- Creating URL from File Object
+- Using `exportIfcFileAsGltf` and passing config to it to get relevant gLTF files.
+- If we pass `splitByFloors` as true the `result` we get will have gLTF files separated according to Floors.
+- `categories` are used to get gLTF files for specific IFC elements, we will pass the imported `IFC types` here.
+- Setting `getProperties` as `true` generates a .json file which has the relevant properties stored in it.
+- Getting the outcome of `exportIfcFileAsGltf()` in `result`
+
+```js {5,7,15,26,30,35,36,44,45}
+async function loadIfc(event) {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+
+    const result = await viewer.GLTF.exportIfcFileAsGltf({
+        ifcFileUrl: url,
+        splitByFloors: true,
+        categories: {
+            walls: [IFCWALL, IFCWALLSTANDARDCASE],
+            slabs: [IFCSLAB],
+            windows: [IFCWINDOW],
+            curtainwalls: [IFCMEMBER, IFCPLATE, IFCCURTAINWALL],
+            doors: [IFCDOOR]
+        },
+        getProperties: true
+    });
+
+    // Using Result and Downloading gLTF files
+
+    // Creating Link Tag
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+
+    // Looping in result
+    for(const categoryName in result.gltf) {
+        const category = result.gltf[categoryName];
+
+        // Looping in Category according to Levels
+        for(const levelName in category) {
+            const file = category[levelName].file;
+
+            // If file is present for a level under category we will download it
+            if(file) {
+                // Downloading gLTF file in local machine
+                link.download = `${file.name}_${categoryName}_${levelName}.gltf`;
+                link.href = URL.createObjectURL(file);
+                link.click();
+            }
+        }
+    }
+
+    // We will check for Properties in result and download the JSON file for it
+    for(let jsonFile of result.json) {
+        link.download = `${jsonFile.name}.json`;
+        link.href = URL.createObjectURL(jsonFile);
+        link.click();
+    }
+
+    // Removing the Node created for link
+    link.remove();
+}
+```
+### Let's try it
+If you did everything right, you should see something like below. This will download bunch of gLTF files.
+
+<Scene link={"https://ifcjs.github.io/hello-world/examples/web-ifc-viewer/gltf-export/index.html"} />
+
+## 2️⃣ gLTF Viewer
+
+Now we have gLTF files and Properties file with us, we will use these files and show the model in `web-ifc-viewer`. We will use another project for this. 
+
+### Loading gLTF files
+
+- Loading gLTF models using `viewer.GLTF.loadModel()`
+- Getting Properties from `properties.json`
+- Creating Spatial Tree
+```js {14,18,22}
+let properties;
+
+async function load() {
+	// Load geometry
+	await viewer.IFC.setWasmPath('../../../');
+	await viewer.GLTF.loadModel('../../../GLTF/doors_Nivel 1.gltf');
+	await viewer.GLTF.loadModel('../../../GLTF/slabs_Nivel 1.gltf');
+	await viewer.GLTF.loadModel('../../../GLTF/slabs_Nivel 2.gltf');
+	await viewer.GLTF.loadModel('../../../GLTF/walls_Nivel 1.gltf');
+	await viewer.GLTF.loadModel('../../../GLTF/windows_Nivel 1.gltf');
+	await viewer.GLTF.loadModel('../../../GLTF/curtainwalls_Nivel 1.gltf');
+
+	// Load properties
+	const rawProperties = await fetch('../../../GLTF/properties.json');
+	properties = await rawProperties.json();
+
+	// Get spatial tree
+	const tree = await constructSpatialTree();
+	console.log(tree);
+}
+
+load();
+```
+
+### Creating Spatial Tree
+
+- Creating Project Node using Object of `IFCPROJECT`
+- Getting Relationships and contructing Spatial Tree Node and Passing back this structure
+- `constructSpatialTreeNode` is a recursive function which will be used to generate the data accordingly
+```js {4,7,13,14,16,22,27,31,59,67}
+// Get spatial tree
+async function constructSpatialTree() {
+    // Getting Project Properties 
+	const ifcProject = getFirstItemOfType('IFCPROJECT');
+
+    // Creating Project Node
+	const ifcProjectNode = {
+		expressID: ifcProject.expressID,
+		type: 'IFCPROJECT',
+		children: [],
+	};
+
+	const relContained = getAllItemsOfType('IFCRELAGGREGATES');
+	const relSpatial = getAllItemsOfType('IFCRELCONTAINEDINSPATIALSTRUCTURE');
+
+	await constructSpatialTreeNode(
+		ifcProjectNode,
+		relContained,
+		relSpatial,
+	);
+
+	return ifcProjectNode;
+}
+
+// Utils functions
+function getFirstItemOfType(type) {
+	return Object.values(properties).find(item => item.type === type);
+}
+
+function getAllItemsOfType(type) {
+	return Object.values(properties).filter(item => item.type === type);
+}
+
+// Recursively constructs the spatial tree
+async function constructSpatialTreeNode(
+	item,
+	contains,
+	spatials,
+) {
+	const spatialRels = spatials.filter(
+		rel => rel.RelatingStructure === item.expressID,
+	);
+	const containsRels = contains.filter(
+		rel => rel.RelatingObject === item.expressID,
+	);
+
+	const spatialRelsIDs = [];
+	spatialRels.forEach(rel => spatialRelsIDs.push(...rel.RelatedElements));
+
+	const containsRelsIDs = [];
+	containsRels.forEach(rel => containsRelsIDs.push(...rel.RelatedObjects));
+
+	const childrenIDs = [...spatialRelsIDs, ...containsRelsIDs];
+
+	const children = [];
+	// Looping through the child elements and creating populating values for it
+    for (let i = 0; i < childrenIDs.length; i++) {
+		const childID = childrenIDs[i];
+		const props = properties[childID];
+		const child = {
+			expressID: props.expressID,
+			type: props.type,
+			children: [],
+		};
+
+        // For Every child element repeating the step and pushing it to children array
+		await constructSpatialTreeNode(child, contains, spatials);
+		children.push(child);
+	}
+
+	item.children = children;
+}
+```
+
+### Getting Properties
+
+With major steps done, now we will get properties of elements on double click. Let's dive in!
+
+- Using `id` we will get the properties and then get property sets for it 
+
+```js {3,4,8,14}
+window.ondblclick = async () => {
+	const result = await viewer.IFC.selector.pickIfcItem(true);
+	const foundProperties = properties[result.id];
+	getPropertySets(foundProperties);
+	console.log(foundProperties);
+};
+
+function getPropertySets(props) {
+	const id = props.expressID;
+	const propertyValues = Object.values(properties);
+	const allPsetsRels = propertyValues.filter(item => item.type === 'IFCRELDEFINESBYPROPERTIES');
+	const relatedPsetsRels = allPsetsRels.filter(item => item.RelatedObjects.includes(id));
+	const psets = relatedPsetsRels.map(item => properties[item.RelatingPropertyDefinition]);
+	for(let pset of psets) {
+		pset.HasProperty = pset.HasProperties.map(id => properties[id]);
+	}
+	props.psets = psets;
+}
+```
+
+### Lets try it
+
+If everything went right, the output will look as below
+<Scene link={"https://ifcjs.github.io/hello-world/examples/web-ifc-viewer/gltf-import/index.html"} />
+
+## Conclusion
+
+🎉
+Congratulations! You have successfully exported IFC file as gLTF files and have a viewer for it. Go to the next pages of the docs to find out what else can you do with IFC.js.
+
