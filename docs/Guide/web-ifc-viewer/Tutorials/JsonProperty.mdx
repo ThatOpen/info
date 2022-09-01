@@ -1,0 +1,78 @@
+---
+title: 📋 Json Property
+sidebar_position: 1
+---
+import {IfcCard} from "../../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../../src/components/Alert/Alert";
+import {Scene} from "../../../../src/components/Scene/Scene"
+
+## Introduction
+
+👩‍🏫 As you might know, IFC is a data schema and what we call as a '.ifc' file is a STEP-File that is widely used to exchange data for 3D objects. This STEP-File is in text format and is not designed as a database. Wanting to be fast reading a single text file is like wishing to go as fast as a car, but with a cycle.
+
+🚧🚧🚧 While IFC.js is super efficient and it works well for medium IFC models, its not the most efficient especially for bigger models and thus you can't except high performance when making concatenated queries. There are ways to gain efficiency in this kind of queries: the easiest one is to generate a JSON with the properties and query that JSON instead.
+
+🚶‍♀️🚶‍♀️🚶‍♀️ Here, we will learn how to deal with this situation, so nothing can stop us, no matter how big the IFC model is! 💪🤖🔥
+
+<IfcCard>
+👶 Check out this wiki link for details on <a href="https://en.wikipedia.org/wiki/Industry_Foundation_Classes#File_Formats">IFC file format</a>
+</IfcCard>
+
+
+🎩 Thankfully IFC.js allows you to pre-process the properties and geometry of an IFC model and convert it to something much more efficient. Specifically, convert the properties to JSON and the geometry to GLB files. After this preprocessing, even big models will run like a charm on any browser. This will make loading and working with files faster and more efficient. 
+
+🚴‍♂️ Enough theory. Lets see how to convert the properties to JSON.
+
+## How to do it 
+
+### Loading the file
+
+⚡⚡⚡ Let's start out by loading our <b>IFC file</b>. This is done through `loadIfcUrl()` method
+
+```js
+async function init() {
+    await viewer.IFC.setWasmPath(wasmPath); 
+    const model = await viewer.IFC.loadIfcUrl(url);
+    }
+```
+
+### Serializing all properties
+🤔 Next, we take all the properties of the model and serialize them, that means, we will create a JSON file with all the properties. The idea beind this is to take properties from JSON instead of IFC directly. This way, you will be able to get the properties an order of magnitude much faster and is super efficient.
+
+🚀 IFC.js makes it super easy with the built in `serializeAllProperties()` method. This method serializes all the properties of an IFC (exluding the geometry) into an array of Blobs. 
+
+```js
+const properties =  await viewer.IFC.properties.serializeAllProperties(model);
+```
+<IfcCard>
+🍰 Working with JSON is also more convenient as you can put the JSON file into a database like MongoDB.
+</IfcCard>
+<IfcAlert>
+As an alternative, you can also generate JSON properties along with geometry by using the method <code>viewer.GLTF.exportIfcFileAsGltf()</code> with option <code>getProperties: true</code>
+</IfcAlert>
+
+### Downloading JSON file
+
+Now that we have serialized all the properties and generated the JSON file, let's go ahead and download this file 💾. We can then use this downloaded JSON file for our super efficient IFC model.
+
+👇 In the code below we are creating a link that downloads the JSON file when we open the page
+
+```js
+const file = new File(properties, 'properties');
+const link = document.createElement('a'); 
+document.body.appendChild(link);
+link.href = URL.createObjectURL(file);
+link.download = 'properties.json';
+link.click();
+link.remove();
+```
+### Github code
+😎 Check out the generated JSON file and the implementation of the code in the Github <a href="https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-viewer/JSON-property-example">page</a> 
+
+### Result
+
+🎉🎉🎉 Congratulations! You now have all the properties from the IFC file in a much efficient JSON format 👓. If you open this file with Visual Studio Code and format it, you will see that this is all the data from the IFC, but in JSON format.
+
+<IfcAlert>
+💻🧑 Go ahead and save this in a front-end database and make your application way way faster.
+</IfcAlert>
