@@ -44,7 +44,6 @@ module.exports = {
           position: "left",
           label: "Docs",
         },
-        { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://discord.gg/FXfyR4XrKT",
           label: "Community",
@@ -98,10 +97,6 @@ module.exports = {
           title: "More",
           items: [
             {
-              label: "Blog",
-              to: "/blog",
-            },
-            {
               label: "GitHub",
               href: "https://github.com/IFCjs",
             },
@@ -129,9 +124,6 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-        },
-        blog: {
-          showReadingTime: true,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
