@@ -1,0 +1,210 @@
+---
+title: ⌊𓉛⌋ Floorplan  
+sidebar_position: 1
+---
+import {IfcCard} from "../../../../src/components/Card/InfoCard";
+import {IfcAlert} from "../../../../src/components/Alert/Alert";
+import {Scene} from "../../../../src/components/Scene/Scene"
+import { IfcImage } from "../../../../src/components/Image/Image";
+
+## Introduction
+
+🚶‍♀️ Let see another functionality that the `web-ifc-viewer` offers. Let's say you want to export the floorplans for each level in your model 🌟. Here we'll learn how to add that functionality, using **Floorplan functions** from the IFC.js API. We will create an app that loads an IFC model and exports the floorplan for each level as a DXF.
+
+<IfcCard>
+✌ Dig into the code and check out all the details about the <a href="https://github.com/IFCjs/web-ifc-viewer/tree/master/viewer/src/components/import-export">floorplan</a> component methods on Github. 
+</IfcCard>
+
+## How to do it 
+
+### First we set up IFC.js and initialize the scene
+
+```js
+const container = document.getElementById('viewer-container');
+const viewer = new IfcViewerAPI({container, backgroundColor: new Color(0xffffff)});
+viewer.grid.setGrid();
+viewer.axes.setAxes();
+
+viewer.IFC.setWasmPath('../../../');
+ClippingEdges.createDefaultIfcStyles = false;
+viewer.dxf.initializeJSDXF(Drawing);
+
+const input = document.getElementById('file-input');
+let model;
+
+input.addEventListener('change',
+
+    async (changed) => {
+
+        const file = changed.target.files[0];
+        const ifcURL = URL.createObjectURL(file);
+        model = await viewer.IFC.loadIfcUrl(ifcURL);
+        await viewer.shadowDropper.renderShadow(0);
+    },
+
+    false,
+);
+```
+
+### ‍We then establish what items we want to draw on the floorplan.
+🏫 Let's define the sectioned and projected categories that we want to draw on our floorplan.
+```js
+const clippingMaterial = new LineMaterial();
+const sectionedCategories = [
+    {
+        name: "windows_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.BLUE,
+        value: [IFCWINDOW, IFCPLATE, IFCMEMBER],
+        stringValue: ["IFCWINDOW", "IFCPLATE", "IFCMEMBER"],
+        material: clippingMaterial
+    },
+    {
+        name: "walls_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.RED,
+        value: [IFCWALL, IFCWALLSTANDARDCASE],
+        stringValue: ["IFCWALL", "IFCWALLSTANDARDCASE"],
+        material: clippingMaterial
+    },
+    {
+        name: "floors_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.RED,
+        value: [IFCSLAB],
+        stringValue: ["IFCSLAB"],
+        material: clippingMaterial
+    },
+    {
+        name: "doors_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.YELLOW,
+        value: [IFCDOOR],
+        stringValue: ["IFCDOOR"],
+        material: clippingMaterial
+    },
+    {
+        name: "furniture_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.RED,
+        value: [IFCFURNISHINGELEMENT],
+        stringValue: ["IFCFURNISHINGELEMENT"],
+        material: clippingMaterial
+    },
+    {
+        name: "stairs_section",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.RED,
+        value: [IFCSTAIR, IFCSTAIRFLIGHT],
+        stringValue: ["IFCSTAIR", "IFCSTAIRFLIGHT"],
+        material: clippingMaterial
+    },
+];
+
+const projectedCategories = [
+    {
+        name: "furniture_projection",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.CYAN,
+        value: [IFCFURNISHINGELEMENT],
+        stringValue: ["IFCFURNISHINGELEMENT"],
+    },
+    {
+        name: "general_projection",
+        style: 'CONTINUOUS',
+        color: Drawing.ACI.CYAN,
+        value: [IFCSLAB, IFCWINDOW, IFCDOOR, IFCSTAIRFLIGHT, IFCSTAIR, IFCRAILING, IFCMEMBER],
+        stringValue: ["IFCSLAB", "IFCWINDOW", "IFCDOOR", "IFCSTAIRFLIGHT", "IFCSTAIR", "IFCRAILING", "IFCMEMBER"],
+    },
+
+];
+```
+### Creating the floorplans
+To keep it simple, pressing the ***[P]*** key triggers the ***exportAllFloors function*** that creates the 🏗 flooplans.
+```js
+window.onkeydown = async (e) => {
+    if (e.code === 'KeyP') {
+        await exportAllFloors();
+    }
+}
+```
+### The process starts by defining the layers, plans, and storeys in the model, which will be use to create the floorplans
+```js
+    await createClippingLayers();
+
+    await viewer.plans.computeAllPlanViews(model.modelID);
+
+    const plans = Object.values(viewer.plans.planLists[model.modelID]);
+
+    const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
+    const storeys = ifcProject.children[0].children[0].children;
+	for(let storey of storeys) {
+        for (let child of storey.children ) {
+            if(child.children.length) {
+                storey.children.push(...child.children);
+            }
+        }
+    }
+```
+
+### With that information, we loop through each plan in the model
+If a drawing doesn't exist, it is created.
+```js
+	for (let plan of plans) {
+        if (!viewer.dxf.drawings[plan.name]) viewer.dxf.newDrawing(plan.name);
+```
+
+#### For each of the plans, we will loop through the projected categories 
+For each of the items to draw, we extract their geometry, get their projection, and draw it.
+```js
+		const storey = storeys.find(storey => storey.expressID === plan.expressID);
+        for (let category of projectedCategories) {
+            const ids = storey.children
+                .filter(child => category.stringValue.includes(child.type))
+                .map(child => child.expressID);
+
+            if (!ids.length) {
+                continue;
+            }
+
+            const subset = viewer.IFC.loader.ifcManager.createSubset({
+                modelID: model.modelID,
+                ids,
+                removePrevious: true,
+                customID: "floor_plan_generation",
+                material: subsetMat
+            });
+
+            const filteredPoints = [];
+            const edges = await viewer.edgesProjector.projectEdges(subset);
+            const positions = edges.geometry.attributes.position.array;
+			...
+            viewer.dxf.drawEdges(plan.name, filteredPoints, category.name, category.color, category.style);
+ 
+```
+#### And finally we draw the sectioned categories:
+```js
+        for (let category of sectionedCategories) {
+            viewer.dxf.drawNamedLayer(plan.name, plan, category.name, category.name, category.color, category.style);
+        }
+
+        const result = viewer.dxf.exportDXF(plan.name);
+        const link = document.createElement('a');
+        link.download = "floorplan.dxf";
+        link.href = URL.createObjectURL(result);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+```
+
+## The result
+Following find a Floorplan generated with this app
+<IfcImage hideSource={true} image={<img src={require("@site/docs/Guide/web-ifc-viewer/Tutorials/FloorplanRedRot.png").default} alt="PC image"></img>}></IfcImage>
+
+🖥️ For the example of everything we've learned today: 🖥️
+<a href="https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-viewer/floorplans">Github repo</a>
+
+## Next steps
+
+🎉🎉🎉
+Congrats! In this example your learned how to export floorplans from your model to DXF files, unsing DXFWriter. 🧐, but you could also use PDFWriter to create PDF files. Now it's up to you to use the tools creatively in your own project! 
