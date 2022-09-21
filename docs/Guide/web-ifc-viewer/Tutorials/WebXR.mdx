@@ -1,0 +1,41 @@
+---
+title: 🥽 WebXR
+sidebar_position: 6
+---
+
+import { IfcCard } from "../../../../src/components/Card/InfoCard";
+import { IfcAlert } from "../../../../src/components/Alert/Alert";
+import { Scene } from "../../../../src/components/Scene/Scene";
+
+<IfcAlert>
+  web-ifc-viewer has been extended to enable WebXR, but you can also easily create your own customized solution via web-ifc-three <a href="https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-three/webxr">example here</a>.
+</IfcAlert>
+
+## Introduction
+
+WebXR brings VR and AR to teh web and gives more immersive experiences. The screen is replaces with a VR headset and the mouse with one or more controllers, and web-ifc-viewer can provide some base functionalities out of the box.
+
+## How to do it
+
+### Set Initialization Options to include webXR
+
+This is easily done by setting the property `webXR` to true on initializing the viewer:
+```javascript
+const container = document.getElementById('viewer-container');
+const viewer = new IfcViewerAPI({ container, webXR: true });
+```
+
+## The result
+
+😎 That alone gives us the web-ifc-viewer WebXR enabled and with controller functionality including movement via controller1 `squeeze` and component highlighting via controler2 `select`.
+You can customize the behavior you want from the VR controllers by modifying the `vrControllers.ts` file at `web-ifc-viewer/viewer/src/components/context/vrControllers.ts`.
+
+<IfcCard>
+    Having a VR headset is not required to develop for WebXR. 🔌 You can simulate a VR headset using tools such as <a href="https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje?hl=en">this Chrome plugin</a> to test your work.
+</IfcCard>
+
+## Next steps
+
+🎉🎉🎉
+Congratulations! With just a small change you have made your web-ifc-viewer ready for the virtual world.
+💪💪💪
