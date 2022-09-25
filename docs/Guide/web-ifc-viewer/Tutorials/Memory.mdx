@@ -3,9 +3,9 @@ title: 🧠 Memory
 sidebar_position: 5
 ---
 
-import { IfcCard } from "../../../../src/components/Card/InfoCard";
-import { IfcAlert } from "../../../../src/components/Alert/Alert";
-import { Scene } from "../../../../src/components/Scene/Scene";
+import { IfcCard } from "@site/src/components/Card/InfoCard";
+import { IfcAlert } from "@site/src/components/Alert/Alert";
+import { Scene } from "@site/src/components/Scene/Scene";
 
 <IfcAlert>
   You can follow along with the full example on <a href="https://github.com/IFCjs/hello-world/tree/main/examples/web-ifc-viewer/memory">Github</a>.
@@ -34,10 +34,10 @@ const stats = new Stats();
 addStats();
 
 function addStats() {
-    stats.showPanel(2);
-    document.body.append(stats.dom);
-    viewer.context.stats = stats;
-};
+  stats.showPanel(2);
+  document.body.append(stats.dom);
+  viewer.context.stats = stats;
+}
 ```
 
 📋 During development we don't have to second guess our memory management anymore, because now it's **visualized** for us.
@@ -68,8 +68,11 @@ async function loadIfcFromFile(file) {
 
 ```js {3}
 const input_button = document.getElementById("input-button");
-input_button.addEventListener("input", (input) => {
-  loadIfcFromFile(input.target.files[0])},
+input_button.addEventListener(
+  "input",
+  (input) => {
+    loadIfcFromFile(input.target.files[0]);
+  },
   false
 );
 ```
