@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "yarn translate:offline && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "axios": "^0.21.1",
-    "deepmark": "^0.1.2",
+    "deepmark": "^0.1.3",
     "glob": "^8.0.3",
     "husky": "^8.0.0",
     "picocolors": "^1.0.0",

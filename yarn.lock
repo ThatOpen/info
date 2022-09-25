@@ -3751,10 +3751,10 @@ deepl-node@^1.6.0:
     form-data "^3.0.0"
     loglevel ">=1.6.2"
 
-deepmark@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/deepmark/-/deepmark-0.1.2.tgz#589a9cb08e05cfb94bca2c9db3fdc19792f1670e"
-  integrity sha512-BxpYkRzxWgC8I2HpmdX/mbjjpwIZ7zAvc+PPj4bc0TbW9kDviy5R+4yLfkxwBVygEfmcwI9nkeX1OSe3BkrnzA==
+deepmark@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/deepmark/-/deepmark-0.1.3.tgz#cee8b5eaff2c9a93f2d69af365fe54fdbcf2caf9"
+  integrity sha512-gZrWGPLN7VeWeS1AebJRj7dzEliANAUtO+tULfsK/q1I+AWetwlvoTtGJMxqMfoGsK3iRNzQ7ZEDj4YzeEeS6w==
   dependencies:
     acorn "^8.8.0"
     acorn-jsx "^5.3.2"

@@ -6,6 +6,9 @@ on:
     paths:
       - docs/**
       - src/**
+      - deepmark.config.mjs
+  workflow_dispatch:
+
 jobs:
   translate:
     name: Translate markdown, json, and yaml files with deepmark.
