@@ -1,0 +1,198 @@
+---
+  title: Contribute
+  sidebar_position: 2
+---
+
+import { IfcAlert } from "@site/src/components/Alert/Alert.jsx";
+import { IfcCard } from "@site/src/components/Card/InfoCard.jsx";
+import { Scene } from "@site/src/components/Scene/Scene.jsx";
+import { Tab } from "@site/src/components/Tab/Tab.jsx";
+
+# Contribute to web-ifc-three
+
+☝
+Have you already decided to contribute to the `web-ifc-three` library? Congratulations on that wise decision, let's start...
+
+😊
+If you are new here,[Check it out!](https://ifcjs.github.io/info/docs/Introduction) you can learn about the possibilities and features of IFC.
+
+## Documentation
+
+📜
+The contribution must be made in the IFCjs/info repository https://github.com/IFCjs/info We use docusaurus for documentation. Don't worry, you don't need to know Docusaurus to do this.<br/>
+👨‍🎨
+You can get introduction from [here](https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Introduction).
+
+## Setup
+
+### Setting up the project
+
+💻 Open terminal and use `yarn add web-ifc-three` to install web-ifc-three. <br/>
+🧵 Don't have yarn installed? You can get it from [here](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable).<br/>
+🚀 We recommend starting from [here](https://ifcjs.github.io/info/docs/Hello%20world/).
+
+
+## Cloning the repository locally
+
+🧰
+To get started with web-ifc-three , you can get one from the official IFC repository on Github, https://github.com/IFCjs/web-ifc-three. In it we will check the methods.
+
+📁
+The first thing to do is to clone the repository to your local machine.<br/>
+Start by forking the project (click on fork button on the top right) and choosing yourself as the owner of the fork (if asked).<br/>
+Now go to the forked repository, click on code button (generally green in color) and copy the https URL.
+
+📦 Now open terminal on your machine and change the current working directory to the location where you want to clone the directory.
+Enter these commands:
+
+```bash
+    //Type git clone, and then paste the URL you copied earlier like this
+    git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+
+    //Enter the cloned repository using cd and then name of the repository like this
+    cd web-ifc-three
+
+    // Using git checkout -b will create a new branch and immediately switch to it
+    git checkout -b ＜new-branch-name＞
+    //<new-branch-name> -> name your branch exactly same as the bounty name or the name starts with bounty ID
+
+    //Minimise this terminal instead of closing it
+```
+
+## Writing code on it
+
+### Using an IDE (Integrated Development Environment)
+
+📝 VS Code - You can install VS Code from [here](https://code.visualstudio.com/download).
+
+### Compiler for code
+
+📚 GCC with MinGW (for windows) - You can configure GCC C++ compiler from [here](https://code.visualstudio.com/docs/cpp/config-mingw). <br/>
+Clang (for macOS) - You can configure Clang compiler from [here](https://code.visualstudio.com/docs/cpp/config-clang-mac).
+
+<IfcAlert>
+  To run the application locally we will need a local server. If you're using <b>VS Code</b> as your IDE, one option is to install the Live Server extension, which allows us to open an instance of Google Chrome, run our web application, and see the changes we make to the code in real time.
+</IfcAlert>
+
+🚧 Use these [APIs](https://ifcjs.github.io/info/docs/Guide/web-ifc-three/api) and these [tutorials](https://ifcjs.github.io/info/docs/Guide/web-ifc-three/Tutorials/Picking) to learn.<br/>
+
+## Creating a submit pull request
+
+🔢 Open your terminal, go to your working directory and enter these commands:
+
+use `git checkout master` to checkout to master branch.<br/>
+use `git pull` to sync your cloned repository with the origin repository.<br/>
+use `git checkout <branch-name>` and enter your branch name to go back to your working branch.<br/>
+use `git pull` to sync with the the main branch.<br/>
+use `git add .` to stage your changes.<br/>
+use `git commit -m "type a message to display for changes" ` to commit the changes made.<br/>
+use `git push` to push the changes to the main repository.
+
+Now go to your github, inside the forked version of the repository.<br/>
+Click on `compare & pull request`.<br/>
+Now describe the changes you made in short and click on `create pull request`.
+
+
+## Tools for documentation
+
+🧶
+With these tools you can make your contribution more dynamic and illustrative.
+
+### Alert
+
+🎹
+Adds a blue alert window containing an animated icon(💡) Color:(#1a73e8).
+
+#### Example:
+
+```js
+import { IfcAlert } from "../../../src/components/Alert/Alert";
+
+<IfcAlert>Write here your text to display inside `IfcAlert`</IfcAlert>;
+```
+
+### Card
+
+🏠
+Add a gray card, it can contain icon. Color:(#f3f4f6).
+
+#### Example:
+
+```js
+import { IfcCard } from "../../../src/components/Card/InfoCard";
+
+<IfcCard icon="🏆" title="TITLE">
+  Write here your text to display inside `IfcCard`
+</IfcCard>;
+```
+
+### Scene
+
+💎
+Add a `Scene` with a link.
+
+#### Example:
+
+```js
+import { Scene } from "../../../src/components/Scene/Scene";
+
+<Scene link={"https://ifcjs.github.io/hello-world/examples/web-ifc-three/helloworld/"} />;
+```
+
+### Tab
+
+🌵
+Add selectable `tab`.
+
+#### Example:
+
+```js
+import { Tab } from "../../../src/components/Tab/Tab";
+
+<IfcTab
+  items={[
+    {
+      icon: "🤖",
+      content: (
+        <p>
+          <b>Font bold</b>
+          <a href="LINK/">NAMELINK</a>
+        </p>
+      ),
+    },
+    {
+      icon: "🦅",
+      content: (
+        <p>
+          <i>Font italics </i>
+        </p>
+      ),
+    },
+  ]}
+/>;
+```
+
+## Titles
+
+🎉
+We can order the titles and establish a development tree thanks to their sizes.
+
+# / # Document Header
+
+## / ## Title
+
+### / ### Subtitle
+
+#### / #### Example / Arguments
+
+### Icons
+
+📝🤔👩‍💻🤷‍♀️⛔💳🤖🏠🎩🧊🎯⚡💻🧑📁💎🐱‍👤✌🌱🧰⏳💾☝❓🌚👀👓🎹👨‍💼👷‍♀️🚧📦💳📜🎸🪕🎻📕🔍📘📗📒🌀🧱✨💣💥💅
+🎓👬💛🐁🌵😊🤕🚦🌎🔥📦🌳🌲🌴🚀📚⚽ 🌈🥶🧵🧠💼🔢1️⃣2️⃣3️⃣👌🦅☝📝🎨🧻📁📭📫🎥🚩🎉⏩🚴‍♂️👨‍🎨🤏🚪💪🧶🐭🐣🔳
+and more...
+
+
+## How do I get started?
+
+😊
+[Talk to us!](https://discord.gg/FXfyR4XrKT) Tell us about your situation and your ideas and we will help you get started as soon as possible.
